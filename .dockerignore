@@ -1,0 +1,14 @@
+# 빌드 컨텍스트에서 제외 (이미지 안에서 새로 설치/생성됨)
+node_modules
+app/node_modules
+**/node_modules
+
+# 용량 큰 것 / 불필요한 것
+*.mp4
+*.mov
+_tmp-payload.json
+app/scripts/output
+
+# git 메타
+.git
+.gitignore
