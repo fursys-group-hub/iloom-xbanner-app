@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await (await b.newContext({ viewport: { width: 1400, height: 900 } })).newPage();
+const errs = [];
+p.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()); });
+p.on('response', (r) => { if (r.status() === 404) console.log('404:', decodeURIComponent(r.url())); });
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+await p.evaluate(() => localStorage.clear());
+await p.reload({ waitUntil: 'networkidle' });
+await p.waitForTimeout(600);
+await p.screenshot({ path: 'scripts/output/startscreen.png' });
+console.log('start-screen visible:', await p.locator('#startScreen').isVisible(), '| console errors:', errs.length);
+await b.close();

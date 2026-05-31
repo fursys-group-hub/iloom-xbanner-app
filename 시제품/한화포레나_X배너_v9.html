@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>일룸 X배너 v9 — 한화포레나 대전월평공원 (기간강조 + 특별 프로모션 4종)</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    /* ===== paybooc 폰트 (일룸 디자인용) ===== */
+    @font-face {
+      font-family: 'Paybooc';
+      src: url('../assets/fonts/paybooc%20OTF%20Light.otf') format('opentype');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'Paybooc';
+      src: url('../assets/fonts/paybooc%20OTF%20Medium.otf') format('opentype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'Paybooc';
+      src: url('../assets/fonts/paybooc%20OTF%20Bold.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Paybooc';
+      src: url('../assets/fonts/paybooc%20OTF%20ExtraBold.otf') format('opentype');
+      font-weight: 800;
+    }
+
+    /* ===========================================
+       v9: 한화포레나 대전월평공원
+       v8 골든 스탠다드 베이스 + 변형 검증
+       - 4컬럼 구버전 혜택표
+       - 기간강조 톤 (1개월 운영)
+       - 특별 프로모션 4종 (2x2 그리드) 신규 추가
+       - 결제 안내 컴팩트화 (공간 확보)
+       =========================================== */
+
+    @page { size: 600px 1800px; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #DDD;
+      font-family: 'Pretendard', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .x-banner {
+      width: 600px;
+      height: 1800px;
+      background: #FFF5EE;
+      color: #2A2520;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      padding: 90px 50px 50px;
+    }
+
+    /* ===== 1. 상단 헤더 ===== */
+
+    .welcome {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      color: #999;
+      text-align: center;
+      margin-bottom: 22px;
+      padding-left: 0.4em;
+    }
+
+    .apt-name {
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: #2A2520;
+      letter-spacing: -0.05em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .main-title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 62px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #E55A3D;
+      letter-spacing: -0.06em;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .period {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2A2520;
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 44px;       /* 케이스 B 변형: 콘텐츠 多 → 그룹 간격 44px 자동 압축 */
+    }
+
+    /* ===== 2. 매장명 (위아래 얇은 라인 + 굵기 800) ===== */
+
+    /* v8 표준 매장명 35px (모든 케이스 동일 — 변경 금지) */
+    .store-box {
+      margin: 0 auto 24px;
+      align-self: center;
+      text-align: center;
+      padding: 26px 70px;
+      border-top: 1.5px solid #2A2520;
+      border-bottom: 1.5px solid #2A2520;
+    }
+
+    .store-name {
+      font-size: 35px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.45;
+      color: #2A2520;
+      letter-spacing: -0.04em;
+    }
+
+    /* ===== 3. 최대 혜택 강조 (기간강조 톤, 3줄 구조) ===== */
+
+    .max-benefit {
+      margin: 0 auto 44px;       /* 케이스 B 변형: 콘텐츠 多 → 그룹 간격 44px 자동 압축 */
+      align-self: center;
+      text-align: center;
+    }
+
+    .max-benefit-before {
+      font-size: 30px;
+      font-weight: 600;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .max-benefit-main {
+      font-size: 36px;
+      font-weight: 800;
+      color: #2A2520;
+      letter-spacing: -0.045em;
+      line-height: 1.25;
+      margin-bottom: 2px;
+    }
+
+    .max-benefit-main strong {
+      color: #E55A3D;
+      font-weight: 900;
+    }
+
+    .max-benefit-after {
+      font-size: 28px;
+      font-weight: 600;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+    }
+
+    /* ===== 4. 혜택표 (4컬럼 구버전) ===== */
+
+    .table-wrapper {
+      background: #FFFFFF;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      margin-bottom: 14px;
+    }
+
+    .table-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 21px;
+      font-weight: 700;
+      text-align: center;
+      padding: 14px 0;
+      letter-spacing: -0.025em;
+    }
+
+    table.benefit-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table.benefit-table th {
+      background: #FFF5EE;
+      color: #555;
+      font-weight: 700;
+      padding: 11px 6px;
+      text-align: center;
+      line-height: 1.3;
+      font-size: 14px;
+      letter-spacing: -0.005em;
+      border-bottom: 1px solid #EEE;
+    }
+
+    /* 4컬럼은 컬럼 수가 적어서 헤더 폰트 1단 키워도 잘 들어감 */
+    table.benefit-table th:last-child {
+      background: #E55A3D;
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    table.benefit-table tbody tr {
+      border-bottom: 1px solid #F2EFE9;
+    }
+
+    table.benefit-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    table.benefit-table td {
+      padding: 13px 6px;
+      text-align: center;
+      color: #333;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    table.benefit-table td.amount {
+      font-weight: 800;
+      color: #2A2520;
+      background: #FAFAF8;
+    }
+
+    table.benefit-table td.total {
+      font-weight: 900;
+      color: #E55A3D;
+      background: #FFEDE5;
+      font-size: 22px;
+    }
+
+    table.benefit-table td.dash {
+      color: #CCC;
+      font-weight: 500;
+    }
+
+    /* ===== 5. 특별 프로모션 4종 (2x2 그리드) ★ v9 신규 ===== */
+
+    .promo-wrapper {
+      background: #FFFFFF;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+    }
+
+    .promo-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 21px;
+      font-weight: 700;
+      text-align: center;
+      padding: 14px 0;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 14px;
+    }
+
+    /* NAVER 광고 스타일 v9-2: 그라데이션 약화 + 아이콘 + 채도 ↑ */
+    .promo-card {
+      border-radius: 14px;
+      padding: 16px 18px 18px;
+      position: relative;
+      min-height: 142px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 그라데이션 약화: 시작-끝 컬러 차이 줄여 부드럽게 */
+    .promo-card.promo-01 {  /* 시즌오프 — 옅은 코랄 */
+      background: linear-gradient(135deg, #FFEADF 0%, #FFF4ED 100%);
+      --accent: #E84D2E;
+    }
+    .promo-card.promo-02 {  /* 소파 — 옅은 카멜 */
+      background: linear-gradient(135deg, #F7E6CB 0%, #FCEFDB 100%);
+      --accent: #CC7831;
+    }
+    .promo-card.promo-03 {  /* 학생방 — 옅은 그린 */
+      background: linear-gradient(135deg, #DDEFD0 0%, #EBF6E0 100%);
+      --accent: #3DA02E;
+    }
+    .promo-card.promo-04 {  /* 단톡방 — 옅은 블루 */
+      background: linear-gradient(135deg, #D6E3F0 0%, #E6EFF7 100%);
+      --accent: #2E78C9;
+    }
+
+    /* 우상단 아이콘 (NAVER 광고처럼 자연스러운 일러스트적 요소) */
+    .promo-icon {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      color: var(--accent);
+      opacity: 0.5;
+    }
+
+    .promo-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .promo-tag {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .promo-headline {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+      color: #2A2520;
+      margin-bottom: 10px;
+    }
+
+    .promo-headline strong {
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .promo-sub {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.45;
+      color: #555;
+      margin-top: auto;
+    }
+
+    /* ===== 6. 결제 안내 (컴팩트 — 1줄 가로 로고 — 카드 2 시도했으나 표 잘림 → 컴팩트 복귀) ===== */
+
+    .payment {
+      background: #FFFFFF;
+      padding: 22px 24px 24px;
+      text-align: center;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .payment-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #2A2520;
+      margin-bottom: 14px;
+      letter-spacing: -0.03em;
+    }
+
+    .payment-brands-compact {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .payment-brands-compact img {
+      height: 18px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .payment-brands-compact .divider {
+      color: #CCC;
+      font-size: 10px;
+    }
+
+    /* ===== 7. 유의사항 ===== */
+
+    .notices {
+      flex: 1;
+      font-size: 11.5px;
+      color: #888;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      padding: 0 4px;
+      text-align: center;
+    }
+
+    .notices p {
+      margin-bottom: 2px;
+      word-break: keep-all;       /* 한국어 단어 단위 줄바꿈 */
+      overflow-wrap: break-word;
+      text-wrap: pretty;          /* 마지막 줄 widow 방지 */
+    }
+    .notices .nowrap {
+      white-space: nowrap;        /* 매장명/고유명사 한 단위 유지 */
+    }
+
+    /* ===== 8. iloom 로고 ===== */
+
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .footer img {
+      height: 28px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    @media print {
+      html, body { background: #FFFFFF; padding: 0; margin: 0; }
+      body { padding: 0; }
+      .x-banner { box-shadow: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="x-banner">
+
+    <!-- ===== 그룹 1: 헤더 ===== -->
+    <div class="welcome">WELCOME HOME</div>
+    <div class="apt-name">한화포레나 대전월평공원</div>
+    <div class="main-title">입주 특별 프로모션</div>
+    <div class="period">2026.03.21. ~ 2026.04.20.</div>
+
+    <!-- ===== 그룹 2: 매장 + 기간강조 카피 ===== -->
+    <div class="store-box">
+      <div class="store-name">
+        일룸 서대전점<br>
+        일룸 대전둔산점
+      </div>
+    </div>
+
+    <div class="max-benefit">
+      <div class="max-benefit-before">한화포레나 입주민을 위한</div>
+      <div class="max-benefit-main">1개월간 최대 <strong>100만원</strong> 특별 혜택</div>
+      <div class="max-benefit-after">지금 매장에서 만나보세요!</div>
+    </div>
+
+    <!-- ===== 그룹 3-1: 혜택표 (4컬럼 구버전) ===== -->
+    <div class="table-wrapper">
+      <div class="table-title">구매 금액대별 혜택</div>
+      <table class="benefit-table">
+        <thead>
+          <tr>
+            <th>구매 금액</th>
+            <th>기존 혜택<br>(상시)</th>
+            <th>박람회 혜택<br>(추가)</th>
+            <th>총 혜택</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="amount">200만원~</td>
+            <td class="dash">—</td>
+            <td>10만원</td>
+            <td class="total">10만원</td>
+          </tr>
+          <tr>
+            <td class="amount">300만원~</td>
+            <td>15만원</td>
+            <td>5만원</td>
+            <td class="total">20만원</td>
+          </tr>
+          <tr>
+            <td class="amount">500만원~</td>
+            <td>30만원</td>
+            <td>10만원</td>
+            <td class="total">40만원</td>
+          </tr>
+          <tr>
+            <td class="amount">700만원~</td>
+            <td>40만원</td>
+            <td>20만원</td>
+            <td class="total">60만원</td>
+          </tr>
+          <tr>
+            <td class="amount">1,000만원~</td>
+            <td>80만원</td>
+            <td>20만원</td>
+            <td class="total">100만원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== 그룹 3-2: 특별 프로모션 4종 (★ v9 신규) ===== -->
+    <div class="promo-wrapper">
+      <div class="promo-title">1개월 시그니처 프로모션 4종</div>
+      <div class="promo-grid">
+
+        <div class="promo-card promo-01">
+          <div class="promo-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7.5" cy="7.5" r="1.4" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="promo-tag">시즌오프 스페셜</div>
+          <div class="promo-headline"><strong>선착순</strong><br>한정 특가</div>
+          <div class="promo-sub">정가 대비 최대 혜택<br>재고 소진 시 조기 마감</div>
+        </div>
+
+        <div class="promo-card promo-02">
+          <div class="promo-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 12v-1a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v1"/><path d="M3 12h18a0 0 0 0 1 0 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5z"/><line x1="6" y1="19" x2="6" y2="22"/><line x1="18" y1="19" x2="18" y2="22"/></svg>
+          </div>
+          <div class="promo-tag">소파 프로모션</div>
+          <div class="promo-headline"><strong>가죽 스툴</strong><br>1개 증정</div>
+          <div class="promo-sub">스노즈컴팩트 가죽소파<br>3.5인 이상 구매 시</div>
+        </div>
+
+        <div class="promo-card promo-03">
+          <div class="promo-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="16" y2="7"/><line x1="9" y1="11" x2="14" y2="11"/></svg>
+          </div>
+          <div class="promo-tag">학생방 패키지</div>
+          <div class="promo-headline">최대 <strong>25만</strong><br>네이버 포인트</div>
+          <div class="promo-sub">지정 A/B 세트 구매 시</div>
+        </div>
+
+        <div class="promo-card promo-04">
+          <div class="promo-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="promo-tag">단톡방 공동구매</div>
+          <div class="promo-headline">최대 <strong>10만</strong><br>네이버 포인트</div>
+          <div class="promo-sub">입주민 누적 세대 달성 시<br>참여 세대 전원 적립</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== 그룹 3-3: 결제 안내 (컴팩트 — 1줄 가로 로고) ===== -->
+    <div class="payment">
+      <div class="payment-title">3가지 포인트 中 택 1 적립</div>
+      <div class="payment-brands-compact">
+        <img src="../assets/point%20logo/n%20pay.png" alt="N pay">
+        <span class="divider">|</span>
+        <img src="../assets/point%20logo/Lpoint.png" alt="L.POINT">
+        <span class="divider">|</span>
+        <img src="../assets/point%20logo/ssgpay.svg" alt="SSGPAY">
+      </div>
+    </div>
+
+    <!-- ===== 하단: 유의사항 + 로고 ===== -->
+    <div class="notices">
+      <p>· 본 프로모션은 통합회원 한정이며, 기간 이후 주문건 및 타 프로모션과 중복 적용 불가합니다.</p>
+      <p>· 네이버 포인트 · L.POINT · SSG 페이머니 中 택 1 적립 <span class="nowrap">(마지막 납기 후 익월말 지급)</span>.</p>
+      <p>· 추후 품목 변경은 <span class="nowrap">일룸 서대전점</span>, <span class="nowrap">일룸 대전둔산점</span>에서만 가능합니다.</p>
+    </div>
+
+    <div class="footer">
+      <img src="../assets/products/iloom-logo.png" alt="iloom">
+    </div>
+
+  </div>
+</body>
+</html>

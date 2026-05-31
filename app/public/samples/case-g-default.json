@@ -1,0 +1,69 @@
+{
+  "_caseId": "case-g",
+  "_version": "v14",
+  "_source": "시제품/도안우미린트리쉐이드_X배너_v14.html (골든 표준)",
+
+  "welcome": "WELCOME HOME",
+  "aptName": "도안 우미린 트리쉐이드",
+  "mainTitle": "입주 특별 프로모션",
+  "period": { "start": "2026-05-22", "end": "2026-05-24" },
+
+  "stores": ["일룸 프리미엄샵 대전둔산", "일룸 NC대전유성점"],
+
+  "maxBenefit": {
+    "before": "단 {3일간!} 입주박람회 현장에서만 드리는",
+    "amount": "100만원",
+    "mainTemplate": "최대 {amount} 특별 혜택",
+    "after": "지금 바로 만나 보세요!"
+  },
+
+  "benefitTable": {
+    "title": "구매 금액대별 혜택",
+    "columns": [
+      { "key": "amount", "label": "구매 금액",     "style": "amount" },
+      { "key": "base",   "label": "상시\n혜택",    "style": "normal" },
+      { "key": "onsite", "label": "현장\n혜택",    "style": "normal" },
+      { "key": "total",  "label": "총 혜택",       "style": "total"  }
+    ],
+    "rows": [
+      { "amount": "100만원~",   "base": "—",      "onsite": "+5만원",  "total": "5만원"   },
+      { "amount": "200만원~",   "base": "—",      "onsite": "+10만원", "total": "10만원"  },
+      { "amount": "300만원~",   "base": "15만원", "onsite": "+5만원",  "total": "20만원"  },
+      { "amount": "500만원~",   "base": "30만원", "onsite": "+10만원", "total": "40만원"  },
+      { "amount": "700만원~",   "base": "40만원", "onsite": "+20만원", "total": "60만원"  },
+      { "amount": "1,000만원~", "base": "80만원", "onsite": "+20만원", "total": "100만원" }
+    ]
+  },
+
+  "extraSection": {
+    "title": "도안 우미린 트리쉐이드 추가 특별 혜택",
+    "cards": [
+      {
+        "imageSrc": "/assets/products/%ED%95%84%EC%A6%88/01_%ED%95%84%EC%A6%88_%EC%8B%9D%ED%83%81.jpg",
+        "name": "식탁 3종 (토스카노·블릭·필즈) 구매 시",
+        "condition": "3종 중 1종 구매 시 적용",
+        "badge": "네이버 포인트 {5만원} 증정"
+      },
+      {
+        "imageSrc": "/assets/products/%EC%BB%AC%EB%A0%89%ED%8A%B8/04_481x481_tab1.jpg",
+        "name": "옷장 80만원 이상 구매 시",
+        "condition": "옷장 단독 구매 금액 기준",
+        "badge": "네이버 포인트 {5만원} 증정"
+      },
+      {
+        "imageSrc": "/assets/products/%EA%B3%B5%EB%8F%99%EA%B5%AC%EB%A7%A4/01_%EB%8C%80%EB%8B%A8%EC%A7%80_%EC%95%84%ED%8C%8C%ED%8A%B8.jpg",
+        "name": "공동 구매 프로모션",
+        "condition": "세대수 구간별 혜택 지급 (최대 {10만원})",
+        "units": [20, 40, 80, 100]
+      }
+    ]
+  },
+
+  "notices": [
+    "본 프로모션은 통합회원 한정 현장 프로모션이며, 기간 이후 주문건 및 타 프로모션과 중복 적용 불가합니다.",
+    "포인트는 마지막 납기 후 익월 말 지급되며, 포인트 유효기간 이후 재발송 불가.",
+    "추후 품목 변경은 일룸 프리미엄샵 대전둔산, 일룸 NC대전유성점에서만 가능합니다."
+  ],
+
+  "footer": { "logoSrc": "/assets/products/iloom-logo.png" }
+}

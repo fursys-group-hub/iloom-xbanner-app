@@ -1,0 +1,17 @@
+import { chromium } from 'playwright';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const OUT = path.join(__dirname, 'output');
+const b = await chromium.launch({ headless: true });
+const ctx = await b.newContext({ viewport: { width: 1500, height: 980 }, deviceScaleFactor: 1.5 });
+const p = await ctx.newPage();
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+await p.locator('.x-banner').first().waitFor();
+await p.click('#startBlank');
+await p.click('.wiz-l[data-go="payment"]');
+await p.locator('#payModes .pay-mode').first().waitFor();
+await p.waitForTimeout(200);
+await p.screenshot({ path: path.join(OUT, 'paymode_full.png') });
+await b.close();
+console.log('saved');

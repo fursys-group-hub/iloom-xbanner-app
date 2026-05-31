@@ -1,0 +1,54 @@
+{
+  "series_name": "플렉서블",
+  "product_name": "플렉서블",
+  "product_id": "flexible_mattress",
+  "page_id": 36580,
+  "source_url": "https://iloomproduct.fursys.com/?p=36580",
+  "fetched_at": "2026-05-11T01:02:37.652Z",
+  "total_images": 3,
+  "failed": 0,
+  "images": [
+    {
+      "file": "01_1024x691_tab1.jpg",
+      "local_path": "assets/products/플렉서블/01_1024x691_tab1.jpg",
+      "size_kb": 82,
+      "src": "https://iloomproduct.fursys.com/wp-content/uploads/2021/04/F1618212582890OJAEAUGDZCG_m.jpg",
+      "alt": "",
+      "w": 1024,
+      "h": 691,
+      "parent_text": "",
+      "grand_text": "",
+      "prev_text": "",
+      "next_text": "",
+      "tab": 1
+    },
+    {
+      "file": "02_590x590_tab1.png",
+      "local_path": "assets/products/플렉서블/02_590x590_tab1.png",
+      "size_kb": 737,
+      "src": "https://iloomproduct.fursys.com/wp-content/uploads/2023/10/image-15.png",
+      "alt": "",
+      "w": 590,
+      "h": 590,
+      "parent_text": "S5G2A (플렉서블 폼/라텍스)",
+      "grand_text": "S5G2A (플렉서블 폼/라텍스)\n9M3 (플렉서블 라이트(온라인))\nS5MT4 (플렉서블 스프링)",
+      "prev_text": "",
+      "next_text": "S5G2A (플렉서블 폼/라텍스)",
+      "tab": 1
+    },
+    {
+      "file": "03_291x269_tab1.png",
+      "local_path": "assets/products/플렉서블/03_291x269_tab1.png",
+      "size_kb": 137,
+      "src": "https://iloomproduct.fursys.com/wp-content/uploads/2023/10/image-12.png",
+      "alt": "",
+      "w": 291,
+      "h": 269,
+      "parent_text": "S5MT4 (플렉서블 스프링)",
+      "grand_text": "S5G2A (플렉서블 폼/라텍스)\n9M3 (플렉서블 라이트(온라인))\nS5MT4 (플렉서블 스프링)",
+      "prev_text": "",
+      "next_text": "S5MT4 (플렉서블 스프링)",
+      "tab": 1
+    }
+  ]
+}

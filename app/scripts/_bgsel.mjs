@@ -1,0 +1,16 @@
+import { chromium } from 'playwright';
+import path from 'path'; import { fileURLToPath } from 'url';
+const __d = path.dirname(fileURLToPath(import.meta.url));
+const b = await chromium.launch({ headless: true });
+const p = await (await b.newContext({ viewport: { width: 1600, height: 1000 } })).newPage();
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+await p.evaluate(() => localStorage.clear());
+await p.reload({ waitUntil: 'networkidle' });
+await p.locator('.x-banner').first().waitFor();
+await p.click('#startBlank');
+await p.waitForTimeout(200);
+await p.click('#bgGroup [data-bg="cushino"]');
+await p.evaluate(() => document.fonts.ready);
+await p.waitForTimeout(700);
+await p.screenshot({ path: path.join(__d, 'output', 'p1_4_bg_cushino.png') });
+await b.close(); console.log('bg shot done');

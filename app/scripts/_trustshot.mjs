@@ -1,0 +1,27 @@
+import { chromium } from 'playwright';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..', '..');
+const OUT = path.join(__dirname, 'output');
+const b = await chromium.launch({ headless: true });
+const ctx = await b.newContext({ viewport: { width: 1500, height: 1100 }, deviceScaleFactor: 1.5 });
+const p = await ctx.newPage();
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+await p.evaluate(() => localStorage.clear());
+await p.reload({ waitUntil: 'networkidle' });
+await p.locator('.x-banner').first().waitFor();
+await p.click('#startBlank');
+await p.setInputFiles('#pdfFile', path.join(ROOT, '참고자료', '일룸 프리미엄샵 논현 디에이치 방배 입주 공략의건.pdf'));
+await p.waitForFunction(() => document.querySelector('#caseBadge')?.textContent?.includes('case-c'), { timeout: 15000 }).catch(()=>{});
+await p.evaluate(() => document.fonts.ready);
+await p.waitForTimeout(500);
+await p.evaluate(() => { document.querySelector('#extractReadoutWrap').open = true; });
+await p.waitForTimeout(200);
+await p.locator('.review-panel').screenshot({ path: path.join(OUT, 'trust_sidebar.png') });
+// 원문 보기 팝오버
+await p.click('#bannerRoot .apt-name');
+await p.waitForTimeout(300);
+await p.locator('#editPopover').screenshot({ path: path.join(OUT, 'trust_popover.png') });
+await b.close();
+console.log('shots saved');

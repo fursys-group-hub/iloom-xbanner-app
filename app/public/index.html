@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>일룸 인쇄용 X배너 어플</title>
+  <link rel="stylesheet" href="banner.css" />
+  <link rel="stylesheet" href="editor.css" />
+</head>
+<body class="app-shell">
+
+  <!-- ===== 시작 화면 (오버레이) ===== -->
+  <div id="startScreen" class="start-screen">
+    <div id="startDrop" class="start-card">
+      <h1 class="start-title"><img class="brand-logo" src="/assets/products/iloom-logo.png" alt="일룸" />X배너 어플</h1>
+      <p class="start-sub">품의서 PDF 한 장으로 입주 박람회 X배너를 자동으로 만듭니다</p>
+
+      <div class="start-actions">
+        <button id="startUpload" class="start-btn start-btn--primary">
+          <span class="start-btn-title">품의서 업로드</span>
+          <span class="start-btn-desc">PDF를 올리면 자동으로 채워집니다</span>
+        </button>
+        <button id="startBlank" class="start-btn">
+          <span class="start-btn-title">전부 새로 작성</span>
+          <span class="start-btn-desc">예시(광주데시앙)부터 직접 입력</span>
+        </button>
+        <button id="startResume" class="start-btn start-btn--resume" hidden>
+          <span class="start-btn-title">이어서 편집</span>
+          <span class="start-btn-desc" id="startResumeDesc">마지막 작업 이어서</span>
+        </button>
+      </div>
+
+      <p class="start-hint">PDF를 이 화면에 끌어다 놓아도 됩니다</p>
+      <input id="pdfFile" type="file" accept="application/pdf" hidden />
+      <div id="extractStatus" class="status"></div>
+    </div>
+  </div>
+
+  <!-- ===== 검수 패널 (좌) ===== -->
+  <aside class="sidebar review-panel">
+    <header class="sidebar-header">
+      <h1><img class="brand-logo" src="/assets/products/iloom-logo.png" alt="일룸" />X배너 어플</h1>
+      <p class="subtitle">미리보기에서 고칠 곳을 누르면 그 자리에서 편집돼요</p>
+    </header>
+
+    <!-- 확인이 필요해요 -->
+    <section class="rv-block" data-tour="review">
+      <div class="rv-head">
+        <h2 class="rv-title">확인이 필요해요</h2>
+        <span id="reviewCount" class="rv-count">0</span>
+      </div>
+      <div id="reviewList" class="rv-list"><!-- app.js 가 채움 --></div>
+      <details id="extractReadoutWrap" class="readout-wrap" hidden>
+        <summary class="readout-summary">품의서에서 읽은 값 — 신뢰도 보기</summary>
+        <div id="extractReadout" class="readout"><!-- app.js 가 채움 --></div>
+      </details>
+    </section>
+
+    <!-- 다듬기 (전역 옵션) -->
+    <section class="rv-block" data-tour="polish">
+      <h2 class="rv-title">다듬기</h2>
+      <div class="ed-field">
+        <span class="field-label">문구 톤 (큰 헤드라인)</span>
+        <div id="toneGroup" class="tone-group"><!-- app.js 가 채움 --></div>
+        <p class="panel-hint">톤을 누르면 큰 문구가 그 톤으로 바뀌어요. 금액·세부 문구는 미리보기에서 다시 다듬을 수 있어요.</p>
+      </div>
+      <div class="ed-field">
+        <span class="field-label">하단 배경 사진 (켜면 유의사항이 흰색으로)</span>
+        <div id="bgGroup" class="swatch-grid swatch-grid--bg"><!-- app.js 가 채움: 없음/침실/쿠시노/내 사진 --></div>
+        <input id="bgUpload" type="file" accept="image/*" hidden />
+      </div>
+      <div class="ed-field">
+        <span class="field-label">영역 순서 (드래그로 위아래 바꾸기)</span>
+        <div id="regionOrder" class="region-order"><!-- app.js 가 채움 --></div>
+      </div>
+    </section>
+
+    <!-- 내보내기 -->
+    <section class="rv-block" data-tour="export">
+      <h2 class="rv-title">인쇄용 내보내기</h2>
+      <div id="exportStatus" class="export-status"><!-- app.js: 완료 신호 --></div>
+      <div id="doneSummary" class="done-summary"><!-- app.js: 점검 요약 --></div>
+      <button id="btnPng2" class="btn btn-primary btn-block">PNG 다운로드</button>
+      <button id="btnPdf2" class="btn btn-primary btn-block">PDF 다운로드 (600×1800mm)</button>
+
+      <details class="order-spec-wrap">
+        <summary class="order-summary">인쇄 발주 정보 (선택)</summary>
+        <div class="order-spec">
+          <p class="panel-hint">인쇄업체에 PDF와 함께 보낼 사양입니다. 채운 뒤 복사하거나 파일로 받으세요.</p>
+          <div id="orderAuto" class="order-auto spec-list"><!-- 크기/색상/도련/형식 자동 --></div>
+          <div class="field-row">
+            <label class="field"><span class="field-label">수량</span>
+              <input id="o_qty" type="text" class="field-input" placeholder="예: 2매" /></label>
+            <label class="field"><span class="field-label">납기일</span>
+              <input id="o_due" type="date" class="field-input" /></label>
+          </div>
+          <label class="field"><span class="field-label">재질</span>
+            <select id="o_material" class="field-input">
+              <option>일반 배너 원단</option>
+              <option>PET (고급)</option>
+              <option>방수 배너</option>
+              <option>실사 출력</option>
+            </select>
+          </label>
+          <label class="order-check"><input id="o_stand" type="checkbox" /> <span>거치대(스탠드) 포함</span></label>
+          <div class="field-row">
+            <label class="field"><span class="field-label">담당자</span>
+              <input id="o_manager" type="text" class="field-input" /></label>
+            <label class="field"><span class="field-label">연락처</span>
+              <input id="o_contact" type="text" class="field-input" placeholder="010-0000-0000" /></label>
+          </div>
+          <button id="btnOrderCopy" class="btn btn-primary btn-block">발주서 복사</button>
+          <button id="btnOrderTxt" class="btn btn-ghost btn-block">발주서 .txt 다운로드</button>
+        </div>
+      </details>
+    </section>
+
+    <div class="sidebar-foot">
+      <button id="btnRestart" class="btn-link-text">새 배너 만들기</button>
+      <button id="btnReset" class="btn-link-text">기본값(광주데시앙) 복원</button>
+    </div>
+  </aside>
+
+  <!-- ===== 미리보기 (상시) ===== -->
+  <main class="main">
+    <div class="main-toolbar">
+      <button id="btnHome" class="btn btn-ghost btn-sm">← 처음</button>
+      <button id="btnHelp" class="btn btn-ghost btn-sm" title="사용법 튜토리얼 다시 보기">도움말</button>
+      <div id="caseBadge" class="case-badge" hidden>케이스 A · v8</div>
+      <div id="overflowChip" class="overflow-chip" hidden>내용 넘침 — 글자가 잘릴 수 있어요</div>
+      <div class="toolbar-spacer"></div>
+      <div class="zoom-group">
+        <button class="zoom-btn is-active" data-zoom="0.8">기본</button>
+        <button class="zoom-btn" data-zoom="1">100%</button>
+        <button class="zoom-btn" data-zoom="2">200%</button>
+        <button id="btnGuide" class="zoom-btn" title="안전영역·재단 가이드 표시">인쇄 가이드</button>
+        <button id="btnFull" class="btn btn-ghost btn-sm">전체화면</button>
+      </div>
+      <div class="toolbar-actions">
+        <button id="btnPng" class="btn btn-primary btn-sm">PNG</button>
+        <button id="btnPdf" class="btn btn-primary btn-sm">PDF</button>
+      </div>
+    </div>
+
+    <div class="preview-stage" data-tour="preview">
+      <div class="preview-frame">
+        <div id="bannerRoot"><!-- app.js 가 채움 --></div>
+      </div>
+    </div>
+    <p class="preview-tip" id="previewTip">미리보기에서 고칠 곳을 누르면 그 자리에서 편집할 수 있어요</p>
+  </main>
+
+  <!-- ===== 편집 팝오버 (미리보기 영역 클릭 시) ===== -->
+  <div id="editPopover" class="ed-pop is-hidden" role="dialog" aria-modal="false">
+    <div class="ed-pop-head">
+      <span id="edPopTitle" class="ed-pop-title">편집</span>
+      <button id="btnEditClose" class="ed-pop-x" aria-label="닫기">×</button>
+    </div>
+    <div class="ed-pop-body">
+
+      <!-- 추출 원문 보기 (품의서에서 가져온 내용 + 신뢰도) -->
+      <div id="edPopSource" class="ed-source" hidden></div>
+
+      <!-- 제목·기간 -->
+      <section class="ed-panel" data-panel="header" hidden>
+        <label class="field">
+          <span class="field-label">아파트명</span>
+          <input id="f_aptName" type="text" class="field-input" />
+        </label>
+        <label class="field">
+          <span class="field-label">메인 타이틀</span>
+          <input id="f_mainTitle" type="text" class="field-input" />
+        </label>
+        <label class="field">
+          <span class="field-label">상단 문구 (WELCOME)</span>
+          <input id="f_welcome" type="text" class="field-input" />
+        </label>
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">박람회 시작</span>
+            <input id="f_periodStart" type="date" class="field-input" />
+          </label>
+          <label class="field">
+            <span class="field-label">박람회 종료</span>
+            <input id="f_periodEnd" type="date" class="field-input" />
+          </label>
+        </div>
+      </section>
+
+      <!-- 매장 -->
+      <section class="ed-panel" data-panel="stores" hidden>
+        <div class="field">
+          <span class="field-label">매장 (한 줄에 하나)</span>
+          <textarea id="f_stores" class="field-input field-textarea" rows="3" placeholder="일룸 분당서현&#10;일룸 분당"></textarea>
+        </div>
+      </section>
+
+      <!-- 최대 혜택 문구 -->
+      <section class="ed-panel" data-panel="maxBenefit" hidden>
+        <label class="field">
+          <span class="field-label">윗줄 문구</span>
+          <input id="f_maxBefore" type="text" class="field-input" placeholder="예: 입주박람회 현장에서만 드리는" />
+        </label>
+        <label class="field">
+          <span class="field-label">강조 금액</span>
+          <input id="f_maxAmount" type="text" class="field-input" placeholder="예: 109만원" />
+        </label>
+        <label class="field">
+          <span class="field-label">아랫줄 문구</span>
+          <input id="f_maxAfter" type="text" class="field-input" placeholder="예: 지금 바로 만나 보세요!" />
+        </label>
+      </section>
+
+      <!-- 축하 문구 (케이스 D) -->
+      <section class="ed-panel" data-panel="celebration" hidden>
+        <label class="field">
+          <span class="field-label">윗줄 문구</span>
+          <input id="f_celBefore" type="text" class="field-input" />
+        </label>
+        <label class="field">
+          <span class="field-label">큰 문구</span>
+          <input id="f_celMain" type="text" class="field-input" />
+        </label>
+        <label class="field">
+          <span class="field-label">아랫줄 문구</span>
+          <input id="f_celAfter" type="text" class="field-input" />
+        </label>
+      </section>
+
+      <!-- 혜택표 -->
+      <section class="ed-panel" data-panel="benefitTable" hidden>
+        <label class="field">
+          <span class="field-label">표 제목</span>
+          <input id="f_tableTitle" type="text" class="field-input" />
+        </label>
+        <div id="tableEditor" class="table-editor"><!-- app.js 가 채움 --></div>
+        <div class="te-add-actions">
+          <button id="btnAddRow" class="btn btn-ghost btn-sm">+ 행 추가</button>
+          <button id="btnAddCol" class="btn btn-ghost btn-sm">+ 열 추가</button>
+        </div>
+      </section>
+
+      <!-- 결제 안내 -->
+      <section class="ed-panel" data-panel="payment" hidden>
+        <p class="panel-hint">체크된 포인트만 표시됩니다. 모두 해제하면 결제 영역이 숨겨집니다.</p>
+        <span class="field-label">표시 방식</span>
+        <div id="payModes" class="pay-modes"><!-- app.js 가 채움 --></div>
+        <label class="field">
+          <span class="field-label">결제 안내 제목</span>
+          <input id="f_payTitle" type="text" class="field-input" placeholder="예: 3가지 포인트 中 택 1 적립" />
+        </label>
+        <span class="field-label">표시할 포인트</span>
+        <div id="payPoints" class="pay-points"><!-- app.js 가 채움 --></div>
+      </section>
+
+      <!-- 유의사항 -->
+      <section class="ed-panel" data-panel="notices" hidden>
+        <div class="field">
+          <span class="field-label">유의사항 (한 줄에 하나)</span>
+          <textarea id="f_notices" class="field-input field-textarea" rows="7"></textarea>
+        </div>
+      </section>
+
+      <!-- 특별 프로모션 (케이스 B) -->
+      <section class="ed-panel" data-panel="promo" hidden>
+        <div id="promoEditor"><!-- app.js 가 채움 --></div>
+      </section>
+
+      <!-- 카드 (제품/추가혜택/후기/박람회) — app.js 가 종류별로 채움 -->
+      <section class="ed-panel" data-panel="card" hidden>
+        <div id="cardPanelBody"></div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ===== 제품 사진 고르기 오버레이 ===== -->
+  <div id="imgPicker" class="img-picker is-hidden" role="dialog" aria-modal="true">
+    <div class="img-picker-card">
+      <div class="img-picker-head">
+        <span>제품 사진 고르기</span>
+        <button id="imgPickerClose" class="ed-pop-x" aria-label="닫기">×</button>
+      </div>
+      <div id="imgPickerBody" class="img-picker-body"><!-- app.js 가 채움 --></div>
+      <input id="prodUpload" type="file" accept="image/*" hidden />
+    </div>
+  </div>
+
+  <!-- ===== 전체화면 미리보기 (검수용) ===== -->
+  <div id="zoomOverlay" class="zoom-overlay is-hidden">
+    <div class="zoom-overlay-bar">
+      <span>전체화면 미리보기 — 화면 전체로 검수하세요</span>
+      <button id="btnFullClose" class="btn btn-ghost btn-sm">닫기 (Esc)</button>
+    </div>
+    <div class="zoom-overlay-stage">
+      <div id="zoomOverlayBanner" class="zoom-overlay-banner"><!-- app.js 가 채움 --></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>일룸 A4 시안 v2 — 도안 우미린 트리쉐이드 (위→아래 단일 컬럼)</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    /* ===========================================
+       A4 v2: 도안 우미린 트리쉐이드 (대전)
+       - v1(2단 그리드) 대비: 단일 컬럼 위→아래 배치
+       - 모든 영역 전체폭 사용 → 폰트 크게, 빈 공간 없게
+       =========================================== */
+
+    @page { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #DDD;
+      font-family: 'Pretendard', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .a4-sheet {
+      width: 794px;
+      height: 1123px;
+      background:
+        linear-gradient(to bottom,
+          rgba(255, 245, 238, 1) 0%,
+          rgba(255, 245, 238, 1) 50%,
+          rgba(255, 245, 238, 0.85) 65%,
+          rgba(255, 245, 238, 0.55) 82%,
+          rgba(255, 245, 238, 0.25) 100%),
+        url('../assets/full%20bakground/%EC%B9%A8%EC%8B%A4%20%EB%B0%B0%EA%B2%BD.jpg') center bottom / cover no-repeat,
+        #FFF5EE;
+      color: #2A2520;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      padding: 53px 60px 45px;
+    }
+
+    /* ===== 1. 헤더 ===== */
+
+    .welcome {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      color: #999;
+      text-align: center;
+      margin-bottom: 10px;
+      padding-left: 0.4em;
+    }
+
+    .apt-name {
+      font-size: 45px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #2A2520;
+      letter-spacing: -0.05em;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .main-title {
+      font-size: 50px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #E55A3D;
+      letter-spacing: -0.05em;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .period {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2A2520;
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* ===== 2. 매장 박스 ===== */
+
+    .store-box {
+      margin: 0 auto 22px;
+      align-self: center;
+      text-align: center;
+      padding: 18px 48px;
+      border-top: 1.5px solid #2A2520;
+      border-bottom: 1.5px solid #2A2520;
+    }
+
+    .store-name {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.45;
+      color: #2A2520;
+      letter-spacing: -0.04em;
+    }
+
+    .store-divider {
+      display: inline-block;
+      margin: 0 8px;
+      color: #C7BFB0;
+      font-weight: 400;
+    }
+
+    /* ===== 3. max-benefit ===== */
+
+    .max-benefit {
+      margin: 0 auto 22px;
+      align-self: center;
+      text-align: center;
+    }
+
+    .max-benefit-before {
+      font-size: 19px;
+      font-weight: 600;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+
+    .max-benefit-main {
+      font-size: 23px;
+      font-weight: 800;
+      color: #2A2520;
+      letter-spacing: -0.045em;
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+
+    .max-benefit-main strong {
+      color: #E55A3D;
+      font-weight: 900;
+    }
+
+    .max-benefit-after {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+    }
+
+    /* ===== 4. 혜택표 ===== */
+
+    .table-wrapper {
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      margin-bottom: 18px;
+    }
+
+    .table-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      padding: 12px 0;
+      letter-spacing: -0.025em;
+    }
+
+    table.benefit-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table.benefit-table th {
+      background: #FFF5EE;
+      color: #555;
+      font-weight: 700;
+      padding: 10px 4px;
+      text-align: center;
+      line-height: 1.3;
+      font-size: 13px;
+      border-bottom: 1px solid #EEE;
+    }
+
+    table.benefit-table th:last-child {
+      background: #E55A3D;
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    table.benefit-table tbody tr {
+      border-bottom: 1px solid #F2EFE9;
+    }
+    table.benefit-table tbody tr:last-child { border-bottom: none; }
+
+    table.benefit-table td {
+      padding: 9px 4px;
+      text-align: center;
+      color: #333;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    table.benefit-table td.amount {
+      font-weight: 800;
+      color: #2A2520;
+      background: #FAFAF8;
+    }
+
+    table.benefit-table td.total {
+      font-weight: 900;
+      color: #E55A3D;
+      background: #FFEDE5;
+      font-size: 18px;
+    }
+
+    table.benefit-table td.dash {
+      color: #CCC;
+      font-weight: 500;
+    }
+
+    /* ===== 5. 추가 혜택 섹션 ===== */
+
+    .extra-section-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      padding: 11px 0;
+      letter-spacing: -0.025em;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .extra-period {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 3px 12px 2px;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      font-feature-settings: "tnum";
+    }
+
+    .product-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .product-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .product-card-image {
+      width: 100%;
+      height: 115px;
+      background: #EFE8DC;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-card-content {
+      flex: 1;
+      text-align: center;
+      padding: 14px 12px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .product-card-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: #2A2520;
+      line-height: 1.3;
+      margin-bottom: 5px;
+      word-break: keep-all;
+    }
+
+    .product-card-condition {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #555;
+      line-height: 1.4;
+      margin-bottom: 8px;
+      word-break: keep-all;
+    }
+
+    .product-card-amount {
+      display: inline-block;
+      background: #FFEDE5;
+      border-radius: 7px;
+      padding: 6px 12px 5px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #E55A3D;
+      line-height: 1.1;
+      margin-top: auto;
+    }
+    .product-card-amount strong {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-right: 3px;
+      font-feature-settings: "tnum";
+    }
+
+    .product-card-units {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      margin-top: auto;
+      flex-wrap: wrap;
+    }
+    .unit-chip {
+      background: #FFEDE5;
+      color: #E55A3D;
+      border-radius: 6px;
+      padding: 4px 7px;
+      font-size: 11.5px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      font-feature-settings: "tnum";
+    }
+    .unit-chip span { font-size: 8.5px; font-weight: 700; margin-left: 1px; }
+
+    /* ===== 6. 유의사항 + 로고 ===== */
+
+    .notices {
+      flex: 1;
+      font-size: 9px;
+      color: #FFFFFF;
+      line-height: 1.55;
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .notices p {
+      margin-bottom: 1px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+    .notices .nowrap {
+      white-space: nowrap;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .footer img {
+      height: 26px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    @media print {
+      html, body { background: #FFFFFF; padding: 0; margin: 0; }
+      body { padding: 0; }
+      .a4-sheet { box-shadow: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="a4-sheet">
+
+    <!-- ===== 1. 헤더 ===== -->
+    <div class="apt-name">도안 우미린 트리쉐이드</div>
+    <div class="main-title">입주 특별 프로모션</div>
+    <div class="period">2026.05.22. ~ 2026.05.24.</div>
+
+    <!-- ===== 2. 매장 박스 ===== -->
+    <div class="store-box">
+      <div class="store-name">
+        일룸 프리미엄샵 대전둔산<span class="store-divider">|</span>일룸 NC대전유성점
+      </div>
+    </div>
+
+    <!-- ===== 3. 혜택표 ===== -->
+    <div class="table-wrapper">
+      <div class="table-title">구매 금액대별 혜택</div>
+      <table class="benefit-table">
+        <thead>
+          <tr>
+            <th>구매 금액</th>
+            <th>상시 혜택</th>
+            <th>현장 혜택</th>
+            <th>총 혜택</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="amount">100만원~</td>
+            <td class="dash">—</td>
+            <td>+5만원</td>
+            <td class="total">5만원</td>
+          </tr>
+          <tr>
+            <td class="amount">200만원~</td>
+            <td class="dash">—</td>
+            <td>+10만원</td>
+            <td class="total">10만원</td>
+          </tr>
+          <tr>
+            <td class="amount">300만원~</td>
+            <td>15만원</td>
+            <td>+5만원</td>
+            <td class="total">20만원</td>
+          </tr>
+          <tr>
+            <td class="amount">500만원~</td>
+            <td>30만원</td>
+            <td>+10만원</td>
+            <td class="total">40만원</td>
+          </tr>
+          <tr>
+            <td class="amount">700만원~</td>
+            <td>40만원</td>
+            <td>+20만원</td>
+            <td class="total">60만원</td>
+          </tr>
+          <tr>
+            <td class="amount">1,000만원~</td>
+            <td>80만원</td>
+            <td>+20만원</td>
+            <td class="total">100만원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== 5. 추가 혜택 카드 3종 (이미지 위 / 문구 아래) ===== -->
+    <div class="extra-section-title">도안 우미린 트리쉐이드 추가 특별 혜택<span class="extra-period">05. 22. ~ 06. 30.</span></div>
+
+    <div class="product-cards-grid">
+      <div class="product-card">
+        <div class="product-card-image">
+          <img src="../assets/products/%ED%95%84%EC%A6%88/01_%ED%95%84%EC%A6%88_%EC%8B%9D%ED%83%81.jpg" alt="필즈 식탁">
+        </div>
+        <div class="product-card-content">
+          <div class="product-card-name">식탁 3종<br>(토스카노·블릭·필즈) 구매 시</div>
+          <div class="product-card-condition">3종 중 1종 구매 시 적용</div>
+          <div class="product-card-amount">네이버 포인트 <strong>5만원</strong> 증정</div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-card-image">
+          <img src="../assets/products/%EC%BB%AC%EB%A0%89%ED%8A%B8/04_481x481_tab1.jpg" alt="컬렉트 옷장">
+        </div>
+        <div class="product-card-content">
+          <div class="product-card-name">옷장 80만원 이상 구매 시</div>
+          <div class="product-card-condition">옷장 단독 구매 금액 기준</div>
+          <div class="product-card-amount">네이버 포인트 <strong>5만원</strong> 증정</div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-card-image">
+          <img src="../assets/products/%EA%B3%B5%EB%8F%99%EA%B5%AC%EB%A7%A4/01_%EB%8C%80%EB%8B%A8%EC%A7%80_%EC%95%84%ED%8C%8C%ED%8A%B8.jpg" alt="대단지 아파트 공동 구매">
+        </div>
+        <div class="product-card-content">
+          <div class="product-card-name">공동 구매 프로모션</div>
+          <div class="product-card-condition">세대수 구간별 혜택 지급<br>(최대 <strong style="color:#E55A3D;font-weight:900;">10만원</strong>)</div>
+          <div class="product-card-units">
+            <div class="unit-chip">20<span>세대</span></div>
+            <div class="unit-chip">40<span>세대</span></div>
+            <div class="unit-chip">80<span>세대</span></div>
+            <div class="unit-chip">100<span>세대</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 6. 유의사항 + 로고 ===== -->
+    <div class="notices">
+      <p>· 본 프로모션은 통합회원 한정 현장 프로모션이며, 기간 이후 주문건 및 타 프로모션과 중복 적용 불가합니다.</p>
+      <p>· 포인트는 마지막 납기 후 익월 말 지급되며, <span class="nowrap">포인트 유효기간 이후 재발송 불가</span>.</p>
+      <p>· 추후 품목 변경은 <span class="nowrap">일룸 프리미엄샵 대전둔산</span>, <span class="nowrap">일룸 NC대전유성점</span>에서만 가능합니다.</p>
+    </div>
+
+    <div class="footer">
+      <img src="../assets/products/iloom-logo.png" alt="iloom">
+    </div>
+
+  </div>
+</body>
+</html>

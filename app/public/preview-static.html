@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>X배너 정적 프리뷰 (Step 2 검증) — 광주 더파크 비스타 데시앙</title>
+  <link rel="stylesheet" href="banner.css" />
+  <style>
+    /* 미리보기 페이지 자체 배경 — 배너 자체 스타일은 건드리지 않음 */
+    html, body { margin: 0; padding: 0; background: #DDD; }
+    body { display: flex; justify-content: center; padding: 40px 0; font-family: 'Pretendard', sans-serif; -webkit-font-smoothing: antialiased; }
+  </style>
+</head>
+<body>
+  <div class="x-banner">
+
+    <div class="welcome">WELCOME HOME</div>
+    <div class="apt-name">광주 더파크 비스타 데시앙</div>
+    <div class="main-title">입주 특별 프로모션</div>
+    <div class="period">2026.03.07. ~ 2026.03.08.</div>
+
+    <div class="store-box">
+      <div class="store-name">
+        일룸 분당서현<br />
+        일룸 분당
+      </div>
+    </div>
+
+    <div class="max-benefit">
+      <div class="max-benefit-before">입주박람회 현장에서만 드리는</div>
+      <div class="max-benefit-main">최대 <strong>109만원</strong> 특별 혜택</div>
+      <div class="max-benefit-after">지금 바로 만나 보세요!</div>
+    </div>
+
+    <div class="table-wrapper">
+      <div class="table-title">구매 금액대별 혜택</div>
+      <table class="benefit-table">
+        <thead>
+          <tr>
+            <th>구매 금액</th>
+            <th>기존 혜택<br />(상시)</th>
+            <th>현장 계약<br />혜택</th>
+            <th>LG 연계<br />혜택</th>
+            <th>총 혜택</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="amount">200만원~</td>
+            <td class="dash">—</td>
+            <td>10만원</td>
+            <td class="dash">—</td>
+            <td class="total">10만원</td>
+          </tr>
+          <tr>
+            <td class="amount">300만원~</td>
+            <td>15만원</td>
+            <td>5만원</td>
+            <td>3만원</td>
+            <td class="total">23만원</td>
+          </tr>
+          <tr>
+            <td class="amount">500만원~</td>
+            <td>30만원</td>
+            <td>10만원</td>
+            <td>6만원</td>
+            <td class="total">46만원</td>
+          </tr>
+          <tr>
+            <td class="amount">700만원~</td>
+            <td>40만원</td>
+            <td>20만원</td>
+            <td>9만원</td>
+            <td class="total">69만원</td>
+          </tr>
+          <tr>
+            <td class="amount">1,000만원~</td>
+            <td>80만원</td>
+            <td>20만원</td>
+            <td>9만원</td>
+            <td class="total">109만원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="payment">
+      <div class="payment-title">프로모션 혜택 지급 안내</div>
+      <div class="payment-subtitle">3가지 포인트 중 나에게 맞는 적립 혜택으로 선택하세요!</div>
+      <div class="payment-brands">
+
+        <div class="point-card npay-card">
+          <div class="card-label">POINT 01</div>
+          <div class="card-logo"><img src="/assets/point%20logo/n%20pay.png" alt="N pay" /></div>
+          <div class="card-desc">네이버<br />포인트 적립</div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="12 5 12 19"></polyline><polyline points="5 12 12 19 19 12"></polyline></svg>
+          </div>
+        </div>
+
+        <div class="point-card lpoint-card">
+          <div class="card-label">POINT 02</div>
+          <div class="card-logo"><img src="/assets/point%20logo/Lpoint.png" alt="L.POINT" /></div>
+          <div class="card-desc">롯데<br />L.POINT 적립</div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="12 5 12 19"></polyline><polyline points="5 12 12 19 19 12"></polyline></svg>
+          </div>
+        </div>
+
+        <div class="point-card ssgpay-card">
+          <div class="card-label">POINT 03</div>
+          <div class="card-logo"><img src="/assets/point%20logo/ssgpay.svg" alt="SSGPAY" /></div>
+          <div class="card-desc">SSG<br />페이머니 적립</div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="12 5 12 19"></polyline><polyline points="5 12 12 19 19 12"></polyline></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="notices">
+      <p>· 본 프로모션은 통합회원 한정 프로모션입니다.</p>
+      <p>· 혜택은 기간 이후 주문건에는 적용이 불가합니다.</p>
+      <p>· 타 프로모션과 중복 불가합니다. (LG전자 제휴 혜택 중복 가능)</p>
+      <p>· 포인트는 마지막 납기 후 익월말 지급됩니다. (포인트 유효기간 이후 재발송 불가)</p>
+      <p>· 박람회 현장 계약 시 계약금 10만원 이상 결제 필수.</p>
+      <p>· 추후 품목 변경은 일룸 분당서현, 일룸 분당에서만 가능합니다.</p>
+    </div>
+
+    <div class="footer">
+      <img src="/assets/products/iloom-logo.png" alt="iloom" />
+    </div>
+
+  </div>
+</body>
+</html>

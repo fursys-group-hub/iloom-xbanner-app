@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>일룸 모던 카드형 X배너</title>
+<style>
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    body { margin: 0; font-family: 'Pretendard', sans-serif; background: #eee; color: #2b2826; }
+    .banner { width: 600px; height: 1800px; margin: 0 auto; background: linear-gradient(180deg, #fdfaf6 0%, #f4eee6 100%); padding: 70px 40px; box-sizing: border-box; overflow: hidden; text-align: center; }
+    
+    .top-sec { margin-bottom: 50px; }
+    .welcome { color: #d32027; font-size: 26px; font-weight: 800; letter-spacing: 5px; margin-bottom: 20px; }
+    .title { font-size: 52px; font-weight: 900; line-height: 1.25; margin-bottom: 20px; }
+    .loc-highlight { display: inline-block; background: #2b2826; color: white; padding: 15px 40px; border-radius: 50px; font-size: 30px; font-weight: bold; margin-bottom: 20px; }
+    
+    .card-table-title { font-size: 28px; font-weight: 800; text-align: left; margin: 40px 0 15px 10px; color: #d32027; }
+    
+    /* 카드형 테이블 */
+    .table-container { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); margin-bottom: 50px; }
+    .t-head { display: flex; font-size: 18px; font-weight: 700; color: #888; padding: 15px 10px; border-bottom: 2px solid #eee; margin-bottom: 10px; }
+    .t-row { display: flex; align-items: center; padding: 20px 10px; border-bottom: 1px solid #f5f5f5; }
+    .t-row:last-child { border-bottom: none; background: #fdf5f5; border-radius: 12px; } /* 마지막 줄 강조 */
+    
+    .c-amt { width: 30%; font-size: 26px; font-weight: 800; text-align: left; }
+    .c-base { width: 25%; font-size: 22px; font-weight: 600; color: #666; }
+    .c-plus { width: 20%; font-size: 20px; font-weight: 500; color: #888; }
+    .c-total { width: 25%; font-size: 30px; font-weight: 900; color: #d32027; text-align: right; }
+    
+    .bottom-info { background: white; border-radius: 20px; padding: 40px 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); margin-bottom: 60px; }
+    .pay-title { font-size: 24px; font-weight: 800; margin-bottom: 20px; }
+    .pay-logos { font-size: 28px; font-weight: 900; word-spacing: 15px; }
+    
+    .notice { font-size: 16px; color: #777; line-height: 1.5; text-align: left; margin: 0 20px; word-break: keep-all; }
+    .logo { color: #d32027; font-size: 50px; font-weight: 900; margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="banner">
+    <div class="top-sec">
+        <div class="welcome">WELCOME HOME</div>
+        <div class="title">광주 더파크 비스타 데시앙<br>입주 특별 프로모션</div>
+        <div class="loc-highlight">일룸 분당서현 · 분당</div>
+    </div>
+
+    <div class="card-table-title">구매 금액대별 혜택</div>
+    
+    <div class="table-container">
+        <div class="t-head">
+            <div style="width: 30%; text-align:left;">구매 금액</div>
+            <div style="width: 25%;">기본 혜택</div>
+            <div style="width: 20%;">LG연계</div>
+            <div style="width: 25%; text-align:right;">총 혜택</div>
+        </div>
+        <div class="t-row"><div class="c-amt">200만원~</div><div class="c-base">10만</div><div class="c-plus">-</div><div class="c-total">10만</div></div>
+        <div class="t-row"><div class="c-amt">300만원~</div><div class="c-base">20만</div><div class="c-plus">3만</div><div class="c-total">23만</div></div>
+        <div class="t-row"><div class="c-amt">500만원~</div><div class="c-base">40만</div><div class="c-plus">6만</div><div class="c-total">46만</div></div>
+        <div class="t-row"><div class="c-amt">700만원~</div><div class="c-base">60만</div><div class="c-plus">9만</div><div class="c-total">69만</div></div>
+        <div class="t-row"><div class="c-amt">1,000만원~</div><div class="c-base">100만</div><div class="c-plus">9만</div><div class="c-total">109만</div></div>
+    </div>
+
+    <div class="bottom-info">
+        <div class="pay-title">3가지 포인트 중 적립 혜택으로 선택!</div>
+        <div class="pay-logos"><span style="color:#03c75a;">N-pay</span> <span style="color:#00a4e3;">L.POINT</span> SSGPAY</div>
+    </div>
+
+    <div class="notice">
+        * 본 프로모션은 통합회원 한정이며 타 프로모션 중복 불가합니다.<br>
+        * 포인트는 제품 배송완료 기준 익월말경 지급 예정입니다.
+    </div>
+
+    <div class="logo">iloom</div>
+</div>
+</body>
+</html>

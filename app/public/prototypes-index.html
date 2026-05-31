@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>일룸 X배너 어플 — 시제품 비교</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="editor.css" />
+</head>
+<body>
+  <header class="page-header">
+    <h1>시제품 비교 모드</h1>
+    <p class="subtitle">정적 시제품 7종 + 동적/정적 프리뷰 검증</p>
+    <p class="subtitle"><a href="/" style="color:#0A84FF">← 어플 본체로 돌아가기</a></p>
+  </header>
+
+  <section class="card-grid">
+    <h2>🎯 어플 본체 검증용 프리뷰</h2>
+    <div class="prototype-grid">
+      <a class="prototype-card prototype-card--active" href="preview-static.html" target="_blank">
+        <div class="badge badge--green">Step 2~3 ✓</div>
+        <div class="title">정적 프리뷰 (banner.css 외부 추출본)</div>
+        <div class="desc">시제품 v8과 픽셀 동일 (269KB / 1200×3600)</div>
+      </a>
+      <a class="prototype-card prototype-card--active" href="preview-dynamic.html" target="_blank">
+        <div class="badge badge--green">Step 4 ✓</div>
+        <div class="title">동적 프리뷰 (데이터 → HTML 함수)</div>
+        <div class="desc">samples/case-a-default.json + renderBanner() (269KB / 1200×3600)</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="card-grid">
+    <h2>📐 시제품 7종 (정적 HTML)</h2>
+    <p class="muted">v8 banner.css 표준이 다른 케이스에도 어떻게 적용되는지 비교용</p>
+    <div class="prototype-grid">
+      <a class="prototype-card" href="prototypes/v08_광주데시앙.html" target="_blank">
+        <div class="badge badge--coral">케이스 A</div>
+        <div class="title">v8 · 광주 더파크 비스타 데시앙</div>
+        <div class="desc">5컬럼 · card_1 결제 안내 · 골든 표준</div>
+      </a>
+      <a class="prototype-card" href="prototypes/v09_한화포레나.html" target="_blank">
+        <div class="badge badge--coral">케이스 B</div>
+        <div class="title">v9 · 한화포레나 대전월평공원</div>
+        <div class="desc">4컬럼 · 특별 프로모션 2x2 · 기간 강조</div>
+      </a>
+      <a class="prototype-card" href="prototypes/v10_디에이치방배.html" target="_blank">
+        <div class="badge badge--coral">케이스 C</div>
+        <div class="title">v10 · 디에이치 방배</div>
+        <div class="desc">제품 카드 3종 · 침실 배경</div>
+      </a>
+      <a class="prototype-card" href="prototypes/v11_잠실래미안_잠실르엘.html" target="_blank">
+        <div class="badge badge--coral">케이스 D</div>
+        <div class="title">v11 · 잠실래미안 + 잠실르엘</div>
+        <div class="desc">2아파트 · 6컬럼 · 후기 이벤트</div>
+      </a>
+      <a class="prototype-card" href="prototypes/v12_창원롯데캐슬.html" target="_blank">
+        <div class="badge badge--coral">케이스 E</div>
+        <div class="title">v12 · 창원 롯데캐슬</div>
+        <div class="desc">박람회 2회 · 박람회 카드 표준</div>
+      </a>
+      <a class="prototype-card" href="prototypes/v13_교대역모아엘가.html" target="_blank">
+        <div class="badge badge--coral">케이스 C 변형</div>
+        <div class="title">v13 · 교대역 모아엘가</div>
+        <div class="desc">제품 카드 2종 · card_2 결제 안내</div>
+      </a>
+      <a class="prototype-card" href="prototypes/v14_도안우미린트리쉐이드.html" target="_blank">
+        <div class="badge badge--coral">케이스 G</div>
+        <div class="title">v14 · 도안 우미린 트리쉐이드</div>
+        <div class="desc">결제 카드 미운용 · 공동구매 칩</div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <p>각 시제품은 자체 인라인 CSS — v8 banner.css 와 무관</p>
+  </footer>
+</body>
+</html>

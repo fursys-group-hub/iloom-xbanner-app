@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>일룸 배너 스튜디오</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── 왼쪽: 에디터 패널 ── -->
+    <aside class="editor-panel">
+
+      <div class="editor-header">
+        <div class="editor-header-text">
+          <div class="editor-logo">iloom Studio</div>
+          <div class="editor-subtitle">X BANNER EDITOR · 600 × 1800PX</div>
+        </div>
+      </div>
+
+      <!-- 헤더 정보 -->
+      <section class="editor-section">
+        <h2 class="section-label">헤더 정보</h2>
+        <div class="field-group">
+          <label class="field-label">아파트 · 단지명</label>
+          <input class="field-input" id="aptName" type="text" placeholder="예) 광주 더파크 비스타 데시앙">
+        </div>
+        <div class="field-group">
+          <label class="field-label">프로모션 제목</label>
+          <input class="field-input" id="mainTitle" type="text" placeholder="예) 입주 특별 프로모션">
+        </div>
+        <div class="field-group">
+          <label class="field-label">기간</label>
+          <input class="field-input" id="period" type="text" placeholder="예) 03.07 - 03.08">
+        </div>
+      </section>
+
+      <!-- 매장 정보 -->
+      <section class="editor-section">
+        <h2 class="section-label">매장 정보</h2>
+        <div class="field-group">
+          <label class="field-label">매장명 1</label>
+          <input class="field-input" id="locationName1" type="text" placeholder="예) 일룸 분당서현">
+        </div>
+        <div class="field-group">
+          <label class="field-label">매장명 2</label>
+          <input class="field-input" id="locationName2" type="text" placeholder="예) 일룸 분당">
+        </div>
+      </section>
+
+      <!-- 혜택 소개 -->
+      <section class="editor-section">
+        <h2 class="section-label">혜택 소개</h2>
+        <div class="field-group">
+          <label class="field-label">위 문구</label>
+          <textarea class="field-input field-textarea" id="descBefore" style="min-height:40px"
+            placeholder="예) 입주박람회 현장에서만 드리는"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">강조 텍스트 (굵게)</label>
+          <input class="field-input" id="descHighlight" type="text" placeholder="예) 최대 109만원 특별 혜택">
+        </div>
+        <div class="field-group">
+          <label class="field-label">아래 문구</label>
+          <textarea class="field-input field-textarea" id="descAfter" style="min-height:40px"
+            placeholder="예) 지금 바로 만나 보세요!"></textarea>
+        </div>
+      </section>
+
+      <!-- 혜택 표 -->
+      <section class="editor-section">
+        <h2 class="section-label">
+          구매금액대별 혜택
+          <span style="display:flex;gap:6px;">
+            <button class="add-row-btn" id="addColBtn">+ 열</button>
+            <button class="add-row-btn" id="addRowBtn">+ 행</button>
+          </span>
+        </h2>
+        <div class="tbl-editor">
+          <div class="tbl-head" id="tableHead">
+            <!-- JS 렌더링 -->
+          </div>
+          <div id="tableRows">
+            <!-- JS 렌더링 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 결제 안내 -->
+      <section class="editor-section">
+        <h2 class="section-label">결제 수단 안내</h2>
+        <div class="field-group">
+          <label class="field-label">안내 문구</label>
+          <textarea class="field-input field-textarea" id="paySubtitle"
+            placeholder="예) 3가지 포인트 중 나에게 맞는&#10;적립 혜택으로 선택하세요!"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">부연 설명</label>
+          <textarea class="field-input field-textarea" id="payMicroText"
+            placeholder="네이버 포인트 / L.POINT / SSG 머니 중 선택이 가능합니다.&#10;포인트는 제품 배송완료 기준으로 익월말경 지급 예정입니다."></textarea>
+        </div>
+      </section>
+
+      <!-- 유의사항 -->
+      <section class="editor-section">
+        <h2 class="section-label">유의사항</h2>
+        <div class="field-group">
+          <textarea class="field-input field-textarea" id="notice"
+            style="min-height:80px"
+            placeholder="유의사항을 입력하세요. 줄바꿈은 Enter로 입력"></textarea>
+        </div>
+      </section>
+
+      <!-- 내보내기 -->
+      <section class="editor-section export-section">
+        <button class="export-btn export-png" id="exportPng">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          PNG 고화질 다운로드
+        </button>
+        <button class="export-btn export-pdf" id="exportPdf">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+          </svg>
+          PDF 인쇄용 다운로드
+        </button>
+      </section>
+
+    </aside>
+
+    <!-- ── 오른쪽: 미리보기 ── -->
+    <main class="preview-area">
+      <div class="preview-header">
+        <span class="preview-label">실시간 미리보기</span>
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="zoomOut">−</button>
+          <span class="zoom-indicator" id="zoomIndicator">—</span>
+          <button class="zoom-btn" id="zoomIn">+</button>
+          <button class="zoom-btn zoom-fit" id="zoomFit">맞춤</button>
+        </div>
+        <span class="preview-size">600 × 1800 px</span>
+      </div>
+      <div class="preview-scroll">
+        <div class="preview-wrapper">
+          <div class="banner-container" id="bannerContainer">
+            <!-- JS 렌더링 -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div><!-- .app -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="templates.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

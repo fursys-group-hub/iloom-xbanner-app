@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>일룸 단톡방 QR A4 v1 — 도안 우미린 트리쉐이드</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    /* ===========================================
+       단톡방 QR A4 v1: 도안 우미린 트리쉐이드 (대전)
+       - 사이즈: A4 세로 210 × 297mm (디스플레이 794 × 1123px @ 96dpi)
+       - 컬러: X배너 v8/v14와 동일 (코랄·크림)
+       - 동반 출력물: 도안우미린트리쉐이드_X배너_v14
+       - QR: 카카오톡 오픈채팅 https://open.kakao.com/o/gcsEGTui
+              → scripts/generate-qr.mjs로 생성된 진짜 스캔 가능한 SVG 사용
+
+       ★ 단톡방 시안 전용 규칙 (사용자 확정 2026-05-15):
+         · WELCOME HOME 라벨 미사용
+         · OPEN 큰 글씨 미사용
+         · 박람회 기간 미사용
+         · 유의사항 안내문 미사용
+         · 아파트명(45px·700) + 채널명(50px·800 코랄, 배경 없음) 두 줄로
+         · iloom 로고는 페이지 하단에 자연 정렬 (footer flex:1)
+       =========================================== */
+
+    @page { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #DDD;
+      font-family: 'Pretendard', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .a4-sheet {
+      width: 794px;
+      height: 1123px;
+      background: #FFF5EE;
+      color: #2A2520;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      padding: 70px 60px 50px;
+    }
+
+    /* ===== 1. 헤더 — 핵심 정보 최대 강조 ===== */
+
+    .header {
+      text-align: center;
+    }
+
+    .apt-name {
+      font-size: 45px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #2A2520;
+      letter-spacing: -0.05em;
+      margin-bottom: 10px;
+    }
+
+    .channel-subtitle {
+      display: inline-block;
+      font-size: 50px;
+      font-weight: 800;
+      color: #E55A3D;
+      letter-spacing: -0.05em;
+      line-height: 1.1;
+    }
+
+    /* ===== 2. QR 코드 ===== */
+
+    .qr-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .qr-box {
+      width: 250px;
+      height: 250px;
+      background: #FFFFFF;
+      border: 5px solid #E55A3D;
+      border-radius: 14px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 22px rgba(229, 90, 61, 0.18);
+      margin-bottom: 14px;
+    }
+
+    .qr-box img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .qr-label {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2A2520;
+      letter-spacing: -0.02em;
+    }
+
+    .qr-label-hint {
+      font-size: 14px;
+      font-weight: 500;
+      color: #888;
+      letter-spacing: -0.01em;
+      margin-top: 6px;
+    }
+
+    /* ===== 3. 혜택 박스 ===== */
+
+    .benefit-section {
+      background: #FFFFFF;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    .benefit-header {
+      background: #E55A3D;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .benefit-body {
+      display: flex;
+      padding: 20px 16px;
+    }
+
+    .benefit-item {
+      flex: 1;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .benefit-item + .benefit-item {
+      border-left: 1px solid #F2EFE9;
+    }
+
+    .benefit-label {
+      display: inline-block;
+      background: #FFEDE5;
+      color: #E55A3D;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      margin-bottom: 14px;
+    }
+
+    .benefit-when {
+      font-size: 19px;
+      font-weight: 500;
+      color: #2A2520;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .benefit-main {
+      font-size: 24px;
+      font-weight: 800;
+      color: #2A2520;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .benefit-main strong {
+      color: #E55A3D;
+    }
+
+    /* ===== 4. 참여 방법 ===== */
+
+    .howto-section {
+      background: #FFFFFF;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .howto-header {
+      background: #E55A3D;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .howto-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      gap: 22px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      min-width: 110px;
+    }
+
+    .step-icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: #FFEDE5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-label {
+      font-size: 17px;
+      font-weight: 700;
+      color: #2A2520;
+      letter-spacing: -0.02em;
+    }
+
+    .step-arrow {
+      color: #E55A3D;
+      font-size: 28px;
+      font-weight: 700;
+      transform: translateY(-6px);
+    }
+
+    /* ===== 5. 로고 (하단 가운데, mix-blend-mode로 흰 배경 자연 제거) ===== */
+
+    .footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .footer img {
+      height: 28px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="a4-sheet">
+
+    <!-- ===== 1. 헤더 (핵심 정보 최대 강조) ===== -->
+    <div class="header">
+      <div class="apt-name">도안 우미린 트리쉐이드</div>
+      <div class="channel-subtitle">일룸 전용 입주민 단톡방</div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- ===== 2. QR 코드 (카카오톡 오픈채팅 https://open.kakao.com/o/gcsEGTui) ===== -->
+    <div class="qr-section">
+      <div class="qr-box">
+        <img src="../assets/qr/도안우미린트리쉐이드_단톡방.svg" alt="단톡방 참여 QR" />
+      </div>
+      <div class="qr-label">단톡방 참여 QR</div>
+      <div class="qr-label-hint">스마트폰 카메라로 스캔하면 단톡방에 입장됩니다</div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- ===== 3. 혜택 박스 ===== -->
+    <div class="benefit-section">
+      <div class="benefit-header">일룸 전용 단톡방 참여 혜택</div>
+      <div class="benefit-body">
+        <div class="benefit-item">
+          <div class="benefit-main">공동구매 세대수별 <strong>최대 10만원 혜택 지급!</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 4. 참여 방법 ===== -->
+    <div class="howto-section">
+      <div class="howto-header">참여 방법</div>
+      <div class="howto-body">
+        <div class="step">
+          <div class="step-icon">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="7" height="7" stroke="#E55A3D" stroke-width="1.8" fill="none"/>
+              <rect x="14" y="3" width="7" height="7" stroke="#E55A3D" stroke-width="1.8" fill="none"/>
+              <rect x="3" y="14" width="7" height="7" stroke="#E55A3D" stroke-width="1.8" fill="none"/>
+              <rect x="5.5" y="5.5" width="2" height="2" fill="#E55A3D"/>
+              <rect x="16.5" y="5.5" width="2" height="2" fill="#E55A3D"/>
+              <rect x="5.5" y="16.5" width="2" height="2" fill="#E55A3D"/>
+              <rect x="14" y="14" width="2" height="2" fill="#E55A3D"/>
+              <rect x="18" y="14" width="2" height="2" fill="#E55A3D"/>
+              <rect x="14" y="18" width="2" height="2" fill="#E55A3D"/>
+              <rect x="18" y="18" width="2" height="2" fill="#E55A3D"/>
+            </svg>
+          </div>
+          <div class="step-label">QR코드 스캔</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-icon">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3C6.48 3 2 6.58 2 11C2 13.4 3.36 15.55 5.5 17V21L9.5 18.5C10.32 18.65 11.15 18.75 12 18.75C17.52 18.75 22 15.17 22 11C22 6.58 17.52 3 12 3Z" fill="#E55A3D"/>
+              <text x="12" y="13" text-anchor="middle" fill="#FFFFFF" font-size="6" font-weight="700">TALK</text>
+            </svg>
+          </div>
+          <div class="step-label">단톡방 입장</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-icon">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="9" width="18" height="11" fill="#E55A3D"/>
+              <rect x="2" y="7" width="20" height="4" fill="#E55A3D"/>
+              <rect x="11" y="7" width="2" height="13" fill="#FFFFFF"/>
+              <path d="M7 7C7 5 8.5 4 10 4C11.5 4 12 5.5 12 7" stroke="#E55A3D" stroke-width="1.8" fill="none"/>
+              <path d="M17 7C17 5 15.5 4 14 4C12.5 4 12 5.5 12 7" stroke="#E55A3D" stroke-width="1.8" fill="none"/>
+            </svg>
+          </div>
+          <div class="step-label">혜택 누리기</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 5. iloom 로고 (하단 가운데) ===== -->
+    <div class="footer">
+      <img src="../assets/products/iloom-logo.png" alt="iloom">
+    </div>
+
+  </div>
+</body>
+</html>

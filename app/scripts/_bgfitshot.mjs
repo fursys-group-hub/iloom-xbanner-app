@@ -1,0 +1,24 @@
+import { chromium } from 'playwright';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..', '..');
+const PDF = path.join(ROOT, '참고자료', '대구범어 아이파크2차 입주 공략의 건(수성점).pdf');
+const b = await chromium.launch();
+const p = await (await b.newContext({ viewport: { width: 1500, height: 1000 } })).newPage();
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+await p.evaluate(() => localStorage.clear());
+await p.reload({ waitUntil: 'networkidle' });
+await p.locator('.x-banner').first().waitFor();
+await p.click('#startBlank');
+await p.setInputFiles('#pdfFile', PDF);
+await p.waitForFunction(() => document.querySelector('#caseBadge')?.textContent?.includes('case-c'), { timeout: 15000 }).catch(() => {});
+await p.evaluate(() => document.fonts.ready);
+await p.waitForTimeout(500);
+await p.click('.zoom-btn[data-zoom="1"]');           // 100%
+await p.waitForTimeout(300);
+await p.locator('.preview-stage').evaluate((el) => { el.scrollTop = el.scrollHeight; });
+await p.waitForTimeout(300);
+await p.locator('.preview-stage').screenshot({ path: 'scripts/output/bgfit_bottom.png' });
+await b.close();
+console.log('done');

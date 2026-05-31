@@ -1,0 +1,379 @@
+/* =====================================================
+   일룸 X배너 템플릿 스타일
+   실제 크기 기준: 600px × 1800px
+   ===================================================== */
+
+/* ─── 배너 기본 ─── */
+.tmpl-il {
+  background: #f3ede0;
+  color: #1a1a1a;
+  font-family: 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 600px;
+  height: 1800px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── 섹션1: 헤더 ─── */
+.il-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 52px 48px 28px;
+}
+
+.il-welcome {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  color: #4a3f33;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.il-main-title {
+  text-align: center;
+  line-height: 1.08;
+  color: #1a1a1a;
+  margin-bottom: 22px;
+  word-break: keep-all;
+}
+.il-title-line1 {
+  font-size: 84px;
+  font-weight: 900;
+  display: block;
+  letter-spacing: -0.03em;
+}
+.il-title-line2 {
+  font-size: 60px;
+  font-weight: 900;
+  display: block;
+  letter-spacing: -0.03em;
+}
+
+/* 날짜 라인 */
+.il-date-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 0;
+}
+.il-date-line {
+  flex: 1;
+  height: 1px;
+  background: #b0a090;
+}
+.il-date-text {
+  font-size: 22px;
+  font-weight: 500;
+  color: #4a3f33;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* ─── 섹션2: 매장 브래킷 박스 ─── */
+.il-store-wrap {
+  width: 100%;
+  padding: 0 44px;
+  margin: 24px 0 0;
+}
+.il-store-box {
+  border: 1.5px solid #2c2c2c;
+  border-radius: 0;
+  padding: 16px 24px 14px;
+  text-align: center;
+  position: relative;
+}
+/* 모서리 브래킷 효과 */
+.il-store-box::before,
+.il-store-box::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #f3ede0;
+  border: 1.5px solid #2c2c2c;
+}
+.il-store-box::before {
+  top: -2px; left: -2px;
+  border-right: none; border-bottom: none;
+}
+.il-store-box::after {
+  bottom: -2px; right: -2px;
+  border-left: none; border-top: none;
+}
+
+.il-store-label {
+  font-size: 20px;
+  font-weight: 400;
+  color: #3a3a3a;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.il-store-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+}
+
+/* ─── 섹션3: 설명 텍스트 ─── */
+.il-desc {
+  padding: 24px 48px 0;
+  text-align: center;
+  line-height: 1.55;
+}
+.il-desc-line1 {
+  font-size: 22px;
+  font-weight: 400;
+  color: #3a3a3a;
+  display: block;
+  margin-bottom: 4px;
+}
+.il-desc-line2 {
+  font-size: 24px;
+  font-weight: 400;
+  color: #1a1a1a;
+  display: block;
+  word-break: keep-all;
+}
+.il-desc-line2 strong {
+  font-weight: 700;
+}
+
+/* ─── 섹션 구분 헤더 (다크 필) ─── */
+.il-section {
+  width: 100%;
+  padding: 20px 32px 0;
+}
+.il-section + .il-section {
+  padding-top: 16px;
+}
+
+.il-section-pill {
+  background: #2c2c2c;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 9px 0;
+  border-radius: 100px;
+  margin-bottom: 14px;
+}
+
+/* ─── 표 ─── */
+.il-table-wrap {
+  border: 1px solid #c8bfb0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.il-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.il-table thead tr {
+  background: #3d3530;
+  color: white;
+}
+.il-table thead th {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 4px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  border-right: 1px solid rgba(255,255,255,0.2);
+  word-break: keep-all;
+  line-height: 1.3;
+}
+.il-table thead th:last-child { border-right: none; }
+
+.il-table tbody tr {
+  border-bottom: 1px solid #ddd4c8;
+}
+.il-table tbody tr:last-child { border-bottom: none; }
+
+.il-table tbody td {
+  font-size: 16px;
+  font-weight: 400;
+  padding: 10px 4px;
+  text-align: center;
+  border-right: 1px solid #ddd4c8;
+  color: #2a2a2a;
+  vertical-align: middle;
+  word-break: keep-all;
+  line-height: 1.3;
+}
+.il-table tbody td:last-child { border-right: none; }
+
+/* 첫 번째 열 (구매금액) 강조 */
+.il-table tbody td:first-child {
+  font-weight: 700;
+  font-size: 15px;
+  background: #f9f5ef;
+  color: #2c1a0e;
+}
+
+/* 마지막 열 (총 혜택) 강조 */
+.il-table tbody td:last-child {
+  font-weight: 700;
+  color: #8b2c00;
+}
+
+/* 병합 셀 */
+.il-table .merged-cell {
+  background: #f0ebe3;
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+/* ─── 결제수단 카드 ─── */
+.il-payment-sub {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: #2c2c2c;
+  margin-bottom: 14px;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.il-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.il-card {
+  display: flex;
+  height: 72px;
+  border-radius: 10px;
+  overflow: visible;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* 왼쪽 컬러 영역 */
+.il-card-left {
+  width: 180px;
+  min-width: 180px;
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.il-card-left::after {
+  /* 티켓 노치 오른쪽 위 */
+  content: '';
+  position: absolute;
+  right: -13px;
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  background: #f3ede0;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+}
+.il-card-left::before {
+  /* 티켓 노치 오른쪽 아래 */
+  content: '';
+  position: absolute;
+  right: -13px;
+  bottom: -12px;
+  width: 24px;
+  height: 24px;
+  background: #f3ede0;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.il-card-logo {
+  color: white;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-align: center;
+  line-height: 1.2;
+  z-index: 1;
+  position: relative;
+}
+
+/* 오른쪽 흰 영역 */
+.il-card-right {
+  flex: 1;
+  background: white;
+  border: 1px solid #ddd4c8;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  border-left: 1px dashed #c8bfb0;
+  margin-left: 13px;
+}
+
+.il-card-ticket-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  color: white;
+  opacity: 0.9;
+}
+
+/* 카드별 색상 */
+.il-card.naver .il-card-left { background: #03c75a; }
+.il-card.naver .il-card-ticket-icon { background: #03c75a; }
+.il-card.lpoint .il-card-left { background: #1b3d7f; }
+.il-card.lpoint .il-card-ticket-icon { background: #1b3d7f; }
+.il-card.ssgpay .il-card-left { background: #e53935; }
+.il-card.ssgpay .il-card-ticket-icon { background: #e53935; }
+
+/* ─── 유의사항 ─── */
+.il-notice {
+  width: 100%;
+  padding: 18px 40px 0;
+  border-top: 1px solid #d0c8bc;
+  margin-top: 16px;
+}
+.il-notice p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #6a6058;
+  line-height: 1.7;
+  word-break: keep-all;
+  margin-bottom: 2px;
+}
+.il-notice p::before {
+  content: '※ ';
+}
+
+/* ─── 로고 ─── */
+.il-logo-wrap {
+  margin-top: auto;
+  padding: 16px 0 28px;
+  text-align: center;
+}
+.il-logo {
+  font-size: 38px;
+  font-weight: 900;
+  color: #2c1a0e;
+  letter-spacing: -0.04em;
+  font-style: italic;
+}

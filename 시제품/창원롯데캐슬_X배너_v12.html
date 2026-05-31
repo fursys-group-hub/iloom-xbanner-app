@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>일룸 X배너 v12 — 창원 롯데캐슬 포레스트 (1아파트 + 박람회 2회 단지별)</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20Light.otf') format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20Medium.otf') format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20Bold.otf') format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20ExtraBold.otf') format('opentype'); font-weight: 800; }
+
+    /* ===========================================
+       v12: 창원 롯데캐슬 포레스트
+       - 1아파트 + 1매장 (창원점) + 박람회 2회 단지별 타깃
+       - 4컬럼 구버전 혜택표
+       - 옷장단독 1종 (제품 카드 1개)
+       - 알고리즘 자동: 빈 공간 충분 → 결제 안내 v8 표준 + max-benefit v8 + 박람회 2회 영역
+       =========================================== */
+
+    @page { size: 600px 1800px; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #DDD;
+      font-family: 'Pretendard', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .x-banner {
+      width: 600px;
+      height: 1800px;
+      background: #FFF5EE;
+      color: #2A2520;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      padding: 90px 50px 50px;
+    }
+
+    /* ===== 1. 상단 헤더 (v8 표준) ===== */
+
+    .welcome {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      color: #999;
+      text-align: center;
+      margin-bottom: 22px;
+      padding-left: 0.4em;
+    }
+
+    .apt-name {
+      font-size: 50px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: #2A2520;
+      letter-spacing: -0.05em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .main-title {
+      font-size: 65px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #E55A3D;
+      letter-spacing: -0.06em;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .period {
+      font-size: 30px;
+      font-weight: 700;
+      color: #2A2520;
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 60px;       /* ★ v8 표준 그룹 1 → 그룹 2 간격 60px */
+    }
+
+    /* ===== 2. 매장명 (v8 표준 35px) ===== */
+
+    .store-box {
+      margin: 0 auto 24px;
+      align-self: center;
+      text-align: center;
+      padding: 26px 70px;
+      border-top: 1.5px solid #2A2520;
+      border-bottom: 1.5px solid #2A2520;
+    }
+
+    .store-name {
+      font-size: 35px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.45;
+      color: #2A2520;
+      letter-spacing: -0.04em;
+    }
+
+    /* ===== 3. max-benefit (v8 표준 35/40/35 — 빈 공간 알고리즘 자동 복원) ===== */
+
+    .max-benefit {
+      margin: 0 auto 60px;       /* ★ v8 표준 그룹 2 → 그룹 3 간격 60px */
+      align-self: center;
+      text-align: center;
+    }
+
+    .max-benefit-before {
+      font-size: 35px;
+      font-weight: 600;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .max-benefit-main {
+      font-size: 40px;
+      font-weight: 800;
+      color: #2A2520;
+      letter-spacing: -0.045em;
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+
+    .max-benefit-main strong {
+      color: #E55A3D;
+      font-weight: 900;
+    }
+
+    .max-benefit-after {
+      font-size: 35px;
+      font-weight: 600;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+    }
+
+    /* ===== 4. ★ 박람회 2회 안내 카드 (v11 후기 카드 스타일 응용) ===== */
+
+    .fairs-wrapper {
+      margin-bottom: 14px;
+    }
+
+    .fairs-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      padding: 12px 0;
+      letter-spacing: -0.025em;
+      border-radius: 14px 14px 0 0;
+    }
+
+    .fairs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px;
+      background: #FFFFFF;
+      border-radius: 0 0 14px 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .fair-card {
+      border-radius: 12px;
+      padding: 18px;
+      position: relative;
+      min-height: 130px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fair-card.fair-1 {
+      background: linear-gradient(135deg, #FFEADF 0%, #FFF4ED 100%);
+      --accent: #E84D2E;
+    }
+    .fair-card.fair-2 {
+      background: linear-gradient(135deg, #D6E3F0 0%, #E6EFF7 100%);
+      --accent: #2E78C9;
+    }
+
+    .fair-icon {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      color: var(--accent);
+      opacity: 0.5;
+    }
+    .fair-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fair-tag {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .fair-dates {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: #2A2520;
+      margin-bottom: 8px;
+    }
+
+    .fair-target {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      margin-top: auto;
+    }
+
+    .fair-sub {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.4;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    /* ===== 5. 혜택표 (4컬럼 구버전) ===== */
+
+    .table-wrapper {
+      background: #FFFFFF;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      margin-bottom: 14px;
+    }
+
+    .table-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 21px;
+      font-weight: 700;
+      text-align: center;
+      padding: 14px 0;
+      letter-spacing: -0.025em;
+    }
+
+    table.benefit-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table.benefit-table th {
+      background: #FFF5EE;
+      color: #555;
+      font-weight: 700;
+      padding: 11px 6px;
+      text-align: center;
+      line-height: 1.3;
+      font-size: 14px;
+      letter-spacing: -0.005em;
+      border-bottom: 1px solid #EEE;
+    }
+
+    table.benefit-table th:last-child {
+      background: #E55A3D;
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    table.benefit-table tbody tr {
+      border-bottom: 1px solid #F2EFE9;
+    }
+
+    table.benefit-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    table.benefit-table td {
+      padding: 13px 6px;
+      text-align: center;
+      color: #333;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    table.benefit-table td.amount {
+      font-weight: 800;
+      color: #2A2520;
+      background: #FAFAF8;
+    }
+
+    table.benefit-table td.total {
+      font-weight: 900;
+      color: #E55A3D;
+      background: #FFEDE5;
+      font-size: 22px;
+    }
+
+    table.benefit-table td.dash {
+      color: #CCC;
+      font-weight: 500;
+    }
+
+    /* ===== 6. 제품 카드 (옷장단독 1종 — v10 디에이치 패턴 동일) ===== */
+
+    .product-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 0;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      display: flex;
+      align-items: stretch;
+      height: 150px;
+      overflow: hidden;
+    }
+
+    .product-card-image {
+      flex: 0 0 180px;
+      align-self: stretch;
+      background: #EFE8DC;
+      overflow: hidden;
+    }
+    .product-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-card-content {
+      flex: 1;
+      text-align: left;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-card-name {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #2A2520;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .product-card-condition {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #555;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .product-card-amount {
+      display: inline-block;
+      background: #FFEDE5;
+      border-radius: 8px;
+      padding: 6px 12px 5px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #E55A3D;
+      line-height: 1.1;
+      align-self: flex-start;
+    }
+
+    .product-card-amount strong {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-right: 4px;
+      font-feature-settings: "tnum";
+    }
+
+    /* ===== 7. 결제 안내 (컴팩트 — 알고리즘 자동 압축: 콘텐츠 초과 → 우선순위 1 다운그레이드) ===== */
+
+    .payment {
+      background: #FFFFFF;
+      padding: 22px 24px 24px;
+      text-align: center;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .payment-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #2A2520;
+      margin-bottom: 14px;
+      letter-spacing: -0.03em;
+    }
+
+    .payment-brands-compact {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .payment-brands-compact img {
+      height: 18px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .payment-brands-compact .divider {
+      color: #CCC;
+      font-size: 10px;
+    }
+
+    /* ===== 8. 유의사항 + 로고 ===== */
+
+    .notices {
+      flex: 1;
+      font-size: 11.5px;
+      color: #888;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      padding: 0 4px;
+      text-align: center;
+    }
+    .notices p {
+      margin-bottom: 2px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+    .notices .nowrap {
+      white-space: nowrap;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+    }
+    .footer img {
+      height: 28px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    @media print {
+      html, body { background: #FFFFFF; padding: 0; margin: 0; }
+      body { padding: 0; }
+      .x-banner { box-shadow: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="x-banner">
+
+    <!-- ===== 그룹 1: 헤더 (v8 표준) ===== -->
+    <div class="welcome">WELCOME HOME</div>
+    <div class="apt-name">창원 롯데캐슬 포레스트</div>
+    <div class="main-title">입주 특별 프로모션</div>
+    <div class="period">2026.01.17. ~ 2026.04.19.</div>
+
+    <!-- ===== 그룹 2: 매장 + max-benefit (v8 표준) ===== -->
+    <div class="store-box">
+      <div class="store-name">일룸 창원점</div>
+    </div>
+
+    <div class="max-benefit">
+      <div class="max-benefit-before">창원 롯데캐슬 입주민을 위한</div>
+      <div class="max-benefit-main">최대 <strong>100만원</strong> 특별 혜택</div>
+      <div class="max-benefit-after">지금 매장에서 만나보세요!</div>
+    </div>
+
+    <!-- ===== 그룹 3: ★ 박람회 2회 안내 카드 (단지별 타깃) ===== -->
+    <div class="fairs-wrapper">
+      <div class="fairs-title">입주박람회 2회 — 단지별 안내</div>
+      <div class="fairs-grid">
+
+        <div class="fair-card fair-1">
+          <div class="fair-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="fair-tag">1차 박람회</div>
+          <div class="fair-dates">2026.01.17.<br>~ 01.18.</div>
+          <div class="fair-target">2단지 입주민</div>
+          <div class="fair-sub">2026년 2월 입주 예정</div>
+        </div>
+
+        <div class="fair-card fair-2">
+          <div class="fair-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="fair-tag">2차 박람회</div>
+          <div class="fair-dates">2026.04.18.<br>~ 04.19.</div>
+          <div class="fair-target">1단지 입주민</div>
+          <div class="fair-sub">2026년 5월 입주 예정</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== 그룹 4: 4컬럼 혜택표 ===== -->
+    <div class="table-wrapper">
+      <div class="table-title">구매 금액대별 혜택</div>
+      <table class="benefit-table">
+        <thead>
+          <tr>
+            <th>구매 금액</th>
+            <th>기존 혜택<br>(상시)</th>
+            <th>박람회 혜택<br>(추가)</th>
+            <th>총 혜택</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="amount">200만원~</td>
+            <td class="dash">—</td>
+            <td>10만원</td>
+            <td class="total">10만원</td>
+          </tr>
+          <tr>
+            <td class="amount">300만원~</td>
+            <td>15만원</td>
+            <td>5만원</td>
+            <td class="total">20만원</td>
+          </tr>
+          <tr>
+            <td class="amount">500만원~</td>
+            <td>25만원</td>
+            <td>10만원</td>
+            <td class="total">35만원</td>
+          </tr>
+          <tr>
+            <td class="amount">700만원~</td>
+            <td>40만원</td>
+            <td>20만원</td>
+            <td class="total">60만원</td>
+          </tr>
+          <tr>
+            <td class="amount">1,000만원~</td>
+            <td>80만원</td>
+            <td>20만원</td>
+            <td class="total">100만원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== 그룹 5: 제품 카드 (옷장단독) ===== -->
+    <div class="product-card">
+      <div class="product-card-image">
+        <img src="../assets/products/%EC%BB%AC%EB%A0%89%ED%8A%B8/04_481x481_tab1.jpg" alt="컬렉트 키큰 옷장">
+      </div>
+      <div class="product-card-content">
+        <div class="product-card-name">키큰 옷장</div>
+        <div class="product-card-condition">2개 포함 150만원 이상 구매 시</div>
+        <div class="product-card-amount"><strong>+100,000</strong> Point</div>
+      </div>
+    </div>
+
+    <!-- ===== 그룹 6: 결제 안내 (컴팩트 — 알고리즘 자동 압축) ===== -->
+    <div class="payment">
+      <div class="payment-title">3가지 포인트 中 택 1 적립</div>
+      <div class="payment-brands-compact">
+        <img src="../assets/point%20logo/n%20pay.png" alt="N pay">
+        <span class="divider">|</span>
+        <img src="../assets/point%20logo/Lpoint.png" alt="L.POINT">
+        <span class="divider">|</span>
+        <img src="../assets/point%20logo/ssgpay.svg" alt="SSGPAY">
+      </div>
+    </div>
+
+    <!-- ===== 하단 ===== -->
+    <div class="notices">
+      <p>· 본 프로모션은 통합회원 한정이며, 기간 이후 주문건 및 타 프로모션과 중복 적용 불가합니다.</p>
+      <p>· 네이버 포인트 · L.POINT · SSG 페이머니 中 택 1 적립 <span class="nowrap">(마지막 납기 후 익월말 지급)</span>.</p>
+      <p>· 박람회 현장 계약 시 계약금 10만원 이상 결제 필수. 추후 품목 변경은 <span class="nowrap">일룸 창원점</span>에서만 가능합니다.</p>
+    </div>
+
+    <div class="footer">
+      <img src="../assets/products/iloom-logo.png" alt="iloom">
+    </div>
+
+  </div>
+</body>
+</html>

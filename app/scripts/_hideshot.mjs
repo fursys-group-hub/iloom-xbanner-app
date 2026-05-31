@@ -1,0 +1,17 @@
+import { chromium } from 'playwright';
+import path from 'path'; import { fileURLToPath } from 'url';
+const __d = path.dirname(fileURLToPath(import.meta.url));
+const PDF_D = path.join(__d, '..', '..', '참고자료', '일룸 송파 & 강동아이파크_잠실래미안 입주박람회 참가&잠실르엘 공략의 건.pdf');
+const b = await chromium.launch({ headless: true });
+const p = await (await b.newContext({ viewport: { width: 1600, height: 1000 } })).newPage();
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+await p.evaluate(() => localStorage.clear());
+await p.reload({ waitUntil: 'networkidle' });
+await p.locator('.x-banner').first().waitFor();
+await p.setInputFiles('#pdfFile', PDF_D);
+await p.waitForFunction(() => document.querySelector('#caseBadge')?.textContent?.includes('case-d'), { timeout: 15000 });
+await p.waitForTimeout(300);
+await p.click('#regionOrder [data-hide="review"]');
+await p.waitForTimeout(300);
+await p.screenshot({ path: path.join(__d, 'output', 'p1_3_hidden.png') });
+await b.close(); console.log('hide shot done');

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>일룸 미니멀리즘 X배너</title>
+<style>
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    body { margin: 0; font-family: 'Pretendard', sans-serif; background: #f4f1eb; color: #333; }
+    .banner { width: 600px; height: 1800px; margin: 0 auto; background: #faf8f5; padding: 100px 50px; box-sizing: border-box; position: relative; overflow: hidden; }
+    
+    .header { text-align: left; margin-bottom: 80px; }
+    .welcome { color: #c92a31; font-size: 24px; font-weight: 800; letter-spacing: 4px; margin-bottom: 20px; }
+    .title { font-size: 48px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: #222; }
+    .date { font-size: 26px; color: #888; font-weight: 500; }
+    
+    .circle-badge { background: #c92a31; color: white; width: 220px; height: 220px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 350px; right: 40px; box-shadow: 0 10px 20px rgba(201,42,49,0.2); }
+    .circle-badge span { font-size: 24px; font-weight: 600; margin-bottom: 5px; }
+    .circle-badge strong { font-size: 42px; font-weight: 900; line-height: 1; }
+    
+    .price-list { margin-top: 250px; margin-bottom: 80px; }
+    .price-row { display: flex; justify-content: space-between; align-items: flex-end; padding: 30px 0; border-bottom: 3px dotted #ddd; }
+    .price-col-1 { font-size: 38px; font-weight: 800; color: #444; }
+    .price-col-2 { font-size: 42px; font-weight: 900; color: #c92a31; }
+    
+    .location { text-align: center; margin-bottom: 80px; }
+    .loc-box { display: inline-block; background: white; padding: 30px 50px; border-radius: 20px; font-size: 34px; font-weight: 800; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .loc-box span { display: block; line-height: 1.6; }
+    
+    .footer { text-align: center; }
+    .pay-info { font-size: 22px; font-weight: 600; margin-bottom: 30px; }
+    .logos { font-size: 26px; font-weight: 900; letter-spacing: 2px; color: #555; margin-bottom: 80px; }
+    .logo-iloom { font-size: 50px; font-weight: 900; color: #c92a31; letter-spacing: -2px; }
+</style>
+</head>
+<body>
+<div class="banner">
+    <div class="header">
+        <div class="welcome">WELCOME HOME</div>
+        <div class="title">광주 더파크 비스타 데시앙<br>입주 특별 프로모션</div>
+        <div class="date">03.07 - 03.08</div>
+    </div>
+    
+    <div class="circle-badge">
+        <span>최대</span>
+        <strong>109만원</strong>
+        <span>특별 혜택</span>
+    </div>
+
+    <div class="price-list">
+        <div class="price-row"><div class="price-col-1">200만원~</div><div class="price-col-2">10만원</div></div>
+        <div class="price-row"><div class="price-col-1">300만원~</div><div class="price-col-2">23만원</div></div>
+        <div class="price-row"><div class="price-col-1">500만원~</div><div class="price-col-2">46만원</div></div>
+        <div class="price-row"><div class="price-col-1">700만원~</div><div class="price-col-2">69만원</div></div>
+        <div class="price-row"><div class="price-col-1">1000만원~</div><div class="price-col-2">109만원</div></div>
+    </div>
+
+    <div class="location">
+        <div class="loc-box">
+            <span>일룸 분당서현</span>
+            <span style="color:#c92a31;">일룸 분당</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="pay-info">3가지 포인트 중 적립 혜택으로 선택하세요!</div>
+        <div class="logos"><span style="color:#03c75a;">N pay</span> | <span style="color:#00a4e3;">L.POINT</span> | SSGPAY.</div>
+        <div class="logo-iloom">iloom</div>
+    </div>
+</div>
+</body>
+</html>

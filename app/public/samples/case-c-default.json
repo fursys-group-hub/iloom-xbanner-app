@@ -1,0 +1,62 @@
+{
+  "_caseId": "case-c",
+  "_version": "v10",
+  "_source": "시제품/디에이치방배_X배너_v10.html (골든 표준)",
+
+  "welcome": "WELCOME HOME",
+  "aptName": "디에이치 방배",
+  "mainTitle": "입주 특별 프로모션",
+  "period": { "start": "2026-07-31", "end": "2026-08-02" },
+
+  "stores": ["일룸 프리미엄샵 논현"],
+
+  "maxBenefit": {
+    "before": "디에이치 방배 입주민을 위한",
+    "amount": "109만원",
+    "mainTemplate": "3일간 최대 {amount} 특별 혜택",
+    "after": "지금 매장에서 만나보세요!"
+  },
+
+  "productSection": {
+    "cards": [
+      { "imageSrc": "/assets/products/%EC%BB%AC%EB%A0%89%ED%8A%B8/04_481x481_tab1.jpg",            "name": "키큰 옷장",            "condition": "2개 포함 150만원 이상 구매 시", "amount": "100,000" },
+      { "imageSrc": "/assets/products/%EB%A6%AC%EB%B9%99_%EB%AA%A8%EC%85%98%EB%B2%A0%EB%93%9C/01_1024x669_tab1.png", "name": "리빙 모션베드",        "condition": "구매 시", "amount": "100,000" },
+      { "imageSrc": "/assets/products/%EC%97%85%EB%AA%A8%EC%85%98/01_1024x723_tab1.png",            "name": "모션 테이블 · 모션데스크", "condition": "구매 시", "amount": "50,000" }
+    ]
+  },
+
+  "benefitTable": {
+    "title": "구매 금액대별 혜택",
+    "columns": [
+      { "key": "amount", "label": "구매 금액",         "style": "amount" },
+      { "key": "base",   "label": "기존 혜택\n(상시)", "style": "normal" },
+      { "key": "onsite", "label": "현장 계약\n혜택",   "style": "normal" },
+      { "key": "lg",     "label": "LG 연계\n혜택",     "style": "normal" },
+      { "key": "total",  "label": "총 혜택",          "style": "total"  }
+    ],
+    "rows": [
+      { "amount": "200만원~",   "base": "—",      "onsite": "10만원", "lg": "—",     "total": "10만원"  },
+      { "amount": "300만원~",   "base": "15만원", "onsite": "5만원",  "lg": "3만원", "total": "23만원"  },
+      { "amount": "500만원~",   "base": "30만원", "onsite": "10만원", "lg": "6만원", "total": "46만원"  },
+      { "amount": "700만원~",   "base": "40만원", "onsite": "20만원", "lg": "9만원", "total": "69만원"  },
+      { "amount": "1,000만원~", "base": "80만원", "onsite": "20만원", "lg": "9만원", "total": "109만원" }
+    ]
+  },
+
+  "payment": {
+    "title": "3가지 포인트 中 택 1 적립",
+    "cards": [
+      { "label": "N pay",   "logoSrc": "/assets/point%20logo/n%20pay.png" },
+      { "label": "L.POINT", "logoSrc": "/assets/point%20logo/Lpoint.png" },
+      { "label": "SSGPAY",  "logoSrc": "/assets/point%20logo/ssgpay.svg" }
+    ]
+  },
+
+  "notices": [
+    "본 프로모션은 통합회원 한정이며, 기간 이후 주문건 및 타 프로모션과 중복 적용 불가합니다. (LG 제휴 혜택 중복 가능)",
+    "네이버 포인트 · L.POINT · SSG 페이머니 中 택 1 적립 (마지막 납기 후 익월말 지급).",
+    "박람회 현장 계약 시 계약금 10만원 이상 결제 필수. 추후 품목 변경은 일룸 프리미엄샵 논현에서만 가능합니다."
+  ],
+
+  "footer": { "logoSrc": "/assets/products/iloom-logo.png" }
+}

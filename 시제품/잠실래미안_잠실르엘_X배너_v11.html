@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>일룸 X배너 v11 — 잠실래미안 + 잠실르엘 (2아파트 동시 + 6컬럼 + 축하형)</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20Light.otf') format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20Medium.otf') format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20Bold.otf') format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Paybooc'; src: url('../assets/fonts/paybooc%20OTF%20ExtraBold.otf') format('opentype'); font-weight: 800; }
+
+    /* ===========================================
+       v11: 잠실래미안 + 잠실르엘
+       - 2아파트 동시 + 2매장 (송파 / 강동아이파크)
+       - 6컬럼 잠실형 혜택표 (가장 복잡한 구조)
+       - 축하형 톤 (입주 축하 메시지 중심)
+       - 후기 이벤트 영역 (잠실은 단톡방 X, 후기 중심)
+       =========================================== */
+
+    @page { size: 600px 1800px; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #DDD;
+      font-family: 'Pretendard', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .x-banner {
+      width: 600px;
+      height: 1800px;
+      background: #FFF5EE;
+      color: #2A2520;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      padding: 80px 50px 50px;
+    }
+
+    /* ===== 1. 상단 헤더 (2아파트명 stack) ===== */
+
+    .welcome {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      color: #999;
+      text-align: center;
+      margin-bottom: 20px;
+      padding-left: 0.4em;
+    }
+
+    /* v8 표준 패턴 적용 — 한 줄 아파트명 */
+    .apt-name {
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: #2A2520;
+      letter-spacing: -0.05em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .main-title {
+      font-size: 62px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #E55A3D;
+      letter-spacing: -0.06em;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    /* v8 표준 .period — 30px / 700 */
+    .period {
+      font-size: 30px;
+      font-weight: 700;
+      color: #2A2520;
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    /* 박람회별 상세 보조 라인 */
+    .period-detail {
+      font-size: 18px;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: -0.015em;
+      text-align: center;
+      margin-bottom: 44px;       /* 케이스 D 변형: 콘텐츠 多 → 그룹 간격 44px 자동 압축 */
+    }
+
+    .period-detail .label {
+      color: #E55A3D;
+      font-weight: 800;
+    }
+
+    /* ===== 2. 매장명 (2매장) ===== */
+
+    /* v8 표준 매장명 — 35px / 800 / line-height 1.45 (광주데시앙 동일) */
+    .store-box {
+      margin: 0 auto 24px;
+      align-self: center;
+      text-align: center;
+      padding: 26px 70px;
+      border-top: 1.5px solid #2A2520;
+      border-bottom: 1.5px solid #2A2520;
+    }
+
+    .store-name {
+      font-size: 35px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.45;
+      color: #2A2520;
+      letter-spacing: -0.04em;
+    }
+
+    /* ===== 3. 축하 메시지 (축하형 톤) ===== */
+
+    /* v9 한화포레나 max-benefit과 동일 폰트 (30/36/28) */
+    .celebration {
+      margin: 0 auto 44px;       /* 케이스 D 변형: 콘텐츠 多 → 그룹 간격 44px 자동 압축 */
+      align-self: center;
+      text-align: center;
+    }
+
+    .celebration-before {
+      font-size: 30px;
+      font-weight: 600;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .celebration-main {
+      font-size: 36px;
+      font-weight: 800;
+      color: #2A2520;
+      letter-spacing: -0.045em;
+      line-height: 1.25;
+      margin-bottom: 2px;
+    }
+
+    .celebration-main strong {
+      color: #E55A3D;
+      font-weight: 900;
+    }
+
+    .celebration-after {
+      font-size: 28px;
+      font-weight: 600;
+      color: #2A2520;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+    }
+
+    .celebration-after strong {
+      color: #E55A3D;
+      font-weight: 900;
+    }
+
+    /* ===== 4. 혜택표 (6컬럼 잠실형) ===== */
+
+    .table-wrapper {
+      background: #FFFFFF;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      margin-bottom: 12px;
+    }
+
+    .table-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 21px;
+      font-weight: 700;
+      text-align: center;
+      padding: 13px 0;
+      letter-spacing: -0.025em;
+    }
+
+    table.benefit-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    table.benefit-table th {
+      background: #FFF5EE;
+      color: #555;
+      font-weight: 700;
+      padding: 12px 4px;
+      text-align: center;
+      line-height: 1.25;
+      font-size: 13px;
+      letter-spacing: -0.005em;
+      border-bottom: 1px solid #EEE;
+      white-space: nowrap;
+    }
+
+    table.benefit-table th:first-child {
+      width: 110px;
+    }
+
+    table.benefit-table th:last-child {
+      background: #E55A3D;
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    table.benefit-table tbody tr {
+      border-bottom: 1px solid #F2EFE9;
+    }
+
+    table.benefit-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    table.benefit-table td {
+      padding: 14px 4px;
+      text-align: center;
+      color: #333;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+    }
+
+    table.benefit-table td.amount {
+      font-weight: 800;
+      color: #2A2520;
+      background: #FAFAF8;
+      font-size: 17px;
+    }
+
+    table.benefit-table td.total {
+      font-weight: 900;
+      color: #E55A3D;
+      background: #FFEDE5;
+      font-size: 21px;
+    }
+
+    table.benefit-table td.dash {
+      color: #CCC;
+      font-weight: 500;
+    }
+
+    /* ===== 5. 후기 이벤트 카드 (v9 특별 프로모션 카드 스타일 응용 — 2x1 그리드) ===== */
+
+    .review-event-wrapper {
+      margin-bottom: 14px;
+    }
+
+    .review-event-title {
+      background: #2A2520;
+      color: #FFFFFF;
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      padding: 12px 0;
+      letter-spacing: -0.025em;
+      border-radius: 14px 14px 0 0;
+    }
+
+    .review-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px;
+      background: #FFFFFF;
+      border-radius: 0 0 14px 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .review-card {
+      border-radius: 12px;
+      padding: 18px 18px 18px;
+      position: relative;
+      min-height: 150px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 후기 이벤트 카드 컬러 (v9 패턴: 그린 / 블루) */
+    .review-card.review-naver {
+      background: linear-gradient(135deg, #DDEFD0 0%, #EBF6E0 100%);
+      --accent: #3DA02E;
+    }
+    .review-card.review-cafe {
+      background: linear-gradient(135deg, #D6E3F0 0%, #E6EFF7 100%);
+      --accent: #2E78C9;
+    }
+
+    .review-icon {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      color: var(--accent);
+      opacity: 0.5;
+    }
+
+    .review-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .review-tag {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .review-headline {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+      color: #2A2520;
+      margin-bottom: 10px;
+    }
+
+    .review-headline strong {
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .review-sub {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.45;
+      color: #555;
+      margin-top: auto;
+    }
+
+    /* ===== 6. 결제 안내 (카드 2 — POINT 01/02/03 라벨+로고만, 설명 없음) ===== */
+
+    .payment {
+      background: #FFFFFF;
+      padding: 18px 20px 20px;
+      text-align: center;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .payment-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #2A2520;
+      margin-bottom: 14px;
+      letter-spacing: -0.03em;
+    }
+
+    .payment-brands-card2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .point-card-2 {
+      border-radius: 12px;
+      padding: 14px 8px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 78px;
+    }
+    .point-card-2.npay-card { background: #EAF7E5; }
+    .point-card-2.lpoint-card { background: #E8F0F8; }
+    .point-card-2.ssgpay-card { background: #FCE8D8; }
+
+    .card-label-2 {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
+    .npay-card .card-label-2 { color: #2D6B1F; }
+    .lpoint-card .card-label-2 { color: #1F4A78; }
+    .ssgpay-card .card-label-2 { color: #8C3D14; }
+
+    .card-logo-2 {
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-logo-2 img {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+    .ssgpay-card .card-logo-2 { height: 18px; }
+
+    /* ===== 7. 유의사항 + 로고 ===== */
+
+    .notices {
+      flex: 1;
+      font-size: 11px;
+      color: #888;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      padding: 0 4px;
+      text-align: center;
+    }
+
+    .notices p {
+      margin-bottom: 2px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+    .notices .nowrap {
+      white-space: nowrap;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    .footer img {
+      height: 28px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    @media print {
+      html, body { background: #FFFFFF; padding: 0; margin: 0; }
+      body { padding: 0; }
+      .x-banner { box-shadow: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="x-banner">
+
+    <!-- ===== 그룹 1: 헤더 (한 줄 아파트명, v8 표준) ===== -->
+    <div class="welcome">WELCOME HOME</div>
+    <div class="apt-name">잠실래미안 아이파크 · 잠실르엘</div>
+    <div class="main-title">입주 특별 프로모션</div>
+    <div class="period">2025.11.22. ~ 2025.11.30.</div>
+    <div class="period-detail"><span class="label">잠실래미안</span> 11.22~23 · <span class="label">잠실르엘</span> 11.28~30</div>
+
+    <!-- ===== 그룹 2: 매장 + 축하 메시지 ===== -->
+    <div class="store-box">
+      <div class="store-name">
+        일룸 송파<br>
+        일룸 강동아이파크
+      </div>
+    </div>
+
+    <div class="celebration">
+      <div class="celebration-before">두 아파트 입주를</div>
+      <div class="celebration-main">진심으로 <strong>축하</strong>드립니다</div>
+      <div class="celebration-after">최대 <strong style="color:#E55A3D;font-weight:900">112만원</strong> 특별 혜택</div>
+    </div>
+
+    <!-- ===== 그룹 3: 6컬럼 혜택표 ===== -->
+    <div class="table-wrapper">
+      <div class="table-title">구매 금액대별 혜택</div>
+      <table class="benefit-table">
+        <thead>
+          <tr>
+            <th>구매 금액</th>
+            <th>아파트<br>특별</th>
+            <th>기존<br>혜택</th>
+            <th>LG<br>연계</th>
+            <th>박람회<br>현장</th>
+            <th>최대<br>혜택</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="amount">200만원~</td>
+            <td>10만</td>
+            <td class="dash">—</td>
+            <td class="dash">—</td>
+            <td>2만</td>
+            <td class="total">12만</td>
+          </tr>
+          <tr>
+            <td class="amount">300만원~</td>
+            <td>20만</td>
+            <td>15만</td>
+            <td>3만</td>
+            <td>2만</td>
+            <td class="total">25만</td>
+          </tr>
+          <tr>
+            <td class="amount">500만원~</td>
+            <td>35만</td>
+            <td>25만</td>
+            <td>5만</td>
+            <td>2만</td>
+            <td class="total">42만</td>
+          </tr>
+          <tr>
+            <td class="amount">700만원~</td>
+            <td>60만</td>
+            <td>40만</td>
+            <td>7만</td>
+            <td>2만</td>
+            <td class="total">69만</td>
+          </tr>
+          <tr>
+            <td class="amount">1,000만원~</td>
+            <td>100만</td>
+            <td>80만</td>
+            <td>10만</td>
+            <td>2만</td>
+            <td class="total">112만</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== 그룹 4: 후기 이벤트 (v9 특별 프로모션 카드 스타일 응용) ===== -->
+    <div class="review-event-wrapper">
+      <div class="review-event-title">입주민 후기 이벤트 — 나눌수록 커지는 혜택</div>
+      <div class="review-cards-grid">
+
+        <div class="review-card review-naver">
+          <div class="review-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="review-tag">네이버 예약 후기</div>
+          <div class="review-headline"><strong>스타벅스</strong><br>쿠폰 증정</div>
+          <div class="review-sub">상담 예약 후 후기 작성 시</div>
+        </div>
+
+        <div class="review-card review-cafe">
+          <div class="review-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="review-tag">입주카페 후기</div>
+          <div class="review-headline">신세계 <strong>1만원</strong><br>상품권 증정</div>
+          <div class="review-sub">잠실펄 카페 상담 후기 시</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== 그룹 5: 결제 안내 (카드 2 — POINT 01/02/03 라벨+로고만) ===== -->
+    <div class="payment">
+      <div class="payment-title">3가지 포인트 中 택 1 적립</div>
+      <div class="payment-brands-card2">
+        <div class="point-card-2 npay-card">
+          <div class="card-label-2">POINT 01</div>
+          <div class="card-logo-2"><img src="../assets/point%20logo/n%20pay.png" alt="N pay"></div>
+        </div>
+        <div class="point-card-2 lpoint-card">
+          <div class="card-label-2">POINT 02</div>
+          <div class="card-logo-2"><img src="../assets/point%20logo/Lpoint.png" alt="L.POINT"></div>
+        </div>
+        <div class="point-card-2 ssgpay-card">
+          <div class="card-label-2">POINT 03</div>
+          <div class="card-logo-2"><img src="../assets/point%20logo/ssgpay.svg" alt="SSGPAY"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 하단 ===== -->
+    <div class="notices">
+      <p>· 본 프로모션은 통합회원 한정이며, 기간 이후 주문건 및 타 프로모션과 중복 적용 불가합니다. <span class="nowrap">(LG 제휴 혜택 중복 가능)</span></p>
+      <p>· 네이버 포인트 · L.POINT · SSG 페이머니 中 택 1 적립 <span class="nowrap">(마지막 납기 후 익월말 지급)</span>.</p>
+      <p>· 박람회 현장 계약 시 계약금 10만원 이상 결제 필수. 추후 품목 변경은 <span class="nowrap">일룸 송파</span>, <span class="nowrap">일룸 강동아이파크</span>에서만 가능합니다.</p>
+    </div>
+
+    <div class="footer">
+      <img src="../assets/products/iloom-logo.png" alt="iloom">
+    </div>
+
+  </div>
+</body>
+</html>

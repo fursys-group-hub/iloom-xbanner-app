@@ -1,0 +1,67 @@
+{
+  "_caseId": "case-e",
+  "_version": "v12",
+  "_source": "시제품/창원롯데캐슬_X배너_v12.html (골든 표준)",
+
+  "welcome": "WELCOME HOME",
+  "aptName": "창원 롯데캐슬 포레스트",
+  "mainTitle": "입주 특별 프로모션",
+  "period": { "start": "2026-01-17", "end": "2026-04-19" },
+
+  "stores": ["일룸 창원점"],
+
+  "maxBenefit": {
+    "before": "창원 롯데캐슬 입주민을 위한",
+    "amount": "100만원",
+    "mainTemplate": "최대 {amount} 특별 혜택",
+    "after": "지금 매장에서 만나보세요!"
+  },
+
+  "fairsSection": {
+    "title": "입주박람회 2회 — 단지별 안내",
+    "cards": [
+      { "tag": "1차 박람회", "dates": "2026.01.17.\n~ 01.18.", "target": "2단지 입주민", "sub": "2026년 2월 입주 예정" },
+      { "tag": "2차 박람회", "dates": "2026.04.18.\n~ 04.19.", "target": "1단지 입주민", "sub": "2026년 5월 입주 예정" }
+    ]
+  },
+
+  "benefitTable": {
+    "title": "구매 금액대별 혜택",
+    "columns": [
+      { "key": "amount", "label": "구매 금액",          "style": "amount" },
+      { "key": "base",   "label": "기존 혜택\n(상시)",   "style": "normal" },
+      { "key": "onsite", "label": "박람회 혜택\n(추가)", "style": "normal" },
+      { "key": "total",  "label": "총 혜택",            "style": "total"  }
+    ],
+    "rows": [
+      { "amount": "200만원~",   "base": "—",      "onsite": "10만원", "total": "10만원"  },
+      { "amount": "300만원~",   "base": "15만원", "onsite": "5만원",  "total": "20만원"  },
+      { "amount": "500만원~",   "base": "25만원", "onsite": "10만원", "total": "35만원"  },
+      { "amount": "700만원~",   "base": "40만원", "onsite": "20만원", "total": "60만원"  },
+      { "amount": "1,000만원~", "base": "80만원", "onsite": "20만원", "total": "100만원" }
+    ]
+  },
+
+  "productSection": {
+    "cards": [
+      { "imageSrc": "/assets/products/%EC%BB%AC%EB%A0%89%ED%8A%B8/04_481x481_tab1.jpg", "name": "키큰 옷장", "condition": "2개 포함 150만원 이상 구매 시", "amount": "100,000" }
+    ]
+  },
+
+  "payment": {
+    "title": "3가지 포인트 中 택 1 적립",
+    "cards": [
+      { "label": "N pay",   "logoSrc": "/assets/point%20logo/n%20pay.png" },
+      { "label": "L.POINT", "logoSrc": "/assets/point%20logo/Lpoint.png" },
+      { "label": "SSGPAY",  "logoSrc": "/assets/point%20logo/ssgpay.svg" }
+    ]
+  },
+
+  "notices": [
+    "본 프로모션은 통합회원 한정이며, 기간 이후 주문건 및 타 프로모션과 중복 적용 불가합니다.",
+    "네이버 포인트 · L.POINT · SSG 페이머니 中 택 1 적립 (마지막 납기 후 익월말 지급).",
+    "박람회 현장 계약 시 계약금 10만원 이상 결제 필수. 추후 품목 변경은 일룸 창원점에서만 가능합니다."
+  ],
+
+  "footer": { "logoSrc": "/assets/products/iloom-logo.png" }
+}

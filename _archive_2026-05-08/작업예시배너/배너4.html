@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일룸 광주 더파크 비스타 데시앙 - 테라코타 테마</title>
+<style>
+    @media print {
+        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f5f0eb; /* 더 따뜻하고 차분한 오트밀 배경 */
+        font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+        color: #3d342b; /* 진한 웜 브라운 (블랙 대체) */
+    }
+    
+    .banner-container {
+        width: 600px;
+        height: 1800px;
+        margin: 0 auto;
+        background-color: #fcfbfa; /* 크림 화이트 */
+        padding: 80px 30px; 
+        text-align: center;
+        box-sizing: border-box;
+        box-shadow: 0 10px 30px rgba(61, 52, 43, 0.08); /* 그림자도 브라운 톤으로 부드럽게 */
+        overflow: hidden; 
+        border-radius: 20px; /* 배너 자체도 살짝 둥글게 */
+    }
+
+    /* 상단 섹션 */
+    .welcome-text {
+        color: #c26554; /* 🌟 트렌디한 테라코타(구운 흙) 오렌지브라운 */
+        font-size: 26px; 
+        font-weight: 800;
+        letter-spacing: 6px; 
+        margin-bottom: 25px; 
+    }
+    .apt-name {
+        font-size: 34px; 
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .main-title {
+        font-size: 56px; 
+        font-weight: 900;
+        margin-bottom: 20px; 
+        line-height: 1.2;
+        color: #2b241e;
+    }
+    .date {
+        font-size: 30px; 
+        font-weight: 600;
+        color: #8c7d70; /* 따뜻한 코코아 그레이 */
+        margin-bottom: 35px; 
+    }
+
+    /* 장소 섹션 */
+    .location-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin: 45px 0; 
+        font-size: 34px; 
+    }
+    .bracket {
+        color: #c26554; /* 테라코타 컬러 */
+        font-weight: 300;
+        font-size: 60px; 
+        line-height: 1;
+    }
+    .location-text {
+        font-weight: 800;
+        line-height: 1.6;
+    }
+    .highlight-underline {
+        text-decoration: underline;
+        text-decoration-color: #f0d8d1; /* 살구빛 밑줄 */
+        text-decoration-thickness: 12px; 
+        text-underline-offset: -2px;
+    }
+
+    /* 설명 텍스트 */
+    .desc-text {
+        font-size: 30px; 
+        font-weight: 500;
+        line-height: 1.5;
+        margin-bottom: 45px; 
+    }
+    .desc-text strong {
+        font-size: 42px; 
+        font-weight: 900;
+        color: #2b241e; 
+    }
+    
+    /* 뱃지 및 카드 섹션 */
+    .section-wrapper {
+        margin-top: 35px; 
+        position: relative;
+    }
+    .badge {
+        background-color: #73564a; /* 진한 모카 브라운 */
+        color: white;
+        padding: 12px 35px; 
+        border-radius: 40px; /* 더 동글동글하게 */
+        font-weight: bold;
+        font-size: 22px; 
+        display: inline-block;
+        position: relative;
+        z-index: 2;
+        margin-bottom: -15px;
+    }
+    .card {
+        background: white;
+        padding: 45px 15px 25px; 
+        border-radius: 20px; /* 모서리를 더 부드럽게 */
+        border: 1px solid #f2e9e1; /* 연한 테두리 추가 */
+        box-shadow: 0 8px 20px rgba(115, 86, 74, 0.04); 
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 테이블 스타일 */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 20px; 
+        text-align: center;
+    }
+    th, td {
+        border: 1px solid #e8ded6; 
+        padding: 18px 5px; 
+        word-break: keep-all;
+    }
+    th {
+        background-color: #f7eee9; /* 아주 연한 테라코타 베이지 */
+        font-weight: 700;
+        color: #5c4a3d;
+    }
+    td {
+        font-weight: 500;
+    }
+
+    /* 포인트 안내 섹션 */
+    .point-text {
+        font-size: 22px; 
+        font-weight: 600;
+        margin-bottom: 25px;
+        line-height: 1.4;
+    }
+    .pay-logos {
+        display: flex;
+        justify-content: center;
+        gap: 25px; 
+        font-weight: 900;
+        font-size: 26px; 
+        margin-bottom: 20px;
+    }
+    .npay { color: #03c75a; }
+    .lpoint { color: #00a4e3; }
+    .ssgpay { color: #3d342b; }
+    
+    .micro-text {
+        font-size: 15px; 
+        font-weight: 500;
+        color: #8c7d70; 
+        line-height: 1.4;
+        margin-top: 10px;
+    }
+
+    /* 유의사항 */
+    .disclaimer {
+        font-size: 16px; 
+        font-weight: 500;
+        color: #9c8e81; 
+        line-height: 1.5;
+        margin: 50px 0 20px 0; 
+        word-break: keep-all;
+    }
+
+    /* 하단 로고 */
+    .logo-bottom {
+        color: #c26554; /* 테라코타 컬러로 통일 */
+        font-size: 50px; 
+        font-weight: 900;
+        letter-spacing: -1px;
+    }
+</style>
+</head>
+<body>
+
+<div class="banner-container">
+    <div class="welcome-text">WELCOME HOME</div>
+    
+    <div class="apt-name">광주 더파크 비스타 데시앙</div>
+    <div class="main-title">입주 특별 프로모션</div>
+    <div class="date">03.07 - 03.08</div>
+
+    <div class="location-box">
+        <span class="bracket">[</span>
+        <div class="location-text">
+            <span class="highlight-underline">일룸 분당서현</span><br>
+            <span class="highlight-underline">일룸 분당</span>
+        </div>
+        <span class="bracket">]</span>
+    </div>
+
+    <div class="desc-text">
+        입주박람회 현장에서만 드리는<br>
+        <strong>최대 109만원 특별 혜택</strong><br>
+        지금 바로 만나 보세요!
+    </div>
+
+    <div class="section-wrapper">
+        <div class="badge">구매 금액대별 혜택</div>
+        <div class="card">
+            <table>
+                <tr>
+                    <th>구매 금액</th>
+                    <th>입주 아파트<br>현장 계약 혜택</th>
+                    <th>LG연계 혜택</th>
+                    <th>총 혜택</th>
+                </tr>
+                <tr>
+                    <td>200만원~</td>
+                    <td>10만원</td>
+                    <td>-</td>
+                    <td>10만원</td>
+                </tr>
+                <tr>
+                    <td>300만원~</td>
+                    <td>20만원</td>
+                    <td>3만원</td>
+                    <td>23만원</td>
+                </tr>
+                <tr>
+                    <td>500만원~</td>
+                    <td>40만원</td>
+                    <td>6만원</td>
+                    <td>46만원</td>
+                </tr>
+                <tr>
+                    <td>700만원~</td>
+                    <td>60만원</td>
+                    <td>9만원</td>
+                    <td>69만원</td>
+                </tr>
+                <tr>
+                    <td>1000만원~</td>
+                    <td>100만원</td>
+                    <td>9만원</td>
+                    <td>109만원</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-wrapper">
+        <div class="badge">프로모션 혜택 지급 안내</div>
+        <div class="card">
+            <div class="point-text">
+                <strong>3가지 포인트 중</strong> 나에게 맞는<br>적립 혜택으로 선택하세요!
+            </div>
+            <div class="pay-logos">
+                <span class="npay">N pay</span> 
+                <span class="lpoint">L.POINT</span> 
+                <span class="ssgpay">SSGPAY.</span>
+            </div>
+            <div class="micro-text">
+                네이버 포인트 / L.POINT / SSG 머니 중 선택이 가능합니다.<br>
+                포인트는 제품 배송완료 기준으로 익월말경 지급 예정입니다.
+            </div>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        본 프로모션은 통합회원 한정 프로모션입니다.<br>
+        혜택은 기간 이후 주문 건에는 적용이 불가합니다. 타 프로모션과 중복 불가합니다.<br>
+        포인트는 마지막 납기 후 익월 말 지급됩니다. (포인트 유효기간 이후 재발송 불가)<br>
+        주문 품목 변경은 일룸 분당서현, 일룸 분당에서만 가능합니다.
+    </div>
+
+    <div class="logo-bottom">iloom</div>
+</div>
+
+</body>
+</html>

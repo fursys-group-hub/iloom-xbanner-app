@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>롯데바이오로직스 임직원 대상 — 기간한정 특별 혜택 (A4 v1)</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    /* ===========================================
+       A4 v1: 롯데바이오로직스 임직원 대상 기간한정 특별 혜택
+       - 원본 이미지(인물 히어로 + 흰색 카드 3종) 디자인 재현
+       - A4 210×297mm 한 장
+       - 구조: 히어로 이미지 → 헤더(로고/타이틀/기간) → 카드 3종 → 로고
+       =========================================== */
+
+    @page { size: A4 portrait; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #DDD;
+      font-family: 'Pretendard', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      background: #F4EFE6;
+      color: #1A1A1A;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== 1. 히어로 이미지 ===== */
+
+    .hero {
+      width: 100%;
+      height: 95mm;
+      background: #D8D2C5;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-placeholder {
+      color: #888;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ===== 2. 헤더 (로고 + 타이틀 + 기간) ===== */
+
+    .header {
+      padding: 8mm 14mm 5mm;
+      text-align: center;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .lotte-logo {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-target {
+      font-size: 30px;
+      font-weight: 700;
+      color: #1A1A1A;
+      letter-spacing: -0.04em;
+    }
+
+    .main-title {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #DA1F2C;
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
+    }
+
+    .period {
+      font-size: 18px;
+      font-weight: 500;
+      color: #6A6A6A;
+      letter-spacing: -0.01em;
+    }
+
+    /* ===== 3. 본문 카드 영역 ===== */
+
+    .cards {
+      padding: 0 14mm;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #DA1F2C;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .card-body {
+      font-size: 19px;
+      font-weight: 500;
+      color: #2A2A2A;
+      letter-spacing: -0.025em;
+      line-height: 1.5;
+    }
+
+    .card-body strong {
+      font-weight: 800;
+      color: #1A1A1A;
+    }
+
+    .card-body .em-blue {
+      font-weight: 800;
+      color: #1A1A1A;
+    }
+
+    .card-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .card-body ul li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 4px;
+    }
+    .card-body ul li:before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      color: #2A2A2A;
+    }
+    .card-body ul li:last-child { margin-bottom: 0; }
+
+    .card-note {
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      letter-spacing: -0.02em;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* 구매 가능 매장 카드 — 지역별 칩 그룹 */
+    .store-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 6px 0 2px;
+    }
+
+    .store-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    .store-region {
+      font-size: 17px;
+      font-weight: 700;
+      color: #6A6A6A;
+      letter-spacing: -0.02em;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+
+    .store-count {
+      font-size: 14px;
+      font-weight: 500;
+      color: #A0A0A0;
+      letter-spacing: -0.02em;
+      margin-left: 2px;
+    }
+
+    .store-chip {
+      background: #F4EFE6;
+      color: #1A1A1A;
+      font-size: 17px;
+      font-weight: 700;
+      padding: 7px 13px;
+      border-radius: 9999px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    /* ===== 4. 푸터 (로고) ===== */
+
+    .footer {
+      padding: 0 14mm;
+      margin-top: auto;
+      margin-bottom: 14mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .footer img {
+      height: 22px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    @media print {
+      html, body { background: #FFFFFF; padding: 0; margin: 0; }
+      body { padding: 0; }
+      .a4-page { box-shadow: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="a4-page">
+
+    <!-- ===== 1. 히어로 이미지 ===== -->
+    <div class="hero">
+      <img src="../assets/롯데바이오/hero.png" alt="iloom 침실">
+    </div>
+
+    <!-- ===== 2. 헤더 ===== -->
+    <div class="header">
+      <div class="brand-row">
+        <img class="lotte-logo" src="../assets/롯데바이오/lotte-biologics-logo.png" alt="LOTTE BIOLOGICS">
+        <div class="brand-target">임직원 대상</div>
+      </div>
+
+      <div class="main-title">기간한정 특별 혜택</div>
+
+      <div class="period">2026.06.13 - 2026.06.28</div>
+    </div>
+
+    <!-- ===== 3. 본문 카드 3종 ===== -->
+    <div class="cards">
+
+      <!-- 카드 1: 구매 혜택 -->
+      <div class="card">
+        <div class="card-title">구매 혜택</div>
+        <div class="card-body">
+          일룸 전제품 <strong>10% 할인</strong> 적용
+        </div>
+        <div class="card-note">*8월 말일까지 제품 수령 필수</div>
+      </div>
+
+      <!-- 카드 2: 구매 방법 -->
+      <div class="card">
+        <div class="card-title">구매 방법</div>
+        <div class="card-body">
+          <ul>
+            <li>지정 매장에서 <strong>임직원 인증 후 구매</strong> (사원증 or 명함제시)</li>
+            <li>임직원 <strong>본인 1인 1회</strong> 한함</li>
+            <li>타 프로모션 <strong>중복 적용 불가</strong></li>
+          </ul>
+        </div>
+        <div class="card-note">*일룸 통합회원 가입 시에만 적용 가능</div>
+      </div>
+
+      <!-- 카드 3: 구매 가능 매장 -->
+      <div class="card">
+        <div class="card-title">구매 가능 매장</div>
+        <div class="store-card-body">
+          <div class="store-group">
+            <span class="store-region">서울 <span class="store-count">(2개)</span> :</span>
+            <span class="store-chip">논현</span>
+            <span class="store-chip">강동아이파크</span>
+          </div>
+          <div class="store-group">
+            <span class="store-region">경기 <span class="store-count">(6개)</span> :</span>
+            <span class="store-chip">송도</span>
+            <span class="store-chip">인천중앙</span>
+            <span class="store-chip">인천검단</span>
+            <span class="store-chip">신세계시흥</span>
+            <span class="store-chip">부천</span>
+            <span class="store-chip">김포</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== 4. 푸터 (iloom 로고) ===== -->
+    <div class="footer">
+      <img src="../assets/products/iloom-logo.png" alt="iloom">
+    </div>
+
+  </div>
+</body>
+</html>

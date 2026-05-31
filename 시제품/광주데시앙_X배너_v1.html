@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>일룸 X배너 — 광주 더파크 비스타 데시앙 입주 특별 프로모션</title>
+
+  <!-- Pretendard 폰트 CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    /* ===== 인쇄 사이즈 ===== */
+    @page {
+      size: 600px 1800px;
+      margin: 0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: #DDD;  /* 화면에서 X배너 외곽 구분용 (인쇄 시 무시됨) */
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;  /* 화면 미리보기용 여백 */
+    }
+
+    /* ===== X배너 본체 (600×1800) ===== */
+    .x-banner {
+      width: 600px;
+      height: 1800px;
+      background: #FFFFFF;
+      color: #1A1A1A;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);  /* 화면 미리보기용 */
+
+      display: flex;
+      flex-direction: column;
+      padding: 70px 50px 60px;
+    }
+
+    /* ===== 1. 환영 문구 ===== */
+    .welcome {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.4em;
+      color: #999;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    /* ===== 2. 아파트명 ===== */
+    .apt-name {
+      font-size: 36px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.25;
+      color: #1A1A1A;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    /* ===== 3. 메인 프로모션 타이틀 ===== */
+    .main-title {
+      font-size: 48px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.2;
+      color: #1A1A1A;
+      letter-spacing: -0.03em;
+      margin-bottom: 22px;
+    }
+
+    /* ===== 4. 기간 ===== */
+    .period {
+      font-size: 22px;
+      font-weight: 500;
+      text-align: center;
+      color: #555;
+      letter-spacing: 0.02em;
+      margin-bottom: 38px;
+    }
+
+    /* ===== 5. 매장명 박스 (대괄호 프레임) ===== */
+    .store-box {
+      position: relative;
+      padding: 22px 50px;
+      margin: 0 auto 38px;
+      display: inline-block;
+      align-self: center;
+    }
+
+    .store-box::before,
+    .store-box::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      border: 2.5px solid #1A1A1A;
+    }
+
+    .store-box::before {
+      left: 0;
+      border-right: none;
+    }
+
+    .store-box::after {
+      right: 0;
+      border-left: none;
+    }
+
+    .store-name {
+      font-size: 26px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.5;
+      color: #1A1A1A;
+      letter-spacing: -0.01em;
+    }
+
+    /* ===== 6. 혜택 소개 본문 ===== */
+    .benefit-intro {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .benefit-before {
+      font-size: 19px;
+      font-weight: 500;
+      color: #333;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .benefit-highlight {
+      font-size: 38px;
+      font-weight: 800;
+      color: #1A1A1A;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .benefit-highlight strong {
+      color: #C8102E;  /* 일룸 레드 — 109만원 강조 */
+    }
+
+    .benefit-after {
+      font-size: 19px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    /* ===== 7. 혜택표 ===== */
+    .benefit-table-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: #1A1A1A;
+      padding: 10px 0;
+      margin-bottom: 0;
+      letter-spacing: 0.02em;
+    }
+
+    table.benefit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 36px;
+      font-size: 15px;
+    }
+
+    table.benefit-table th {
+      background: #F2EFE9;  /* 라이트 베이지 헤더 */
+      color: #333;
+      font-weight: 600;
+      padding: 10px 4px;
+      border: 1px solid #DDD;
+      text-align: center;
+      line-height: 1.3;
+      font-size: 13px;
+    }
+
+    table.benefit-table td {
+      padding: 11px 4px;
+      border: 1px solid #DDD;
+      text-align: center;
+      color: #333;
+      font-weight: 500;
+    }
+
+    table.benefit-table td.amount {
+      font-weight: 700;
+      background: #FAF9F6;
+    }
+
+    table.benefit-table td.total {
+      font-weight: 800;
+      color: #C8102E;
+      background: #FFF5F5;
+    }
+
+    table.benefit-table th:last-child {
+      background: #C8102E;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    /* ===== 8. 결제 안내 ===== */
+    .payment {
+      text-align: center;
+      padding: 22px 24px;
+      background: #F8F7F4;
+      border-radius: 8px;
+      margin-bottom: 28px;
+    }
+
+    .payment-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 6px;
+    }
+
+    .payment-subtitle {
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    .payment-brands {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .payment-brand {
+      padding: 8px 16px;
+      border: 1.5px solid #DDD;
+      border-radius: 6px;
+      background: #FFFFFF;
+      font-size: 13px;
+      font-weight: 700;
+      color: #444;
+      letter-spacing: -0.01em;
+      min-width: 90px;
+      text-align: center;
+    }
+
+    .payment-brand.npay {
+      color: #03C75A;
+    }
+
+    .payment-brand.lpoint {
+      color: #ED1B23;
+    }
+
+    .payment-brand.ssgpay {
+      color: #FF6F00;
+    }
+
+    /* ===== 9. 유의사항 ===== */
+    .notices {
+      font-size: 10px;
+      color: #888;
+      line-height: 1.65;
+      letter-spacing: -0.005em;
+      flex: 1;
+      padding: 0 4px;
+    }
+
+    .notices p {
+      margin-bottom: 2px;
+      padding-left: 8px;
+      text-indent: -8px;
+    }
+
+    /* ===== 10. iloom 로고 (하단) ===== */
+    .logo-area {
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    .logo-area img {
+      height: 40px;
+      width: auto;
+    }
+
+    /* ===== 인쇄용 ===== */
+    @media print {
+      html, body {
+        background: #FFFFFF;
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        padding: 0;
+      }
+      .x-banner {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="x-banner">
+
+    <!-- 1. WELCOME HOME -->
+    <div class="welcome">WELCOME HOME</div>
+
+    <!-- 2. 아파트명 -->
+    <div class="apt-name">광주 더파크 비스타 데시앙</div>
+
+    <!-- 3. 메인 프로모션 타이틀 -->
+    <div class="main-title">입주 특별 프로모션</div>
+
+    <!-- 4. 기간 -->
+    <div class="period">03.07 — 03.08</div>
+
+    <!-- 5. 매장명 박스 (대괄호) -->
+    <div class="store-box">
+      <div class="store-name">
+        일룸 분당서현<br>
+        일룸 분당
+      </div>
+    </div>
+
+    <!-- 6. 혜택 소개 본문 -->
+    <div class="benefit-intro">
+      <div class="benefit-before">입주박람회 현장에서만 드리는</div>
+      <div class="benefit-highlight">최대 <strong>109만원</strong><br>특별 혜택</div>
+      <div class="benefit-after">지금 바로 만나 보세요!</div>
+    </div>
+
+    <!-- 7. 혜택표 -->
+    <div class="benefit-table-title">구매 금액대별 혜택</div>
+    <table class="benefit-table">
+      <thead>
+        <tr>
+          <th>구매 금액</th>
+          <th>기존 혜택<br>(상시)</th>
+          <th>현장 계약<br>혜택</th>
+          <th>LG 연계<br>혜택</th>
+          <th>총 혜택</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="amount">200만원~</td>
+          <td>-</td>
+          <td>10만원</td>
+          <td>-</td>
+          <td class="total">10만원</td>
+        </tr>
+        <tr>
+          <td class="amount">300만원~</td>
+          <td>15만원</td>
+          <td>5만원</td>
+          <td>3만원</td>
+          <td class="total">23만원</td>
+        </tr>
+        <tr>
+          <td class="amount">500만원~</td>
+          <td>30만원</td>
+          <td>10만원</td>
+          <td>6만원</td>
+          <td class="total">46만원</td>
+        </tr>
+        <tr>
+          <td class="amount">700만원~</td>
+          <td>40만원</td>
+          <td>20만원</td>
+          <td>9만원</td>
+          <td class="total">69만원</td>
+        </tr>
+        <tr>
+          <td class="amount">1,000만원~</td>
+          <td>80만원</td>
+          <td>20만원</td>
+          <td>9만원</td>
+          <td class="total">109만원</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 8. 결제 안내 -->
+    <div class="payment">
+      <div class="payment-title">프로모션 혜택 지급 안내</div>
+      <div class="payment-subtitle">
+        3가지 포인트 중 나에게 맞는<br>
+        적립 혜택으로 선택하세요!
+      </div>
+      <div class="payment-brands">
+        <div class="payment-brand npay">N pay</div>
+        <div class="payment-brand lpoint">L.POINT</div>
+        <div class="payment-brand ssgpay">SSGPAY</div>
+      </div>
+    </div>
+
+    <!-- 9. 유의사항 -->
+    <div class="notices">
+      <p>· 본 프로모션은 통합회원 한정 프로모션입니다.</p>
+      <p>· 혜택은 기간 이후 주문건에는 적용이 불가합니다.</p>
+      <p>· 타 프로모션과 중복 불가합니다. (LG전자 제휴 혜택 중복 가능)</p>
+      <p>· 포인트는 마지막 납기 후 익월말 지급됩니다. (포인트 유효기간 이후 재발송 불가)</p>
+      <p>· 박람회 현장 계약 시 계약금 10만원 이상 결제 필수.</p>
+      <p>· 추후 품목 변경은 일룸 분당서현, 일룸 분당에서만 가능합니다.</p>
+    </div>
+
+    <!-- 10. iloom 로고 -->
+    <div class="logo-area">
+      <img src="../assets/products/iloom-logo.png" alt="iloom">
+    </div>
+
+  </div>
+</body>
+</html>

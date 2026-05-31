@@ -1,0 +1,68 @@
+{
+  "series_name": "바젤",
+  "product_name": "바젤",
+  "product_id": "basel_bed",
+  "page_id": 39171,
+  "source_url": "https://iloomproduct.fursys.com/?p=39171",
+  "fetched_at": "2026-05-11T01:01:38.294Z",
+  "total_images": 4,
+  "failed": 0,
+  "images": [
+    {
+      "file": "01_1024x608_tab1.jpg",
+      "local_path": "assets/products/바젤/01_1024x608_tab1.jpg",
+      "size_kb": 50,
+      "src": "https://iloomproduct.fursys.com/wp-content/uploads/2021/11/ab-0272-a_%EC%88%98%EC%A0%95_1-1024x608.jpg",
+      "alt": "",
+      "w": 1024,
+      "h": 608,
+      "parent_text": "",
+      "grand_text": "타겟 및 기획의도\n휴가 같은 일상으로의 초대, 바젤\n\n바젤 심플리화이트 SP\n세상에 하나 뿐인 나만의 호텔룸에 초대합니다.\n어느 공간에 연출해도 아늑하고 트렌디한 무드가 살아나는 화이트톤의 모던 호텔 스타일 침실 시리즈입니다.\n공간과 필요에 따라 다양한 사이즈의 침대와 아트월을 매치하여 나만의 호텔룸을 꾸밀 수 있습니다.\n깔끔하고 모던한 호텔 침실 무드는 물론 편리함 또한 놓치지 않은 바젤 시리즈를 만나 보세요.\n\n바젤 어반스테이 UW\n세련된 어반스테이 감성을 우리집 침실에서 만나보세요.\n적당한 무게감의 어반월넛 컬러가 자아내는 편",
+      "prev_text": "",
+      "next_text": "",
+      "tab": 1
+    },
+    {
+      "file": "02_794x980_tab1.png",
+      "local_path": "assets/products/바젤/02_794x980_tab1.png",
+      "size_kb": 799,
+      "src": "https://iloomproduct.fursys.com/wp-content/uploads/2023/02/%EC%9D%B4%EB%AF%B8%EC%A7%80-1061.png",
+      "alt": "",
+      "w": 794,
+      "h": 980,
+      "parent_text": "",
+      "grand_text": "타겟 및 기획의도\n휴가 같은 일상으로의 초대, 바젤\n\n바젤 심플리화이트 SP\n세상에 하나 뿐인 나만의 호텔룸에 초대합니다.\n어느 공간에 연출해도 아늑하고 트렌디한 무드가 살아나는 화이트톤의 모던 호텔 스타일 침실 시리즈입니다.\n공간과 필요에 따라 다양한 사이즈의 침대와 아트월을 매치하여 나만의 호텔룸을 꾸밀 수 있습니다.\n깔끔하고 모던한 호텔 침실 무드는 물론 편리함 또한 놓치지 않은 바젤 시리즈를 만나 보세요.\n\n바젤 어반스테이 UW\n세련된 어반스테이 감성을 우리집 침실에서 만나보세요.\n적당한 무게감의 어반월넛 컬러가 자아내는 편",
+      "prev_text": "",
+      "next_text": "",
+      "tab": 1
+    },
+    {
+      "file": "03_1024x1024_tab1.jpg",
+      "local_path": "assets/products/바젤/03_1024x1024_tab1.jpg",
+      "size_kb": 112,
+      "src": "https://iloomproduct.fursys.com/wp-content/uploads/2021/11/P98A3765-3-1024x1024.jpg",
+      "alt": "",
+      "w": 1024,
+      "h": 1024,
+      "parent_text": "SP (SIMPLY WHITE)",
+      "grand_text": "SP (SIMPLY WHITE)",
+      "prev_text": "",
+      "next_text": "SP (SIMPLY WHITE)",
+      "tab": 1
+    },
+    {
+      "file": "04_389x387_tab1.png",
+      "local_path": "assets/products/바젤/04_389x387_tab1.png",
+      "size_kb": 65,
+      "src": "https://iloomproduct.fursys.com/wp-content/uploads/2023/02/%EC%9D%B4%EB%AF%B8%EC%A7%80-1059.png",
+      "alt": "",
+      "w": 389,
+      "h": 387,
+      "parent_text": "UW (URBAN WALNUT)",
+      "grand_text": "UW (URBAN WALNUT)",
+      "prev_text": "",
+      "next_text": "UW (URBAN WALNUT)",
+      "tab": 1
+    }
+  ]
+}

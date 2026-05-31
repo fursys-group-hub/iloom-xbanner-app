@@ -1,0 +1,14 @@
+{
+  "name": "banner-app",
+  "version": "1.0.0",
+  "description": "X배너 에디터 + 인쇄용 파일 생성",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.0.0"
+  }
+}

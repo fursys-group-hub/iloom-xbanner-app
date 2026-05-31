@@ -1,0 +1,15 @@
+{
+  "name": "iloom-banner-app",
+  "version": "0.1.0",
+  "description": "일룸 인쇄용 X배너 어플 — 품의서 PDF 자동 추출 + 템플릿 + 제품 라이브러리",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "fetch-images": "node scripts/fetch-product-images.mjs",
+    "fetch-all": "node scripts/fetch-all-products.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.59.1",
+    "qrcode": "^1.5.4"
+  }
+}
