@@ -4,6 +4,7 @@ app/node_modules
 **/node_modules
 
 # 용량 큰 것 / 불필요한 것
+assets/_배경_원본_백업
 *.mp4
 *.mov
 _tmp-payload.json
