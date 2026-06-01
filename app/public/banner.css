@@ -211,6 +211,20 @@
   letter-spacing: var(--tr-store);
 }
 
+/* ── 미리보기 전용 placeholder — 비어 있는 필수 항목 안내 (코랄·이탤릭). 출력엔 안 나옴 ── */
+.x-banner .ph-fill {
+  color: var(--coral);
+  font-style: italic;
+  font-weight: 700;
+  opacity: 0.92;
+}
+.x-banner .store-box--ph {
+  border-top-style: dashed;
+  border-bottom-style: dashed;
+  border-color: var(--coral);
+  background: var(--coral-tint);
+}
+
 /* ===== 3. 최대 혜택 강조 (3줄 구조) ===== */
 .x-banner .max-benefit {
   margin: 0 auto var(--gap-group);

@@ -229,7 +229,8 @@ function hideStart() { startScreen.classList.add('is-hidden'); }
 // ───────── 렌더 ─────────
 function rerender() {
   if (!root || !state) return;
-  root.innerHTML = renderBanner(state);
+  // _draft: 미리보기에만 빈 필수항목 안내 placeholder 표시 (출력 state 엔 안 들어감 — 얕은 복사로 원본 보존)
+  root.innerHTML = renderBanner({ ...state, _draft: true });
   const banner = root.querySelector('.x-banner');
   applyBackground(banner, state);
   fitBanner(banner);

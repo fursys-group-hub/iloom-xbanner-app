@@ -15,12 +15,18 @@ function PeriodDetail(detail) {
   return `<div class="period-detail">${parts}</div>`;
 }
 
-export function Header({ welcome, aptName, mainTitle, period, periodDetail } = {}) {
+export function Header({ welcome, aptName, mainTitle, period, periodDetail, _draft = false } = {}) {
+  // 미리보기(_draft)에선 비어 있는 필수 항목 자리에 코랄 안내 문구 → 클릭해 입력.
+  // 출력에선 _draft 가 없어 그냥 빈 칸(안내 문구 안 찍힘).
+  const ph = (text) => `<span class="ph-fill">${text}</span>`;
+  const aptHtml    = aptName?.trim() ? escHtml(aptName)         : (_draft ? ph('아파트명을 입력하세요') : '');
+  const periodStr  = formatPeriod(period);
+  const periodHtml = periodStr       ? escHtml(periodStr)       : (_draft ? ph('박람회 기간을 입력하세요') : '');
   return `
     <div class="welcome">${escHtml(welcome ?? 'WELCOME HOME')}</div>
-    <div class="apt-name">${escHtml(aptName ?? '')}</div>
+    <div class="apt-name">${aptHtml}</div>
     <div class="main-title">${escHtml(mainTitle ?? '')}</div>
-    <div class="period">${escHtml(formatPeriod(period))}</div>
+    <div class="period">${periodHtml}</div>
     ${PeriodDetail(periodDetail)}
   `;
 }
