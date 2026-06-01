@@ -790,7 +790,7 @@ body.app-shell {
 /* 미리보기 위 플로팅 보기 컨트롤 (줌·인쇄가이드·전체화면) */
 .preview-floating {
   position: absolute;
-  bottom: 24px; left: 50%; transform: translateX(-50%);
+  bottom: 64px; left: 50%; transform: translateX(-50%);
   z-index: 50;
   display: flex; align-items: center; gap: 6px;
   background: rgba(255,255,255,0.92);
@@ -1163,6 +1163,9 @@ body.dark .preview-floating { background: rgba(28,28,30,0.92); }
 .rv-count.is-clear { background: var(--ok); }
 
 .rv-list { display: flex; flex-direction: column; gap: 10px; }
+
+/* "다음 확인 항목으로" 버튼 — 확인 카드와 떨어뜨려 숨 쉬게 */
+.rv-next { margin-top: 14px; }
 
 .rv-item {
   display: flex;
