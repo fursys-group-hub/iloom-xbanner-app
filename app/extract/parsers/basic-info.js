@@ -189,6 +189,27 @@ function parseStoresNumbered(lines) {
   return stores;
 }
 
+// 제목줄 괄호 안 매장명 추출 — "제목 … 입주공략 (서대전점)" / "(스타필드수원점 수원광교점)" / "(서대전점,대전둔산점)"
+// 거의 모든 품의서 제목에 "(OO점)" 이 들어가 가장 보편적인 최종 폴백 (라벨/따옴표/번호 다 실패할 때).
+function parseStoresFromTitle(lines) {
+  const stores = [];
+  const isStore = (s) =>
+    /^[가-힣A-Za-z0-9]{2,10}점$/.test(s) &&
+    !/백화점|면세점|할인점|편의점/.test(s) &&
+    !/^(대리점|지점|본점|영업점)$/.test(s);
+  for (const line of lines) {
+    if (!/공략|입주/.test(line.text)) continue;                 // 제목·요지 성격의 줄만
+    for (const pm of line.text.matchAll(/[\(（]([^)）]*점[^)）]*)[\)）]/g)) {
+      for (const tok of pm[1].split(/[\s,，·/및]+/)) {
+        const name = tok.trim().replace(/^일룸\s*/, '');
+        if (isStore(name) && !stores.some((s) => s.name === name)) stores.push({ name, code: null });
+      }
+    }
+    if (stores.length) break;   // 첫 매칭 줄만
+  }
+  return stores;
+}
+
 // "일룸-품의26-03-00082" 패턴
 function parseDocNumber(text) {
   const m = text.match(/일룸[\-\s]?품의\d{2,4}[\-\s]?\d{1,2}[\-\s]?\d{3,6}/);
@@ -295,6 +316,11 @@ export async function extractBasicInfo(pdf) {
     if (!v.length) {
       v = parseStoresNumbered(lines);
       if (v.length) src = { value: v.map((s) => s.name + (s.code ? `(${s.code})` : '')).join(', '), label: '매장목록(번호)', mode: 'inline' };
+    }
+    // 폴백3(최종): 제목 괄호 안 매장명 "…입주공략 (서대전점)" (대전하늘채 등 — 위 3가지 표기 다 아닐 때)
+    if (!v.length) {
+      v = parseStoresFromTitle(lines);
+      if (v.length) src = { value: v.map((s) => s.name).join(', '), label: '제목괄호매장', mode: 'inline' };
     }
     fields.stores = v;
     meta.stores   = { value: v, raw: src?.value, label: src?.label, confidence: confidenceFor(src, v) };
