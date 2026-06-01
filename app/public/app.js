@@ -288,7 +288,6 @@ function rerender() {
   applyBackground(banner, state);
   fitBanner(banner);
   decorateEditable(banner);
-  renderSizeRef();
   if (caseBadge) caseBadge.textContent = `${state._caseId === 'case-a' ? '케이스 A' : state._caseId} · ${state._version || 'v8'}`;
   updateOverflowChip();
   afterRenderImageCheck();
@@ -1677,12 +1676,6 @@ async function boot() {
     $('#btnGuide').classList.toggle('is-active', guideOn);
     renderGuide();
   });
-  $('#btnSizeRef')?.addEventListener('click', () => {
-    sizeRefOn = !sizeRefOn;
-    $('#btnSizeRef').classList.toggle('is-active', sizeRefOn);
-    renderSizeRef();
-  });
-
   // ── 로그인 화면(게이트) ──
   const gateLogin = async () => {
     const errEl = $('#loginErr'); errEl.hidden = true;

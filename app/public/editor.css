@@ -784,7 +784,24 @@ body.app-shell {
   flex-direction: column;
   overflow: hidden;
   background: var(--bg);
+  position: relative;   /* 플로팅 보기 컨트롤 기준 */
 }
+
+/* 미리보기 위 플로팅 보기 컨트롤 (줌·인쇄가이드·전체화면) */
+.preview-floating {
+  position: absolute;
+  bottom: 24px; left: 50%; transform: translateX(-50%);
+  z-index: 50;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.92);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid var(--line, #e5e5ea);
+  border-radius: 9999px;
+  padding: 6px 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+.preview-floating .pf-div { width: 1px; height: 18px; background: var(--line, #e5e5ea); margin: 0 3px; }
+body.dark .preview-floating { background: rgba(28,28,30,0.92); }
 
 .main-toolbar {
   display: flex;

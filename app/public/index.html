@@ -154,14 +154,6 @@
       <div id="caseBadge" class="case-badge" hidden>케이스 A · v8</div>
       <div id="overflowChip" class="overflow-chip" hidden>내용 넘침 — 글자가 잘릴 수 있어요</div>
       <div class="toolbar-spacer"></div>
-      <div class="zoom-group">
-        <button class="zoom-btn is-active" data-zoom="0.8">기본</button>
-        <button class="zoom-btn" data-zoom="1">100%</button>
-        <button class="zoom-btn" data-zoom="2">200%</button>
-        <button id="btnGuide" class="zoom-btn" title="안전영역·재단 가이드 표시">인쇄 가이드</button>
-        <button id="btnSizeRef" class="zoom-btn" title="사람 키(170cm)와 비교해 실제 크기를 가늠해요">실제 크기</button>
-        <button id="btnFull" class="btn btn-ghost btn-sm">전체화면</button>
-      </div>
       <div class="toolbar-actions">
         <button id="btnSave" class="btn btn-ghost btn-sm" title="이 배너를 내 계정에 저장">저장</button>
         <div class="acct-menu">
@@ -174,6 +166,16 @@
         <button id="btnPng" class="btn btn-primary btn-sm">PNG</button>
         <button id="btnPdf" class="btn btn-primary btn-sm">PDF</button>
       </div>
+    </div>
+
+    <!-- 미리보기 위 플로팅 보기 컨트롤 (줌·가이드·전체화면) -->
+    <div class="preview-floating">
+      <button class="zoom-btn is-active" data-zoom="0.8">기본</button>
+      <button class="zoom-btn" data-zoom="1">100%</button>
+      <button class="zoom-btn" data-zoom="2">200%</button>
+      <span class="pf-div"></span>
+      <button id="btnGuide" class="zoom-btn" title="안전영역·재단 가이드 표시">인쇄 가이드</button>
+      <button id="btnFull" class="zoom-btn" title="전체화면으로 검수">전체화면</button>
     </div>
 
     <div class="preview-stage" data-tour="preview">
