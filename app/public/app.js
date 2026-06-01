@@ -18,7 +18,44 @@ function saveDraft() {
   try {
     localStorage.setItem(DRAFT_KEY, JSON.stringify({ state, savedAt: new Date().toISOString() }));
   } catch { /* 용량 초과 등은 조용히 무시 */ }
+  if (!isTimeTravel) pushHist();   // 편집 1건마다 되돌리기 지점 기록 (되돌리기 실행 중엔 안 쌓음)
 }
+
+// ───────── 되돌리기 / 다시하기 (히스토리) ─────────
+const HIST_MAX = 60;
+let histStack = [];     // 편집 직후 상태 스냅샷(JSON) 들의 선형 기록
+let histPos   = -1;     // 현재 상태가 가리키는 위치
+let isTimeTravel = false;
+
+function pushHist() {
+  if (!state) return;
+  const snap = JSON.stringify(state);
+  if (histStack[histPos] === snap) return;       // 실제 변화 없으면 안 쌓음 (중복 렌더 무시)
+  histStack = histStack.slice(0, histPos + 1);   // 되돌린 뒤 새 편집 → 앞쪽(redo) 가지 버림
+  histStack.push(snap);
+  if (histStack.length > HIST_MAX) histStack.shift();
+  histPos = histStack.length - 1;
+  updateUndoButtons();
+}
+function timeTravelTo(pos) {
+  if (pos < 0 || pos >= histStack.length) return;
+  histPos = pos;
+  isTimeTravel = true;
+  state = JSON.parse(histStack[histPos]);
+  syncFormFromState?.();
+  rerender();            // rerender 끝의 saveDraft 는 isTimeTravel 이라 새 기록 안 쌓음
+  isTimeTravel = false;
+  updateUndoButtons();
+}
+function undo() { if (histPos > 0) timeTravelTo(histPos - 1); }
+function redo() { if (histPos < histStack.length - 1) timeTravelTo(histPos + 1); }
+function updateUndoButtons() {
+  const u = document.getElementById('btnUndo');
+  const r = document.getElementById('btnRedo');
+  if (u) u.disabled = histPos <= 0;
+  if (r) r.disabled = histPos >= histStack.length - 1;
+}
+function resetHist() { histStack = []; histPos = -1; updateUndoButtons(); }   // 새 배너 시작 시 기록 초기화
 function loadDraft() {
   try { return JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch { return null; }
 }
@@ -235,6 +272,7 @@ function rerender() {
   applyBackground(banner, state);
   fitBanner(banner);
   decorateEditable(banner);
+  renderSizeRef();
   if (caseBadge) caseBadge.textContent = `${state._caseId === 'case-a' ? '케이스 A' : state._caseId} · ${state._version || 'v8'}`;
   updateOverflowChip();
   afterRenderImageCheck();
@@ -359,13 +397,33 @@ function reviewValuePreview(key) {
   return '';
 }
 
+// 지금 "확인이 필요한" 항목 목록 (검수 리스트·다음버튼 공용)
+// 프로모션은 자동 추출 카드가 실제로 있을 때만 (없으면 신뢰도 낮아도 검수할 게 없음)
+function currentReviewItems() {
+  return REVIEW_FIELDS.filter((it) => it.key === 'promotions' ? promoNeedsReview() : needsReview(it.key));
+}
+
+let reviewCursor = 0;   // "다음 확인 항목으로" 순회 위치
+function goNextReview() {
+  const items = currentReviewItems();
+  if (!items.length) return;
+  if (reviewCursor >= items.length) reviewCursor = 0;
+  goToField(items[reviewCursor].key);
+  reviewCursor += 1;
+}
+
 function renderReviewList() {
   if (!reviewList) return;
   const f = state?._extraction?.fields;
-  // 프로모션은 자동 추출 카드가 실제로 있을 때만 (없으면 신뢰도 낮아도 검수할 게 없음)
-  const items = REVIEW_FIELDS.filter((it) => it.key === 'promotions' ? promoNeedsReview() : needsReview(it.key));
+  const items = currentReviewItems();
   reviewCount.textContent = items.length;
   reviewCount.classList.toggle('is-clear', items.length === 0);
+  const nextBtn = document.getElementById('btnNextReview');
+  if (nextBtn) {
+    nextBtn.hidden = items.length === 0;
+    nextBtn.textContent = `다음 확인 항목으로 → (${items.length}개)`;
+    if (reviewCursor >= items.length) reviewCursor = 0;
+  }
 
   if (!f) {
     reviewList.innerHTML = `<div class="rv-empty">${ICON.info}<span>PDF에서 자동으로 채운 항목이 없어요. 미리보기에서 고칠 곳을 직접 눌러 편집하세요.</span></div>`;
@@ -547,6 +605,26 @@ function openFullscreen() {
 }
 function closeFullscreen() {
   $('#zoomOverlay')?.classList.add('is-hidden');
+}
+
+// ───────── 실제 크기 비교 (사람 실루엣 — 미리보기 전용) ─────────
+let sizeRefOn = false;
+// 사람 실루엣 1개 (viewBox 비율로 키만 다르게 — CSS 높이로 180/165cm 표현)
+const PERSON_SVG = `<svg viewBox="0 0 44 180" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+  <circle cx="22" cy="15" r="11"/>
+  <path d="M22 28 C13 28 10 34 10 46 L8 92 C7.5 97 13 98 14 93 L17 60 L18 60 L18 104 C18 128 15.5 152 14.5 172 C14.3 178 21 178 21.2 172 L22 122 L22.8 172 C23 178 29.7 178 29.5 172 C28.5 152 26 128 26 104 L26 60 L27 60 L30 93 C31 98 36.5 97 36 92 L34 46 C34 34 31 28 22 28 Z"/>
+</svg>`;
+function renderSizeRef() {
+  const rootEl = document.getElementById('bannerRoot');
+  if (!rootEl) return;
+  rootEl.querySelector('.size-ref')?.remove();
+  if (!sizeRefOn) return;
+  const el = document.createElement('div');
+  el.className = 'size-ref';
+  el.innerHTML = `
+    <figure class="p-m">${PERSON_SVG}<figcaption>남 180cm</figcaption></figure>
+    <figure class="p-f">${PERSON_SVG}<figcaption>여 165cm</figcaption></figure>`;
+  rootEl.appendChild(el);   // .x-banner 의 형제 → 출력(인쇄/PNG)엔 포함 안 됨
 }
 
 // ───────── 인쇄 가이드 오버레이 ─────────
@@ -1123,6 +1201,7 @@ async function handlePdfUpload(file) {
   const newState = await res.json();
   state = newState;
   allowDraftSave = true;
+  resetHist();           // 새 품의서 → 되돌리기 기록 새로 시작
   syncFormFromState();
   rerender();
 
@@ -1283,6 +1362,7 @@ async function boot() {
   $('#startBlank').addEventListener('click', () => {
     state = JSON.parse(JSON.stringify(initial));
     allowDraftSave = true;
+    resetHist();
     syncFormFromState();
     rerender();
     hideStart();
@@ -1300,6 +1380,7 @@ async function boot() {
     resumeBtn.addEventListener('click', () => {
       state = JSON.parse(JSON.stringify(draft.state));
       allowDraftSave = true;
+      resetHist();
       syncFormFromState();
       rerender();
       hideStart();
@@ -1374,6 +1455,7 @@ async function boot() {
     const item = e.target.closest('.rv-item');
     if (item) goToField(item.dataset.go);
   });
+  $('#btnNextReview')?.addEventListener('click', goNextReview);
 
   // ── 신뢰도 readout — 고치기 가능한 줄 클릭 시 미리보기로 점프 + 편집 ──
   $('#extractReadout')?.addEventListener('click', (e) => {
@@ -1388,6 +1470,11 @@ async function boot() {
     $('#btnGuide').classList.toggle('is-active', guideOn);
     renderGuide();
   });
+  $('#btnSizeRef')?.addEventListener('click', () => {
+    sizeRefOn = !sizeRefOn;
+    $('#btnSizeRef').classList.toggle('is-active', sizeRefOn);
+    renderSizeRef();
+  });
   $('#btnFull').addEventListener('click', openFullscreen);
   $('#btnFullClose').addEventListener('click', closeFullscreen);
   $('#zoomOverlay').addEventListener('click', (e) => { if (e.target.id === 'zoomOverlay') closeFullscreen(); });
@@ -1400,6 +1487,18 @@ async function boot() {
 
   // 도움말 — 튜토리얼 다시 보기
   $('#btnHelp')?.addEventListener('click', () => startTour());
+
+  // 되돌리기 / 다시하기 (버튼 + Ctrl+Z / Ctrl+Shift+Z / Ctrl+Y)
+  $('#btnUndo')?.addEventListener('click', undo);
+  $('#btnRedo')?.addEventListener('click', redo);
+  document.addEventListener('keydown', (e) => {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return; // 입력칸은 글자 되돌리기 우선
+    const k = e.key.toLowerCase();
+    if (k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+    else if (k === 'y') { e.preventDefault(); redo(); }
+  });
 
   // 처음으로 / 새 배너 / 기본값
   $('#btnHome').addEventListener('click', showStart);

@@ -50,6 +50,7 @@
         <span id="reviewCount" class="rv-count">0</span>
       </div>
       <div id="reviewList" class="rv-list"><!-- app.js 가 채움 --></div>
+      <button id="btnNextReview" class="btn btn-primary btn-block rv-next" hidden>다음 확인 항목으로 →</button>
       <details id="extractReadoutWrap" class="readout-wrap" hidden>
         <summary class="readout-summary">품의서에서 읽은 값 — 신뢰도 보기</summary>
         <div id="extractReadout" class="readout"><!-- app.js 가 채움 --></div>
@@ -126,6 +127,8 @@
     <div class="main-toolbar">
       <button id="btnHome" class="btn btn-ghost btn-sm">← 처음</button>
       <button id="btnHelp" class="btn btn-ghost btn-sm" title="사용법 튜토리얼 다시 보기">도움말</button>
+      <button id="btnUndo" class="btn btn-ghost btn-sm" title="되돌리기 (Ctrl+Z)" disabled>되돌리기</button>
+      <button id="btnRedo" class="btn btn-ghost btn-sm" title="다시하기 (Ctrl+Shift+Z)" disabled>다시하기</button>
       <div id="caseBadge" class="case-badge" hidden>케이스 A · v8</div>
       <div id="overflowChip" class="overflow-chip" hidden>내용 넘침 — 글자가 잘릴 수 있어요</div>
       <div class="toolbar-spacer"></div>
@@ -134,6 +137,7 @@
         <button class="zoom-btn" data-zoom="1">100%</button>
         <button class="zoom-btn" data-zoom="2">200%</button>
         <button id="btnGuide" class="zoom-btn" title="안전영역·재단 가이드 표시">인쇄 가이드</button>
+        <button id="btnSizeRef" class="zoom-btn" title="사람 키(170cm)와 비교해 실제 크기를 가늠해요">실제 크기</button>
         <button id="btnFull" class="btn btn-ghost btn-sm">전체화면</button>
       </div>
       <div class="toolbar-actions">
