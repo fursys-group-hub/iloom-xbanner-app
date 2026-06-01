@@ -297,6 +297,19 @@ export async function extractBasicInfo(pdf) {
         if (m) { v = parseAmount(m[1]); if (v) { src = { value: l.text, label: '객단가(본문스캔)', mode: 'inline' }; break; } }
       }
     }
+    // 폴백2: "구분 수주건수 객단가 목표매출" 표 — 객단가가 컬럼 헤더라 값은 다음 데이터행에 있음
+    // (부산센텀 "부산센텀점 40 2,750,000 110,000,000"). 데이터행의 백만원대(100만~999만) 숫자 = 객단가.
+    if (!v) {
+      const hdrIdx = lines.findIndex((l) => /객단가/.test(l.text) && /(목표\s*매출|수주\s*건수|예상\s*매출)/.test(l.text));
+      if (hdrIdx >= 0) {
+        for (let i = hdrIdx + 1; i < Math.min(hdrIdx + 6, lines.length); i++) {
+          const nums = [...lines[i].text.matchAll(/([\d,]{7,})/g)]
+            .map((m) => parseInt(m[1].replace(/,/g, ''), 10))
+            .filter((n) => n >= 1_000_000 && n <= 9_990_000);   // 100만~999만 = 통상 객단가 범위
+          if (nums.length) { v = nums[0]; src = { value: lines[i].text, label: '객단가(표)', mode: 'inline' }; break; }
+        }
+      }
+    }
     fields.pricePerCustomer = v;
     meta.pricePerCustomer   = { value: v, raw: src?.value, label: src?.label, confidence: confidenceFor(src, v) };
   }
@@ -404,6 +417,7 @@ export async function extractBasicInfo(pdf) {
   {
     const found = findByLabels(lines, L.약명 || ['약명']);
     let v = null;
+    let shortNameSrc = null;
     if (found) {
       // 시작 부호(":", "(", 공백 등) 제거 → 괄호 안 텍스트만 추출
       v = found.value
@@ -412,8 +426,20 @@ export async function extractBasicInfo(pdf) {
         .replace(/[\)）].*$/, '')
         .trim() || null;
     }
+    // 폴백: "약명" 라벨이 없을 때 → 수주건명 예시 괄호에서 약명 추출
+    // "예시) 홍길동(입주)(현장)(두산오션)(옷장)" / "수주건명 기재 : 고객명(입주)(현장)(두산오션)"
+    // → 괄호 토큰 중 정형 키워드(입주/현장/옷장/계약/후기/고객명…) 아닌 것 = 약명 (부산센텀 두산오션)
+    if (!v) {
+      const KEYWORD = /^(입주|현장|옷장|계약|후기|고객명|홍길동|상시|박람회|매장|온라인)$/;
+      for (const l of lines) {
+        if (!/수주\s*건명|수주건명|예시\s*[)）]/.test(l.text)) continue;
+        const toks = [...l.text.matchAll(/[\(（]([^)）]{2,8})[\)）]/g)].map((m) => m[1].trim());
+        const cand = toks.find((t) => !KEYWORD.test(t) && /^[가-힣A-Za-z0-9]+$/.test(t));
+        if (cand) { v = cand; shortNameSrc = { value: l.text, label: '약명(수주건명예시)' }; break; }
+      }
+    }
     fields.shortName = v;
-    meta.shortName   = { value: v, raw: found?.value, label: found?.label, confidence: confidenceFor(found, v) };
+    meta.shortName   = { value: v, raw: found?.value || shortNameSrc?.value, label: found?.label || shortNameSrc?.label, confidence: confidenceFor(found || shortNameSrc, v) };
   }
 
   // ── 작성 정보 (한 줄에 "문서번호 ... 작성일 ..." 형태) ──
