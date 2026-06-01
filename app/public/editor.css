@@ -915,6 +915,46 @@ body.app-shell {
   white-space: nowrap; font-size: 40px; font-weight: 800; color: #8A8A8E;
 }
 
+/* ───────── 로그인 / 계정 ───────── */
+.acct-name { font-size: 14px; font-weight: 700; color: var(--ink, #1c1c1e); padding: 0 6px; align-self: center; }
+.login-dialog { width: 380px; max-width: 92vw; }
+.login-hint { font-size: 14px; color: var(--ink-mute, #8a8a8e); line-height: 1.5; margin: 0 0 14px; }
+.login-dialog .ed-field { margin-bottom: 12px; }
+.login-err { color: var(--danger, #E5484D); font-size: 14px; font-weight: 600; margin-top: 4px; }
+
+/* ───────── 내 배너함 (갤러리) ───────── */
+.gallery-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px;
+}
+.gallery-overlay.is-hidden { display: none; }
+.gallery-card {
+  background: var(--bg-surface, #fff); border-radius: 16px;
+  width: 1040px; max-width: 95vw; max-height: 88vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,.3);
+}
+.gallery-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px; border-bottom: 1px solid var(--line, #e5e5ea);
+}
+.gallery-head h2 { font-size: 20px; font-weight: 800; margin: 0; }
+.gallery-body { padding: 24px; overflow: auto; }
+.gallery-empty { text-align: center; color: var(--ink-mute, #8a8a8e); font-size: 16px; line-height: 1.7; padding: 48px 0; }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+.gal-card { border: 1px solid var(--line, #e5e5ea); border-radius: 12px; overflow: hidden; background: #fff; }
+.gal-thumb { height: 170px; overflow: hidden; background: #FFF5EE; border-bottom: 1px solid var(--line, #e5e5ea); position: relative; }
+.gal-thumb-scale { transform: scale(0.366); transform-origin: top left; width: 600px; pointer-events: none; }
+.gal-thumb-scale .x-banner { box-shadow: none !important; }
+.gal-meta { padding: 12px 14px 4px; }
+.gal-title { font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gal-date { font-size: 13px; color: var(--ink-mute, #8a8a8e); margin-top: 2px; }
+.gal-actions { display: flex; gap: 6px; padding: 10px 14px 14px; }
+.gal-actions .btn { flex: 1; }
+.gal-actions .gal-del { flex: 0 0 auto; color: var(--danger, #E5484D); }
+
 /* ===== 인덱스 페이지 (시제품 비교 모드) ===== */
 
 .page-header {

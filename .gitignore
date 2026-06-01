@@ -2,6 +2,11 @@
 node_modules/
 app/node_modules/
 
+# 환경변수(비밀 키) — 절대 올리지 말 것
+.env
+app/.env
+*.env.local
+
 # 배경 사진 원본 백업 (용량 큼 — 로컬에만 보관, 배포 안 함)
 assets/_배경_원본_백업/
 

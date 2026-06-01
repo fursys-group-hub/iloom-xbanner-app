@@ -24,6 +24,7 @@ import { extractBenefitTable } from './extract/parsers/benefit-table.js';
 import { extractPromotions } from './extract/parsers/promotions.js';
 import { extractNotices } from './extract/parsers/notices.js';
 import { extractPayment } from './extract/parsers/payment.js';
+import * as store from './lib/store.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
@@ -294,6 +295,87 @@ app.post('/api/export/pdf', async (req, res) => {
     console.error('[export PDF] 실패:', err);
     res.status(500).json({ error: err.message });
   }
+});
+
+// ─────────────────────────────────────────
+//  로그인 / 작업물 저장·불러오기 / 공유 (Supabase)
+// ─────────────────────────────────────────
+// 토큰에서 사용자 추출 (Authorization: Bearer <token>)
+function authUser(req) {
+  const h = req.headers.authorization || '';
+  const token = h.startsWith('Bearer ') ? h.slice(7) : '';
+  return store.verifyToken(token);   // { uid, name } 또는 null
+}
+function requireAuth(req, res) {
+  if (!store.storeReady) { res.status(503).json({ error: '저장 기능이 아직 설정되지 않았어요.' }); return null; }
+  const u = authUser(req);
+  if (!u) { res.status(401).json({ error: '로그인이 필요해요.' }); return null; }
+  return u;
+}
+
+// 로그인 또는 신규 가입 (이름 처음이면 비밀번호 설정)
+app.post('/api/auth/login', async (req, res) => {
+  if (!store.storeReady) return res.status(503).json({ error: '저장 기능이 아직 설정되지 않았어요.' });
+  try {
+    const { name, password } = req.body || {};
+    const r = await store.loginOrSignup(name, password);
+    if (r.error) return res.status(400).json({ error: r.error });
+    res.json({ name: r.user.name, token: r.token, isNew: r.isNew });
+  } catch (err) {
+    console.error('[auth] 실패:', err);
+    res.status(500).json({ error: '로그인 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.' });
+  }
+});
+// 현재 로그인 확인
+app.get('/api/auth/me', (req, res) => {
+  const u = authUser(req);
+  if (!u) return res.status(401).json({ error: 'no session' });
+  res.json({ name: u.name });
+});
+
+// 내 배너 목록
+app.get('/api/banners', async (req, res) => {
+  const u = requireAuth(req, res); if (!u) return;
+  try { res.json(await store.listBanners(u.uid)); }
+  catch (err) { console.error('[banners list]', err); res.status(500).json({ error: '목록을 불러오지 못했어요.' }); }
+});
+// 배너 하나 열기
+app.get('/api/banners/:id', async (req, res) => {
+  const u = requireAuth(req, res); if (!u) return;
+  try {
+    const b = await store.getBanner(u.uid, req.params.id);
+    if (!b) return res.status(404).json({ error: '없는 배너예요.' });
+    res.json(b);
+  } catch (err) { console.error('[banner get]', err); res.status(500).json({ error: '불러오지 못했어요.' }); }
+});
+// 저장(신규/갱신)
+app.post('/api/banners', async (req, res) => {
+  const u = requireAuth(req, res); if (!u) return;
+  try {
+    const { id, title, data, thumb } = req.body || {};
+    if (!data) return res.status(400).json({ error: '저장할 내용이 없어요.' });
+    const saved = await store.saveBanner(u.uid, { id, title: title || '제목 없음', data, thumb });
+    res.json(saved);
+  } catch (err) { console.error('[banner save]', err); res.status(500).json({ error: '저장하지 못했어요.' }); }
+});
+// 삭제
+app.delete('/api/banners/:id', async (req, res) => {
+  const u = requireAuth(req, res); if (!u) return;
+  try { await store.deleteBanner(u.uid, req.params.id); res.json({ ok: true }); }
+  catch (err) { console.error('[banner del]', err); res.status(500).json({ error: '삭제하지 못했어요.' }); }
+});
+// 공유 — 로그인 없이 읽기 전용 데이터
+app.get('/api/share/:shareId', async (req, res) => {
+  if (!store.storeReady) return res.status(503).json({ error: '준비되지 않았어요.' });
+  try {
+    const b = await store.getSharedBanner(req.params.shareId);
+    if (!b) return res.status(404).json({ error: '공유된 배너를 찾을 수 없어요.' });
+    res.json(b);
+  } catch (err) { console.error('[share]', err); res.status(500).json({ error: '불러오지 못했어요.' }); }
+});
+// 공유 뷰어 페이지 (로그인 없이) — /s/<shareId>
+app.get('/s/:shareId', (_req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, 'share.html'));
 });
 
 // 업로드 단계(multer) 오류 → 친절 안내 (라우트보다 먼저 터지므로 별도 핸들러 필요)

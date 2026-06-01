@@ -1344,6 +1344,203 @@ async function download(format) {
 }
 
 // ───────── 부트 ─────────
+// ═════════ 로그인 / 저장 / 내 배너함 (Supabase 연동) ═════════
+const TOKEN_KEY = 'xbanner-token';
+let authToken = localStorage.getItem(TOKEN_KEY) || null;
+let authName  = localStorage.getItem('xbanner-name') || null;
+let currentBannerId = null;   // 현재 편집 중인 저장 배너 id (있으면 재저장=갱신)
+
+function authFetch(url, opts = {}) {
+  const headers = { ...(opts.headers || {}) };
+  if (authToken) headers.Authorization = `Bearer ${authToken}`;
+  let body = opts.body;
+  if (body && typeof body !== 'string') { headers['Content-Type'] = 'application/json'; body = JSON.stringify(body); }
+  return fetch(url, { ...opts, headers, body });
+}
+function updateAccountUI() {
+  const nameEl = $('#acctName');
+  if (authName) {
+    if (nameEl) { nameEl.textContent = `${authName} 님`; nameEl.hidden = false; }
+    $('#btnLogin')?.setAttribute('hidden', '');
+    $('#btnLogout')?.removeAttribute('hidden');
+  } else {
+    if (nameEl) nameEl.hidden = true;
+    $('#btnLogin')?.removeAttribute('hidden');
+    $('#btnLogout')?.setAttribute('hidden', '');
+  }
+}
+function setAuth(token, name) {
+  authToken = token; authName = name;
+  if (token) { localStorage.setItem(TOKEN_KEY, token); localStorage.setItem('xbanner-name', name); }
+  else { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem('xbanner-name'); currentBannerId = null; }
+  updateAccountUI();
+}
+
+// 작은 입력 다이얼로그 (제목 등) — 값 문자열 또는 null(취소)
+function promptDialog(title, defValue = '') {
+  return new Promise((resolve) => {
+    const ov = document.createElement('div');
+    ov.className = 'ui-dialog-overlay is-show';
+    ov.innerHTML = `
+      <div class="ui-dialog" role="dialog" aria-modal="true">
+        <h3 class="ui-dialog-title">${title}</h3>
+        <div class="ui-dialog-body"><input id="pdInput" class="field-input" value="${escAttr(defValue)}" /></div>
+        <div class="ui-dialog-actions">
+          <button type="button" class="btn btn-ghost" data-act="cancel">취소</button>
+          <button type="button" class="btn btn-primary" data-act="ok">확인</button>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+    const input = ov.querySelector('#pdInput');
+    setTimeout(() => { input.focus(); input.select(); }, 50);
+    const close = (v) => { document.removeEventListener('keydown', onKey, true); ov.remove(); resolve(v); };
+    const onKey = (e) => { if (e.key === 'Escape') close(null); else if (e.key === 'Enter') close(input.value.trim() || defValue); };
+    document.addEventListener('keydown', onKey, true);
+    ov.addEventListener('click', (e) => {
+      if (e.target === ov || e.target.dataset.act === 'cancel') close(null);
+      if (e.target.dataset.act === 'ok') close(input.value.trim() || defValue);
+    });
+  });
+}
+
+// 2단계 로그인 (이름 → 비밀번호). 성공 시 true
+function loginDialog() {
+  return new Promise((resolve) => {
+    const ov = document.createElement('div');
+    ov.className = 'ui-dialog-overlay is-show';
+    ov.innerHTML = `
+      <div class="ui-dialog login-dialog" role="dialog" aria-modal="true">
+        <h3 class="ui-dialog-title">로그인</h3>
+        <div class="ui-dialog-body">
+          <p class="login-hint">이름과 비밀번호로 로그인해요. 처음이면 입력한 비밀번호로 새 계정이 만들어져요.</p>
+          <label class="ed-field"><span class="field-label">이름</span><input id="lgName" class="field-input" autocomplete="username" /></label>
+          <label class="ed-field"><span class="field-label">비밀번호</span><input id="lgPw" type="password" class="field-input" autocomplete="current-password" /></label>
+          <div id="lgErr" class="login-err" hidden></div>
+        </div>
+        <div class="ui-dialog-actions">
+          <button type="button" class="btn btn-ghost" data-act="cancel">취소</button>
+          <button type="button" class="btn btn-primary" data-act="ok">로그인 / 가입</button>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+    const nameI = ov.querySelector('#lgName'), pwI = ov.querySelector('#lgPw'), errEl = ov.querySelector('#lgErr');
+    const okBtn = ov.querySelector('[data-act="ok"]');
+    setTimeout(() => nameI.focus(), 50);
+    const close = (v) => { document.removeEventListener('keydown', onKey, true); ov.remove(); resolve(v); };
+    const submit = async () => {
+      const name = nameI.value.trim(), pw = pwI.value;
+      errEl.hidden = true;
+      if (!name || !pw) { errEl.textContent = '이름과 비밀번호를 입력해 주세요.'; errEl.hidden = false; return; }
+      okBtn.disabled = true;
+      try {
+        const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, password: pw }) });
+        const j = await res.json();
+        if (!res.ok) { errEl.textContent = j.error || '로그인에 실패했어요.'; errEl.hidden = false; okBtn.disabled = false; return; }
+        setAuth(j.token, j.name);
+        showToast(j.isNew ? `${j.name} 님, 새 계정이 만들어졌어요.` : `${j.name} 님, 환영해요.`, 'ok');
+        close(true);
+      } catch { errEl.textContent = '연결에 문제가 생겼어요. 잠시 후 다시 시도해 주세요.'; errEl.hidden = false; okBtn.disabled = false; }
+    };
+    const onKey = (e) => { if (e.key === 'Escape') close(false); else if (e.key === 'Enter') submit(); };
+    document.addEventListener('keydown', onKey, true);
+    ov.addEventListener('click', (e) => {
+      if (e.target === ov || e.target.dataset.act === 'cancel') close(false);
+      if (e.target.dataset.act === 'ok') submit();
+    });
+  });
+}
+async function ensureLogin() { return authToken ? true : loginDialog(); }
+
+// 현재 배너 저장 (신규/갱신)
+async function saveCurrentBanner() {
+  if (!state) { showToast('저장할 배너가 없어요.', 'err'); return; }
+  if (!(await ensureLogin())) return;
+  const title = await promptDialog('배너 이름을 정해주세요', state.aptName?.trim() || '제목 없음');
+  if (title === null) return;
+  try {
+    const res = await authFetch('/api/banners', { method: 'POST', body: { id: currentBannerId, title, data: state } });
+    const j = await res.json();
+    if (!res.ok) { showToast(j.error || '저장하지 못했어요.', 'err'); return; }
+    currentBannerId = j.id;
+    showToast(`"${title}" 저장됐어요.`, 'ok');
+  } catch { showToast('저장 중 문제가 생겼어요.', 'err'); }
+}
+
+// 내 배너함 열기 + 미니 미리보기 렌더
+async function openGallery() {
+  if (!(await ensureLogin())) return;
+  const ov = $('#galleryOverlay'), body = $('#galleryBody');
+  ov.classList.remove('is-hidden');
+  body.innerHTML = '<p class="gallery-empty">불러오는 중…</p>';
+  try {
+    const res = await authFetch('/api/banners');
+    const list = await res.json();
+    if (!res.ok) { body.innerHTML = `<p class="gallery-empty">${list.error || '불러오지 못했어요.'}</p>`; return; }
+    if (!Array.isArray(list) || !list.length) {
+      body.innerHTML = '<p class="gallery-empty">아직 저장한 배너가 없어요.<br>편집 화면에서 [저장]을 누르면 여기에 모여요.</p>';
+      return;
+    }
+    body.innerHTML = '<div class="gallery-grid"></div>';
+    const grid = body.querySelector('.gallery-grid');
+    for (const b of list) {
+      const when = b.updated_at ? new Date(b.updated_at).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' }) : '';
+      const card = document.createElement('div');
+      card.className = 'gal-card';
+      card.innerHTML = `
+        <div class="gal-thumb"><div class="gal-thumb-scale"></div></div>
+        <div class="gal-meta">
+          <div class="gal-title">${escAttr(b.title || '제목 없음')}</div>
+          <div class="gal-date">${when} 저장</div>
+        </div>
+        <div class="gal-actions">
+          <button class="btn btn-primary btn-sm" data-open="${b.id}">열기</button>
+          <button class="btn btn-ghost btn-sm" data-share="${escAttr(b.share_id || '')}">공유</button>
+          <button class="btn btn-ghost btn-sm gal-del" data-del="${b.id}" data-title="${escAttr(b.title || '')}">삭제</button>
+        </div>`;
+      grid.appendChild(card);
+      // 미니 미리보기 — 저장된 data 로 배너 렌더 후 축소(상단만 보임)
+      try { card.querySelector('.gal-thumb-scale').innerHTML = renderBanner(b.data || {}); } catch { /* 렌더 실패 무시 */ }
+    }
+  } catch { body.innerHTML = '<p class="gallery-empty">불러오는 중 문제가 생겼어요.</p>'; }
+}
+function closeGallery() { $('#galleryOverlay')?.classList.add('is-hidden'); }
+
+async function openSavedBanner(id) {
+  try {
+    const res = await authFetch(`/api/banners/${id}`);
+    const j = await res.json();
+    if (!res.ok) { showToast(j.error || '열지 못했어요.', 'err'); return; }
+    state = j.data;
+    currentBannerId = id;
+    allowDraftSave = true;
+    resetHist();
+    syncFormFromState();
+    rerender();
+    closeGallery();
+    hideStart();
+    showToast(`"${j.title || '배너'}" 불러왔어요.`, 'ok');
+  } catch { showToast('불러오는 중 문제가 생겼어요.', 'err'); }
+}
+function shareBanner(shareId) {
+  if (!shareId) { showToast('공유 링크가 아직 없어요. 저장하면 생겨요.', 'err'); return; }
+  const link = `${location.origin}/s/${shareId}`;
+  navigator.clipboard?.writeText(link).then(
+    () => showToast('공유 링크를 복사했어요. 붙여넣어 전달하세요.', 'ok'),
+    () => showToast(`공유 링크: ${link}`, 'ok'),
+  );
+}
+async function deleteSavedBanner(id, title) {
+  const ok = await confirmDialog({ title: '이 배너를 삭제할까요?', bodyHtml: `"${escAttr(title || '제목 없음')}" 은(는) 되돌릴 수 없어요.`, okText: '삭제', danger: true });
+  if (!ok) return;
+  try {
+    const res = await authFetch(`/api/banners/${id}`, { method: 'DELETE' });
+    if (!res.ok) { showToast('삭제하지 못했어요.', 'err'); return; }
+    if (currentBannerId === id) currentBannerId = null;
+    showToast('삭제됐어요.', 'ok');
+    openGallery();   // 목록 새로고침
+  } catch { showToast('삭제 중 문제가 생겼어요.', 'err'); }
+}
+
 async function boot() {
   const res = await fetch('/samples/case-a-default.json');
   initial = await res.json();
@@ -1474,6 +1671,20 @@ async function boot() {
     sizeRefOn = !sizeRefOn;
     $('#btnSizeRef').classList.toggle('is-active', sizeRefOn);
     renderSizeRef();
+  });
+
+  // ── 로그인 / 저장 / 내 배너함 ──
+  updateAccountUI();
+  $('#btnLogin')?.addEventListener('click', () => loginDialog());
+  $('#btnLogout')?.addEventListener('click', () => { setAuth(null, null); showToast('로그아웃했어요.', 'ok'); });
+  $('#btnSave')?.addEventListener('click', saveCurrentBanner);
+  $('#btnGallery')?.addEventListener('click', openGallery);
+  $('#galleryClose')?.addEventListener('click', closeGallery);
+  $('#galleryOverlay')?.addEventListener('click', (e) => {
+    if (e.target.id === 'galleryOverlay') { closeGallery(); return; }
+    const open = e.target.closest('[data-open]'); if (open) { openSavedBanner(open.dataset.open); return; }
+    const sh = e.target.closest('[data-share]'); if (sh) { shareBanner(sh.dataset.share); return; }
+    const del = e.target.closest('[data-del]'); if (del) { deleteSavedBanner(del.dataset.del, del.dataset.title); return; }
   });
   $('#btnFull').addEventListener('click', openFullscreen);
   $('#btnFullClose').addEventListener('click', closeFullscreen);

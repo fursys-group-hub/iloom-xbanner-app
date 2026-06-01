@@ -3,6 +3,11 @@ node_modules
 app/node_modules
 **/node_modules
 
+# 비밀 키 — 이미지에 안 들어가게 (Railway 환경변수로 주입)
+.env
+app/.env
+**/.env
+
 # 용량 큰 것 / 불필요한 것
 assets/_배경_원본_백업
 *.mp4

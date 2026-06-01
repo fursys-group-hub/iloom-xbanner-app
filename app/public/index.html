@@ -141,6 +141,11 @@
         <button id="btnFull" class="btn btn-ghost btn-sm">전체화면</button>
       </div>
       <div class="toolbar-actions">
+        <button id="btnSave" class="btn btn-ghost btn-sm" title="이 배너를 내 계정에 저장">저장</button>
+        <button id="btnGallery" class="btn btn-ghost btn-sm" title="저장한 배너 목록">내 배너함</button>
+        <span id="acctName" class="acct-name" hidden></span>
+        <button id="btnLogin" class="btn btn-ghost btn-sm">로그인</button>
+        <button id="btnLogout" class="btn btn-ghost btn-sm" hidden>로그아웃</button>
         <button id="btnPng" class="btn btn-primary btn-sm">PNG</button>
         <button id="btnPdf" class="btn btn-primary btn-sm">PDF</button>
       </div>
@@ -298,6 +303,17 @@
     </div>
     <div class="zoom-overlay-stage">
       <div id="zoomOverlayBanner" class="zoom-overlay-banner"><!-- app.js 가 채움 --></div>
+    </div>
+  </div>
+
+  <!-- ===== 내 배너함 (갤러리) ===== -->
+  <div id="galleryOverlay" class="gallery-overlay is-hidden" role="dialog" aria-modal="true">
+    <div class="gallery-card">
+      <div class="gallery-head">
+        <h2>내 배너함</h2>
+        <button id="galleryClose" class="ed-pop-x" aria-label="닫기">×</button>
+      </div>
+      <div id="galleryBody" class="gallery-body"><!-- app.js 가 채움 --></div>
     </div>
   </div>
 

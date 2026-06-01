@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>일룸 X배너 — 공유 미리보기</title>
+  <link rel="stylesheet" href="/banner.css" />
+  <style>
+    html, body { margin: 0; padding: 0; background: #DDD; font-family: 'Pretendard', -apple-system, sans-serif; }
+    .share-bar {
+      position: sticky; top: 0; z-index: 10;
+      background: #141414; color: #fff;
+      padding: 14px 20px; display: flex; align-items: center; gap: 12px;
+      font-size: 15px;
+    }
+    .share-bar .tag { background: #007AFF; border-radius: 9999px; padding: 3px 10px; font-size: 13px; font-weight: 700; }
+    .share-bar .title { font-weight: 700; }
+    .share-stage { display: flex; justify-content: center; padding: 32px 0 64px; }
+    .share-scale { transform: scale(0.82); transform-origin: top center; }
+    .share-msg { text-align: center; padding: 80px 20px; color: #555; font-size: 17px; line-height: 1.7; }
+    @media (max-width: 720px) { .share-scale { transform: scale(0.52); } }
+  </style>
+</head>
+<body>
+  <div class="share-bar">
+    <span class="tag">읽기 전용</span>
+    <span class="title" id="shareTitle">불러오는 중…</span>
+  </div>
+  <div class="share-stage"><div class="share-scale"><div id="bannerRoot"></div></div></div>
+
+  <script type="module">
+    import { renderBanner } from '/render/render-banner.js';
+    import { fitBanner, applyBackground } from '/fit-banner.js';
+
+    const id = location.pathname.split('/').filter(Boolean).pop();
+    const root = document.getElementById('bannerRoot');
+    const titleEl = document.getElementById('shareTitle');
+    try {
+      const res = await fetch(`/api/share/${encodeURIComponent(id)}`);
+      if (!res.ok) {
+        titleEl.textContent = '공유 미리보기';
+        root.innerHTML = '<p class="share-msg">공유된 배너를 찾을 수 없어요.<br>링크가 만료되었거나 삭제되었을 수 있어요.</p>';
+      } else {
+        const { title, data } = await res.json();
+        titleEl.textContent = title || '일룸 X배너';
+        document.title = `${title || '일룸 X배너'} — 공유 미리보기`;
+        root.innerHTML = renderBanner(data);
+        const banner = root.querySelector('.x-banner');
+        applyBackground(banner, data);
+        try { await document.fonts.ready; } catch {}
+        fitBanner(banner);
+      }
+    } catch {
+      root.innerHTML = '<p class="share-msg">불러오는 중 문제가 생겼어요.</p>';
+    }
+  </script>
+</body>
+</html>
