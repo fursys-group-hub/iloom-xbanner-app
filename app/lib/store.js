@@ -9,6 +9,9 @@ import bcrypt from 'bcryptjs';
 const URL    = process.env.SUPABASE_URL;
 const KEY    = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const SECRET = process.env.SESSION_SECRET || 'dev-secret-change-me';
+if (URL && KEY && !process.env.SESSION_SECRET) {
+  console.warn('⚠️ SESSION_SECRET 미설정 — 약한 기본값 사용 중. 운영에서는 반드시 환경변수로 설정하세요(토큰 위조 위험).');
+}
 
 export const storeReady = !!(URL && KEY);
 
@@ -84,10 +87,10 @@ export async function loginOrSignup(name, password) {
 // ───────── 배너 저장소 ─────────
 export async function listBanners(uid) {
   // data 포함 — 갤러리에서 저장된 내용으로 미니 미리보기를 그리기 위함
-  return sb(`xbanner_banners?user_id=eq.${uid}&select=id,title,share_id,updated_at,data&order=updated_at.desc`);
+  return sb(`xbanner_banners?user_id=eq.${enc(uid)}&select=id,title,share_id,updated_at,data&order=updated_at.desc`);
 }
 export async function getBanner(uid, id) {
-  const rows = await sb(`xbanner_banners?id=eq.${id}&user_id=eq.${uid}&select=*`);
+  const rows = await sb(`xbanner_banners?id=eq.${enc(id)}&user_id=eq.${enc(uid)}&select=*`);
   return rows?.[0] || null;
 }
 export async function getSharedBanner(shareId) {
@@ -95,11 +98,12 @@ export async function getSharedBanner(shareId) {
   return rows?.[0] || null;
 }
 function newShareId() { return crypto.randomBytes(9).toString('base64url'); }
+const enc = (v) => encodeURIComponent(String(v ?? ''));   // PostgREST 쿼리 값 안전 처리
 
 export async function saveBanner(uid, { id, title, data, thumb }) {
   const now = new Date().toISOString();
   if (id) {   // 기존 갱신 (본인 것만)
-    const rows = await sb(`xbanner_banners?id=eq.${id}&user_id=eq.${uid}`, {
+    const rows = await sb(`xbanner_banners?id=eq.${enc(id)}&user_id=eq.${enc(uid)}`, {
       method: 'PATCH', prefer: 'return=representation',
       body: { title, data, thumb, updated_at: now },
     });
@@ -112,6 +116,6 @@ export async function saveBanner(uid, { id, title, data, thumb }) {
   return rows?.[0] || null;
 }
 export async function deleteBanner(uid, id) {
-  await sb(`xbanner_banners?id=eq.${id}&user_id=eq.${uid}`, { method: 'DELETE', prefer: 'return=minimal' });
+  await sb(`xbanner_banners?id=eq.${enc(id)}&user_id=eq.${enc(uid)}`, { method: 'DELETE', prefer: 'return=minimal' });
   return true;
 }

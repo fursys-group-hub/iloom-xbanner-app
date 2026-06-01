@@ -55,7 +55,9 @@ function updateUndoButtons() {
   if (u) u.disabled = histPos <= 0;
   if (r) r.disabled = histPos >= histStack.length - 1;
 }
-function resetHist() { histStack = []; histPos = -1; updateUndoButtons(); }   // 새 배너 시작 시 기록 초기화
+// 새 배너 시작 시: 되돌리기 기록 + "어떤 저장본을 편집 중인지(currentBannerId)" 모두 초기화
+// (이게 없으면 저장본 열어 편집 중 새 PDF 올린 뒤 저장 시 원래 저장본을 덮어쓰는 버그)
+function resetHist() { histStack = []; histPos = -1; currentBannerId = null; updateUndoButtons(); }
 function loadDraft() {
   try { return JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch { return null; }
 }
@@ -1511,9 +1513,9 @@ async function openSavedBanner(id) {
     const j = await res.json();
     if (!res.ok) { showToast(j.error || '열지 못했어요.', 'err'); return; }
     state = j.data;
-    currentBannerId = id;
     allowDraftSave = true;
-    resetHist();
+    resetHist();              // 기록 초기화(여기서 currentBannerId 도 null 로)
+    currentBannerId = id;     // → 그 다음에 "이 저장본을 편집 중"으로 표시 (재저장=갱신)
     syncFormFromState();
     rerender();
     closeGallery();
@@ -1718,6 +1720,7 @@ async function boot() {
     clearDraft();
     allowDraftSave = false;
     state = JSON.parse(JSON.stringify(initial));
+    resetHist();
     syncFormFromState();
     rerender();
     extractStatus.textContent = '';
@@ -1727,6 +1730,7 @@ async function boot() {
   $('#btnReset').addEventListener('click', async () => {
     if (hasEdits() && !(await confirmDialog({ title: '기본값으로 되돌릴까요?', bodyHtml: '편집한 내용이 사라지고 기본값(광주데시앙)으로 돌아갑니다.', okText: '되돌리기', danger: true }))) return;
     state = JSON.parse(JSON.stringify(initial));
+    resetHist();
     syncFormFromState();
     rerender();
     clearDraft();
