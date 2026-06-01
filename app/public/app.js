@@ -262,7 +262,21 @@ function markReviewed(key) {
   saveDraft();
 }
 
-function showStart() { startScreen.classList.remove('is-hidden'); }
+const loginScreen = $('#loginScreen');
+function showLogin() {
+  loginScreen?.classList.remove('is-hidden');
+  startScreen.classList.add('is-hidden');
+  setTimeout(() => $('#loginName')?.focus(), 60);
+}
+function updateStartAcct() {
+  const el = $('#startAcctName');
+  if (el) el.textContent = authName ? `${authName} 님` : '';
+}
+function showStart() {
+  loginScreen?.classList.add('is-hidden');
+  startScreen.classList.remove('is-hidden');
+  updateStartAcct();
+}
 function hideStart() { startScreen.classList.add('is-hidden'); }
 
 // ───────── 렌더 ─────────
@@ -611,11 +625,6 @@ function closeFullscreen() {
 
 // ───────── 실제 크기 비교 (사람 실루엣 — 미리보기 전용) ─────────
 let sizeRefOn = false;
-// 사람 실루엣 1개 (viewBox 비율로 키만 다르게 — CSS 높이로 180/165cm 표현)
-const PERSON_SVG = `<svg viewBox="0 0 44 180" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-  <circle cx="22" cy="15" r="11"/>
-  <path d="M22 28 C13 28 10 34 10 46 L8 92 C7.5 97 13 98 14 93 L17 60 L18 60 L18 104 C18 128 15.5 152 14.5 172 C14.3 178 21 178 21.2 172 L22 122 L22.8 172 C23 178 29.7 178 29.5 172 C28.5 152 26 128 26 104 L26 60 L27 60 L30 93 C31 98 36.5 97 36 92 L34 46 C34 34 31 28 22 28 Z"/>
-</svg>`;
 function renderSizeRef() {
   const rootEl = document.getElementById('bannerRoot');
   if (!rootEl) return;
@@ -624,8 +633,8 @@ function renderSizeRef() {
   const el = document.createElement('div');
   el.className = 'size-ref';
   el.innerHTML = `
-    <figure class="p-m">${PERSON_SVG}<figcaption>남 180cm</figcaption></figure>
-    <figure class="p-f">${PERSON_SVG}<figcaption>여 165cm</figcaption></figure>`;
+    <figure class="p-m"><img src="/assets/silhouette/man.png" alt="" /><figcaption>남 180cm</figcaption></figure>
+    <figure class="p-f"><img src="/assets/silhouette/woman.png" alt="" /><figcaption>여 165cm</figcaption></figure>`;
   rootEl.appendChild(el);   // .x-banner 의 형제 → 출력(인쇄/PNG)엔 포함 안 됨
 }
 
@@ -1414,9 +1423,9 @@ function loginDialog() {
       <div class="ui-dialog login-dialog" role="dialog" aria-modal="true">
         <h3 class="ui-dialog-title">로그인</h3>
         <div class="ui-dialog-body">
-          <p class="login-hint">이름과 비밀번호로 로그인해요. 처음이면 입력한 비밀번호로 새 계정이 만들어져요.</p>
+          <p class="login-hint">이름과 비밀번호(숫자 4자리)로 로그인해요. 처음이면 입력한 비밀번호로 새 계정이 만들어져요.</p>
           <label class="ed-field"><span class="field-label">이름</span><input id="lgName" class="field-input" autocomplete="username" /></label>
-          <label class="ed-field"><span class="field-label">비밀번호</span><input id="lgPw" type="password" class="field-input" autocomplete="current-password" /></label>
+          <label class="ed-field"><span class="field-label">비밀번호 (숫자 4자리)</span><input id="lgPw" type="password" class="field-input" inputmode="numeric" maxlength="4" autocomplete="current-password" /></label>
           <div id="lgErr" class="login-err" hidden></div>
         </div>
         <div class="ui-dialog-actions">
@@ -1430,18 +1439,11 @@ function loginDialog() {
     setTimeout(() => nameI.focus(), 50);
     const close = (v) => { document.removeEventListener('keydown', onKey, true); ov.remove(); resolve(v); };
     const submit = async () => {
-      const name = nameI.value.trim(), pw = pwI.value;
-      errEl.hidden = true;
-      if (!name || !pw) { errEl.textContent = '이름과 비밀번호를 입력해 주세요.'; errEl.hidden = false; return; }
-      okBtn.disabled = true;
-      try {
-        const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, password: pw }) });
-        const j = await res.json();
-        if (!res.ok) { errEl.textContent = j.error || '로그인에 실패했어요.'; errEl.hidden = false; okBtn.disabled = false; return; }
-        setAuth(j.token, j.name);
-        showToast(j.isNew ? `${j.name} 님, 새 계정이 만들어졌어요.` : `${j.name} 님, 환영해요.`, 'ok');
-        close(true);
-      } catch { errEl.textContent = '연결에 문제가 생겼어요. 잠시 후 다시 시도해 주세요.'; errEl.hidden = false; okBtn.disabled = false; }
+      errEl.hidden = true; okBtn.disabled = true;
+      const r = await doLogin(nameI.value.trim(), pwI.value);
+      if (r.error) { errEl.textContent = r.error; errEl.hidden = false; okBtn.disabled = false; return; }
+      showToast(r.isNew ? `${r.name} 님, 새 계정이 만들어졌어요.` : `${r.name} 님, 환영해요.`, 'ok');
+      close(true);
     };
     const onKey = (e) => { if (e.key === 'Escape') close(false); else if (e.key === 'Enter') submit(); };
     document.addEventListener('keydown', onKey, true);
@@ -1452,6 +1454,18 @@ function loginDialog() {
   });
 }
 async function ensureLogin() { return authToken ? true : loginDialog(); }
+
+// 로그인 API 호출 (로그인 화면·다이얼로그 공용). 성공 시 setAuth + {ok}, 실패 시 {error}
+async function doLogin(name, password) {
+  if (!name || !password) return { error: '이름과 비밀번호를 입력해 주세요.' };
+  try {
+    const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, password }) });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok) return { error: j.error || '로그인에 실패했어요.' };
+    setAuth(j.token, j.name);
+    return { ok: true, isNew: j.isNew, name: j.name };
+  } catch { return { error: '연결에 문제가 생겼어요. 잠시 후 다시 시도해 주세요.' }; }
+}
 
 // 현재 배너 저장 (신규/갱신)
 async function saveCurrentBanner() {
@@ -1549,7 +1563,8 @@ async function boot() {
   state   = JSON.parse(JSON.stringify(initial));
   syncFormFromState();
   rerender();
-  showStart();
+  // 로그인 게이트 — 로그인해야 시작 화면(품의서/내 배너함)이 보임
+  if (authToken) showStart(); else showLogin();
   document.fonts?.ready?.then(() => {
     const bn = root.querySelector('.x-banner');
     applyBackground(bn, state);
@@ -1675,10 +1690,27 @@ async function boot() {
     renderSizeRef();
   });
 
-  // ── 로그인 / 저장 / 내 배너함 ──
+  // ── 로그인 화면(게이트) ──
+  const gateLogin = async () => {
+    const errEl = $('#loginErr'); errEl.hidden = true;
+    const btn = $('#loginBtn'); btn.disabled = true;
+    const r = await doLogin($('#loginName').value.trim(), $('#loginPw').value);
+    btn.disabled = false;
+    if (r.error) { errEl.textContent = r.error; errEl.hidden = false; return; }
+    $('#loginPw').value = '';
+    showToast(r.isNew ? `${r.name} 님, 새 계정이 만들어졌어요.` : `${r.name} 님, 환영해요.`, 'ok');
+    showStart();
+  };
+  $('#loginBtn')?.addEventListener('click', gateLogin);
+  $('#loginName')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#loginPw').focus(); });
+  $('#loginPw')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') gateLogin(); });
+  $('#startLogout')?.addEventListener('click', () => { setAuth(null, null); showToast('로그아웃했어요.', 'ok'); showLogin(); });
+  $('#startGallery')?.addEventListener('click', openGallery);
+
+  // ── 로그인 / 저장 / 내 배너함 (편집 화면 툴바) ──
   updateAccountUI();
   $('#btnLogin')?.addEventListener('click', () => loginDialog());
-  $('#btnLogout')?.addEventListener('click', () => { setAuth(null, null); showToast('로그아웃했어요.', 'ok'); });
+  $('#btnLogout')?.addEventListener('click', () => { setAuth(null, null); showToast('로그아웃했어요.', 'ok'); showLogin(); });
   $('#btnSave')?.addEventListener('click', saveCurrentBanner);
   $('#btnGallery')?.addEventListener('click', openGallery);
   $('#galleryClose')?.addEventListener('click', closeGallery);

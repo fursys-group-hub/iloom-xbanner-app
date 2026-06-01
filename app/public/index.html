@@ -9,13 +9,35 @@
 </head>
 <body class="app-shell">
 
-  <!-- ===== 시작 화면 (오버레이) ===== -->
-  <div id="startScreen" class="start-screen">
+  <!-- ===== 로그인 화면 (가장 먼저) ===== -->
+  <div id="loginScreen" class="start-screen">
+    <div class="start-card login-card">
+      <h1 class="start-title"><img class="brand-logo" src="/assets/products/iloom-logo.png" alt="일룸" />X배너 어플</h1>
+      <p class="start-sub">이름과 비밀번호(숫자 4자리)로 로그인하세요.<br>처음이면 입력한 비밀번호로 새 계정이 만들어져요.</p>
+      <div class="login-form">
+        <label class="ed-field"><span class="field-label">이름</span><input id="loginName" class="field-input" autocomplete="username" placeholder="예: 김수지" /></label>
+        <label class="ed-field"><span class="field-label">비밀번호 (숫자 4자리)</span><input id="loginPw" type="password" class="field-input" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="예: 1234" /></label>
+        <div id="loginErr" class="login-err" hidden></div>
+        <button id="loginBtn" class="start-btn start-btn--primary login-submit"><span class="start-btn-title">로그인 / 가입</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 시작 화면 (로그인 후) ===== -->
+  <div id="startScreen" class="start-screen is-hidden">
     <div id="startDrop" class="start-card">
+      <div class="start-acct">
+        <span id="startAcctName" class="start-acct-name"></span>
+        <button id="startLogout" class="btn-link-text">로그아웃</button>
+      </div>
       <h1 class="start-title"><img class="brand-logo" src="/assets/products/iloom-logo.png" alt="일룸" />X배너 어플</h1>
       <p class="start-sub">품의서 PDF 한 장으로 입주 박람회 X배너를 자동으로 만듭니다</p>
 
       <div class="start-actions">
+        <button id="startGallery" class="start-btn start-btn--gallery">
+          <span class="start-btn-title">내 배너함</span>
+          <span class="start-btn-desc">저장한 배너 다시 열기 · 공유</span>
+        </button>
         <button id="startUpload" class="start-btn start-btn--primary">
           <span class="start-btn-title">품의서 업로드</span>
           <span class="start-btn-desc">PDF를 올리면 자동으로 채워집니다</span>

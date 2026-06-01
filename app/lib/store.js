@@ -69,7 +69,7 @@ export async function findUser(name) {
 export async function loginOrSignup(name, password) {
   const n = cleanName(name);
   if (n.length < 1) return { error: '이름을 입력해 주세요.' };
-  if (!password || password.length < 4) return { error: '비밀번호는 4자 이상으로 해주세요.' };
+  if (!password || password.length < 4) return { error: '비밀번호는 숫자 4자리로 입력해 주세요.' };
 
   const existing = await findUser(n);
   if (existing) {

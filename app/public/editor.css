@@ -582,6 +582,19 @@ body.app-shell {
 .start-btn--resume:hover { border-color: var(--accent); }
 .start-btn--resume .start-btn-title { color: var(--ink); }
 .start-btn--resume[hidden] { display: none; }
+.start-btn--gallery { border-color: var(--accent); background: var(--accent-bg); }
+.start-btn--gallery .start-btn-title { color: var(--accent-deep, var(--accent)); }
+
+/* 로그인 화면 폼 */
+.login-card { max-width: 420px; }
+.login-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; text-align: left; }
+.login-submit { margin-top: 8px; align-items: center; justify-content: center; text-align: center; }
+.login-submit .start-btn-title { color: #fff; }
+
+/* 시작 화면 계정 행 (우측 상단) */
+.start-card { position: relative; }
+.start-acct { position: absolute; top: 18px; right: 22px; display: flex; align-items: center; gap: 10px; }
+.start-acct-name { font-size: 14px; font-weight: 700; color: var(--ink-soft, #636366); }
 
 .start-hint { margin: 24px 0 0; font-size: 13px; color: var(--ink-mute); }
 
@@ -909,7 +922,7 @@ body.app-shell {
 .size-ref figure { margin: 0; position: relative; }
 .size-ref figure.p-m { height: 1800px; }   /* 남 180cm — 배너와 같은 높이 */
 .size-ref figure.p-f { height: 1650px; }   /* 여 165cm */
-.size-ref svg { display: block; height: 100%; width: auto; fill: #9A9AA0; }
+.size-ref svg, .size-ref img { display: block; height: 100%; width: auto; }
 .size-ref figcaption {
   position: absolute; top: -96px; left: 50%; transform: translateX(-50%);
   white-space: nowrap; font-size: 40px; font-weight: 800; color: #8A8A8E;
