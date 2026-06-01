@@ -1369,16 +1369,9 @@ function authFetch(url, opts = {}) {
   return fetch(url, { ...opts, headers, body });
 }
 function updateAccountUI() {
-  const nameEl = $('#acctName');
-  if (authName) {
-    if (nameEl) { nameEl.textContent = `${authName} 님`; nameEl.hidden = false; }
-    $('#btnLogin')?.setAttribute('hidden', '');
-    $('#btnLogout')?.removeAttribute('hidden');
-  } else {
-    if (nameEl) nameEl.hidden = true;
-    $('#btnLogin')?.removeAttribute('hidden');
-    $('#btnLogout')?.setAttribute('hidden', '');
-  }
+  const btn = $('#acctBtn');
+  if (btn) btn.textContent = authName ? `${authName} 님 ▾` : '로그인';
+  $('#startAcctName') && ($('#startAcctName').textContent = authName ? `${authName} 님` : '');
 }
 function setAuth(token, name) {
   authToken = token; authName = name;
@@ -1707,12 +1700,22 @@ async function boot() {
   $('#startLogout')?.addEventListener('click', () => { setAuth(null, null); showToast('로그아웃했어요.', 'ok'); showLogin(); });
   $('#startGallery')?.addEventListener('click', openGallery);
 
-  // ── 로그인 / 저장 / 내 배너함 (편집 화면 툴바) ──
+  // ── 저장 + 계정 메뉴(이름 누르면 내 배너함·로그아웃 펼침) ──
   updateAccountUI();
-  $('#btnLogin')?.addEventListener('click', () => loginDialog());
-  $('#btnLogout')?.addEventListener('click', () => { setAuth(null, null); showToast('로그아웃했어요.', 'ok'); showLogin(); });
   $('#btnSave')?.addEventListener('click', saveCurrentBanner);
-  $('#btnGallery')?.addEventListener('click', openGallery);
+  const acctBtn = $('#acctBtn'), acctDropdown = $('#acctDropdown');
+  acctBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!authToken) { loginDialog(); return; }      // 혹시 로그아웃 상태면 로그인
+    acctDropdown.classList.toggle('is-hidden');
+  });
+  acctDropdown?.addEventListener('click', (e) => {
+    const it = e.target.closest('[data-acct]'); if (!it) return;
+    acctDropdown.classList.add('is-hidden');
+    if (it.dataset.acct === 'gallery') openGallery();
+    else if (it.dataset.acct === 'logout') { setAuth(null, null); showToast('로그아웃했어요.', 'ok'); showLogin(); }
+  });
+  document.addEventListener('click', () => acctDropdown?.classList.add('is-hidden'));   // 바깥 클릭 시 닫기
   $('#galleryClose')?.addEventListener('click', closeGallery);
   $('#galleryOverlay')?.addEventListener('click', (e) => {
     if (e.target.id === 'galleryOverlay') { closeGallery(); return; }

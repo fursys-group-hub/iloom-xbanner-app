@@ -164,10 +164,13 @@
       </div>
       <div class="toolbar-actions">
         <button id="btnSave" class="btn btn-ghost btn-sm" title="이 배너를 내 계정에 저장">저장</button>
-        <button id="btnGallery" class="btn btn-ghost btn-sm" title="저장한 배너 목록">내 배너함</button>
-        <span id="acctName" class="acct-name" hidden></span>
-        <button id="btnLogin" class="btn btn-ghost btn-sm">로그인</button>
-        <button id="btnLogout" class="btn btn-ghost btn-sm" hidden>로그아웃</button>
+        <div class="acct-menu">
+          <button id="acctBtn" class="btn btn-ghost btn-sm" aria-haspopup="true" title="계정 메뉴">로그인</button>
+          <div id="acctDropdown" class="acct-dropdown is-hidden" role="menu">
+            <button class="acct-item" data-acct="gallery" role="menuitem">내 배너함</button>
+            <button class="acct-item acct-item--danger" data-acct="logout" role="menuitem">로그아웃</button>
+          </div>
+        </div>
         <button id="btnPng" class="btn btn-primary btn-sm">PNG</button>
         <button id="btnPdf" class="btn btn-primary btn-sm">PDF</button>
       </div>
