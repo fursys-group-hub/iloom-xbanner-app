@@ -276,7 +276,7 @@ app.post('/api/export/png', async (req, res) => {
     res.send(buffer);
   } catch (err) {
     console.error('[export PNG] 실패:', err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'PNG 저장 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.' });
   }
 });
 
@@ -293,7 +293,7 @@ app.post('/api/export/pdf', async (req, res) => {
     res.send(buffer);
   } catch (err) {
     console.error('[export PDF] 실패:', err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'PDF 저장 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.' });
   }
 });
 
