@@ -21,9 +21,16 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ===== 설정 =====
-const LOGIN_URL = 'https://iloomproduct.fursys.com/wp-login.php';
-const ID = 'seoyeon_lee';
-const PW = 'iloomguide2020';
+// ⚠️ 보안: 로그인 정보는 환경변수로 분리했습니다.
+//    이전에 코드에 하드코딩돼 GitHub에 노출된 비밀번호는 반드시 폐기·재발급(변경) 하세요.
+//    실행 전 .env 또는 셸에서 ILOOM_LOGIN_ID / ILOOM_LOGIN_PW 를 설정해야 합니다.
+const LOGIN_URL = process.env.ILOOM_LOGIN_URL || 'https://iloomproduct.fursys.com/wp-login.php';
+const ID = process.env.ILOOM_LOGIN_ID;
+const PW = process.env.ILOOM_LOGIN_PW;
+if (!ID || !PW) {
+  console.error('❌ 로그인 정보가 없습니다. 환경변수 ILOOM_LOGIN_ID, ILOOM_LOGIN_PW 를 설정한 뒤 실행하세요.');
+  process.exit(1);
+}
 
 // X배너 어플 프로젝트의 assets 폴더 (이 스크립트가 어디서 실행되든 항상 동일 경로)
 const PROJECT_ROOT = path.resolve(__dirname, '..');

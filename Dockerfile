@@ -24,5 +24,6 @@ RUN cd app && npx playwright install --with-deps chromium
 COPY . .
 
 ENV NODE_ENV=production
-# PORT 는 레일웨이가 런타임에 주입 — server.js 가 process.env.PORT 를 읽음
+# PORT 는 런타임에 주입 — server.js 가 process.env.PORT 를 읽음 (없으면 3000)
+EXPOSE 3000
 CMD ["node", "app/server.js"]
