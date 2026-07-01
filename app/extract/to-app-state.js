@@ -72,6 +72,13 @@ const PROMO_CARD_PRESETS = {
   모션:          { tag: '모션 프로모션',   headline: '{모션 가구}\n혜택',     sub: '지정 모션 구매 시',           icon: 'bed' },
 };
 
+// 아무 프로모션도 추출 못 했을 때의 편집용 기본 카드 — "특별 프로모션" 영역이 항상 보이도록.
+// 사용자가 편집 화면에서 실제 내용으로 덮어쓰는 초안 (auto-draft → manual customize).
+const DEFAULT_PROMO_CARDS = [
+  { tag: '특별 프로모션', headline: '{지정 세트}\n구매 혜택', sub: '내용을 입력하세요', icon: 'box' },
+  { tag: '추가 혜택',     headline: '{금액별}\n추가 지원',   sub: '내용을 입력하세요', icon: 'tag' },
+];
+
 // 감지된 프로모션 이름 배열 → 카드 배열 (최대 4종, 우선순위 순)
 const PROMO_PRIORITY = ['한정프로모션', '옷장단독', '소파', '학생방', '모션', '세트구매', '단톡방공동구매'];
 function buildPromoCards(promoNames) {
@@ -296,11 +303,10 @@ export function pdfDataToAppState({ basic, benefit, promotions, notices, payment
   state._copyTone = copyTone;
   state.mainTitle = autoMainTitle({ noFair: !!basic?.fields?.noFair });
 
-  // ── 결제 안내 표시/숨김 ── (사용자 규칙: 포인트 브랜드 언급 있으면 기본 3카드, 전혀 없으면 숨김)
-  // payment 미전달(구 호출부)이면 기본 3카드 유지 — 하위호환
-  if (payment && payment.ok === false) {
-    state.payment = null;
-  }
+  // ── 결제 안내 항상 표시 ── (사용자 확정 2026-07-01: 브랜드 언급 유무와 무관하게 기본 3카드 항상 노출)
+  // 과거엔 payment.ok === false 이면 숨겼으나, "혜택 지급 방법" 카드가 사라지는 문제로 제거.
+  // 기본값(DEFAULT_STATE.payment 3카드)을 그대로 유지. 사용자는 편집 화면에서 개별 조정 가능.
+  void payment;   // 파서 결과는 참고만 — 카드 유지 여부에는 더 이상 영향 없음
 
   // ── 유의사항 — PDF에서 추출된 게 있으면 그걸 우선 사용, 없으면 기본 6줄 ──
   if (notices?.ok && notices.notices?.length >= 2) {
@@ -317,13 +323,23 @@ export function pdfDataToAppState({ basic, benefit, promotions, notices, payment
     state.notices[state.notices.length - 1] = lastNotice;
   }
 
-  // ── 특별 프로모션 카드 (케이스 B 2x2 그리드만) ── (분류는 위에서 결정됨)
-  if (caseId === 'case-b' && promoCards.length) {
-    state.specialPromoSection = {
-      title: `특별 프로모션 ${promoCards.length}종`,
-      cards: promoCards,
-    };
-  }
+  // ── 특별 프로모션 카드 (항상 표시, 케이스 무관) ── (사용자 확정 2026-07-01)
+  // 우선순위: ①전용 파서(실제 금액/세트 문구, 정확) → ②키워드 프리셋(promoCards) → ③편집용 기본 카드
+  // 케이스 게이팅 제거 — 데이터가 있으면 어느 케이스에서든 렌더. 레이아웃은 카드 수로 결정.
+  const detailCards = promotions?.specialPromoDetail?.cards || [];
+  const promoSectionCards =
+    detailCards.length ? detailCards
+    : promoCards.length ? promoCards
+    : DEFAULT_PROMO_CARDS;   // 아무것도 못 뽑아도 편집용 기본 카드로 항상 노출
+  state.specialPromoSection = {
+    title: '특별 프로모션',
+    cards: promoSectionCards.slice(0, 4),
+  };
+  // 1~2장은 가로 컴팩트(row), 3장 이상은 2x2 그리드(card) — 휑한 그리드 방지
+  state._promoLayout = promoSectionCards.length <= 2 ? 'row' : 'card';
+  // 실제 추출된 프로모션이 있는지 — 특수 레이아웃(c/d/e/g)은 이때만 프로모션 블록 노출(플레이스홀더 클러터 방지).
+  // 일반 레이아웃(case-a/b)은 이 값과 무관하게 항상 노출.
+  state._hasRealPromo = detailCards.length > 0 || promoCards.length > 0;
 
   // ── 신뢰도 메타데이터 ──
   state._extraction = {

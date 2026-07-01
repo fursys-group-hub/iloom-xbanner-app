@@ -5,6 +5,7 @@ import { Header }        from '../../components/header.js';
 import { StoreBox }      from '../../components/store-box.js';
 import { MaxBenefit }    from '../../components/max-benefit.js';
 import { BenefitTable }  from '../../components/benefit-table.js';
+import { SpecialPromoGrid } from '../../components/special-promo-grid.js';
 import { renderPayment } from '../../components/payment.js';
 import { Notices }       from '../../components/notices.js';
 import { Footer }        from '../../components/footer.js';
@@ -18,6 +19,7 @@ export function renderCaseA(data = {}) {
       ${orderBlocks(data, [
         { key: 'maxBenefit', html: MaxBenefit(data.maxBenefit) },
         { key: 'table',      html: BenefitTable(data.benefitTable) },
+        { key: 'promo',      html: SpecialPromoGrid({ ...data.specialPromoSection, layout: data._promoLayout }) },
         { key: 'payment',    html: renderPayment(data, 'card_1') },
         { key: 'notices',    html: Notices(data.notices) },
       ])}

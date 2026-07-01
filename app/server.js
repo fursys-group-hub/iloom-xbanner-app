@@ -96,7 +96,8 @@ app.post('/api/extract', upload.single('pdf'), async (req, res) => {
       return res.status(422).json({
         code: 'NO_TEXT',
         error: '글자가 인식되지 않는 PDF예요. 사진(스캔)으로 만든 품의서는 자동으로 읽을 수 없어요. '
-             + '글자를 복사할 수 있는(텍스트) PDF로 다시 올리거나, 미리보기에서 직접 입력해 만들 수 있어요.',
+             + '인쇄 창에서 "Microsoft Print to PDF" 대신 "PDF로 저장(Save as PDF)"을 선택해 다시 저장하면 글자가 살아있는 PDF가 됩니다. '
+             + '또는 미리보기에서 직접 입력해 만들 수 있어요.',
       });
     }
 

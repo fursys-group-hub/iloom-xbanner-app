@@ -6,6 +6,7 @@ import { StoreBox }      from '../../components/store-box.js';
 import { MaxBenefit }    from '../../components/max-benefit.js';
 import { BenefitTable }  from '../../components/benefit-table.js';
 import { ExtraBenefits } from '../../components/extra-benefits.js';
+import { SpecialPromoGrid } from '../../components/special-promo-grid.js';
 import { Notices }       from '../../components/notices.js';
 import { Footer }        from '../../components/footer.js';
 import { orderBlocks }   from '../../utils/order.js';
@@ -19,6 +20,7 @@ export function renderCaseG(data = {}) {
         { key: 'maxBenefit', html: MaxBenefit(data.maxBenefit) },
         { key: 'table',      html: BenefitTable(data.benefitTable) },
         { key: 'extra',      html: ExtraBenefits(data.extraSection) },
+        { key: 'promo',      html: data._hasRealPromo ? SpecialPromoGrid({ ...data.specialPromoSection, layout: data._promoLayout }) : '' },
         { key: 'notices',    html: Notices(data.notices) },
       ])}
       ${Footer(data.footer)}

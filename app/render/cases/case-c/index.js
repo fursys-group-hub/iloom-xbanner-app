@@ -6,6 +6,7 @@ import { StoreBox }       from '../../components/store-box.js';
 import { MaxBenefit }     from '../../components/max-benefit.js';
 import { ProductCards }   from '../../components/product-cards.js';
 import { BenefitTable }   from '../../components/benefit-table.js';
+import { SpecialPromoGrid } from '../../components/special-promo-grid.js';
 import { renderPayment }  from '../../components/payment.js';
 import { Notices }        from '../../components/notices.js';
 import { Footer }         from '../../components/footer.js';
@@ -20,6 +21,7 @@ export function renderCaseC(data = {}) {
         { key: 'maxBenefit', html: MaxBenefit(data.maxBenefit) },
         { key: 'product',    html: ProductCards(data.productSection) },
         { key: 'table',      html: BenefitTable(data.benefitTable) },
+        { key: 'promo',      html: data._hasRealPromo ? SpecialPromoGrid({ ...data.specialPromoSection, layout: data._promoLayout }) : '' },
         { key: 'payment',    html: renderPayment(data, 'compact') },
         { key: 'notices',    html: Notices(data.notices) },
       ])}

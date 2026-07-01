@@ -6,6 +6,7 @@ import { StoreBox }     from '../../components/store-box.js';
 import { Celebration }  from '../../components/celebration.js';
 import { BenefitTable } from '../../components/benefit-table.js';
 import { ReviewEvent }  from '../../components/review-event.js';
+import { SpecialPromoGrid } from '../../components/special-promo-grid.js';
 import { renderPayment } from '../../components/payment.js';
 import { Notices }      from '../../components/notices.js';
 import { Footer }       from '../../components/footer.js';
@@ -20,6 +21,7 @@ export function renderCaseD(data = {}) {
         { key: 'celebration', html: Celebration(data.celebration) },
         { key: 'table',       html: BenefitTable(data.benefitTable) },
         { key: 'review',      html: ReviewEvent(data.reviewSection) },
+        { key: 'promo',       html: data._hasRealPromo ? SpecialPromoGrid({ ...data.specialPromoSection, layout: data._promoLayout }) : '' },
         { key: 'payment',     html: renderPayment(data, 'card_2') },
         { key: 'notices',     html: Notices(data.notices) },
       ])}
